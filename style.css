@@ -1,3 +1,35 @@
+/* Estilos para la sección de inicio */
+section.seccion#inicio {
+  border-left: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 2vw;
+}
+
+.seccion#inicio {
+  /* ...otros estilos... */
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.seccion#bio {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#premios {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#contacto {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Mejora UX: Evita salto visual al cambiar de pestaña de partituras */
 .tab-content-partituras {
   min-height: 520px;
@@ -49,7 +81,7 @@ html {
 
 body {
   font-family: 'Courier Prime', monospace;
-  background: var(--color-fondo);
+  background: #000 !important;
   color: var(--color-secundario);
   margin: 0;
   min-height: 100vh;
@@ -547,9 +579,12 @@ main.content {
   }
 
   .video-background {
-    right: 10%;
-    width: 50vw;
-    height: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto 20px auto;
+    height: auto;
   }
 }
 
@@ -609,13 +644,14 @@ main.content {
   }
 
   .video-background {
-    position: static;
-    width: 90vw;
-    height: 90vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     margin: 0 auto 20px auto;
-    display: block;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .inicio-content {
