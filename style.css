@@ -289,69 +289,6 @@ main.content {
   }
 }
 
-/* NUEVOS ESTILOS PARA PESTAÑAS DE PARTITURAS */
-.tab-menu-partituras {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-  padding: 20px;
-  margin: 0 0 20px 0;
-  overflow-x: auto;
-  border-bottom: 2px solid var(--color-principal);
-}
-
-.tab-menu-partituras li a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 2px;
-  background: transparent;
-  /* Fondo transparente para pestañas inactivas */
-  color: var(--color-secundario);
-  /* Unificar el color de las pestañas */
-  font-weight: normal;
-  /* Eliminar negritas */
-  text-decoration: none;
-  border-radius: 8px;
-  /* Bordes redondeados */
-  white-space: nowrap;
-  transition: all 0.3s;
-  /* Transición suave */
-  border: 2px solid transparent;
-  /* Sin borde visible para pestañas inactivas */
-}
-
-.tab-menu-partituras li a:hover,
-.tab-menu-partituras li a.active {
-  background: var(--color-principal);
-  /* Fondo celeste para la pestaña activa */
-  color: var(--color-secundario);
-  /* Texto claro para la pestaña activa */
-  border: 2px solid var(--color-principal);
-  /* Borde del mismo color que el fondo */
-}
-
-.tab-content-partituras .tab-pane {
-  display: none;
-}
-
-.tab-content-partituras .tab-pane.active {
-  display: block;
-}
-
-.subtitulo-partituras {
-  font-size: 1.2em;
-  /* Tamaño más pequeño */
-  font-weight: normal;
-  /* Cambia a texto normal si no quieres negrita */
-  color: var(--color-secundario);
-  /* Usa el color claro definido en la página */
-  margin-top: 20px;
-  margin-bottom: 10px;
-  text-align: left;
-  grid-column: 1 / -1;
-  /* Asegura que ocupe toda la fila */
-}
 
 /* ---------------------------
        VIDEOS: Menú interno (Pestañas) en la Sección Videos
@@ -423,117 +360,6 @@ main.content {
   aspect-ratio: 16 / 9;
 }
 
-/* ---------------------------
-       PARTITURAS
-       Uso de grid para lograr bloques uniformes en tamaño
-    --------------------------- */
-.obras-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  /* Grid flexible para partituras */
-  gap: 2px;
-  margin-top: 15px;
-}
-
-/* Contenedor de cada partitura */
-.obra {
-  background: rgba(50, 50, 50, 0.9);
-  /* Fondo oscuro */
-  border-radius: 4px;
-  /* Bordes redondeados */
-  font-size: 0.8em;
-  /* Tamaño de fuente pequeño */
-  display: flex;
-  /* Diseño flexible */
-  flex-direction: row;
-  /* Elementos en una fila */
-  justify-content: space-between;
-  /* Espaciado entre los elementos */
-  align-items: flex-start;
-  /* Alinea los elementos al inicio verticalmente */
-  height: auto;
-  /* Altura automática para adaptarse al contenido */
-  padding: 8px;
-  /* Espaciado interno */
-  box-sizing: border-box;
-  /* Incluye padding y bordes en el tamaño total */
-  overflow: hidden;
-  /* Oculta contenido desbordado */
-  min-height: 50px;
-  /* Altura mínima para mantener consistencia */
-}
-
-/* Título de la partitura */
-.obra h4 {
-  margin: 0;
-  /* Sin margen */
-  font-size: 0.9em;
-  /* Tamaño de fuente */
-  font-weight: 400;
-  /* Asegurar un peso normal consistente */
-  overflow: hidden;
-  /* Oculta texto desbordado */
-  text-overflow: ellipsis;
-  /* Agrega "..." si el texto es muy largo */
-  white-space: nowrap;
-  /* Evitar que el texto se divida en varias líneas */
-  flex: 1;
-  /* Ocupa el espacio disponible */
-  margin-bottom: 5px;
-  /* Espaciado entre el título y el botón */
-  color: var(--color-secundario);
-  /* Mantener el color unificado */
-}
-
-/* Botón PDF */
-
-.pdf-link {
-  color: var(--color-secundario);
-  font-weight: normal;
-  text-decoration: none;
-  background: #015b98;
-  color: #fff;
-  border-radius: 4px;
-  font-size: 0.75em;
-  padding: 2px 5px;
-  transition: background 0.3s;
-}
-
-.pdf-link.updated {
-  background: #eaffea !important;
-  color: #015b98 !important;
-  border: 1px solid #9a2900;
-}
-
-.pdf-link:hover {
-  background: #2980b9;
-  /* Cambia el color de fondo al pasar el mouse */
-}
-
-.pdf-button {
-  display: flex;
-  align-items: center;
-  padding: 6px 10px;
-  background: var(--color-principal);
-  color: var(--color-secundario);
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85em;
-  transition: background 0.3s;
-}
-
-.pdf-button:hover {
-  background: #c0392b;
-  /* Color más oscuro al pasar el mouse */
-}
-
-.pdf-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  /* Espacio entre el ícono y el texto */
-}
 
 /* ---------------------------
        FOTOS
@@ -589,20 +415,6 @@ main.content {
   height: 100%;
 }
 
-.seccion#partituras {
-  position: relative;
-}
-
-.creditos-partituras {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 2em;
-  color: var(--color-texto);
-  opacity: 0.7;
-  /* Hace el texto un poco transparente */
-  font-style: italic;
-}
 
 .subtitulo-partituras {
   font-size: 1.2em;
@@ -613,25 +425,6 @@ main.content {
   text-align: left;
 }
 
-.donation {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.donate-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background: var(--color-principal);
-  color: var(--color-secundario);
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 1em;
-  transition: background 0.3s;
-}
-
-.donate-button:hover {
-  background: #c0392b;
-}
 
 /* ---------------------------
        NUEVA SECCIÓN: PREMIOS
@@ -681,82 +474,7 @@ main.content {
   /* Eliminar negritas */
 }
 
-/* ---------------------------
-       TABLA DE PARTITURAS
-    --------------------------- */
-.partituras-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 12px;
-  text-align: left;
-  background-color: var(--color-overlay);
-  color: var(--color-secundario);
-}
 
-.partituras-table th,
-.partituras-table td {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 6px;
-}
-
-.partituras-table th {
-  background-color: var(--color-principal);
-  color: var(--color-secundario);
-  font-weight: bold;
-}
-
-.partituras-table tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-.partituras-table tr:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.partituras-table a {
-  display: inline-block;
-  padding: 2px 8px;
-  background-color: #005aba;
-  /* Azul estándar */
-  color: #fff;
-  /* Texto blanco */
-  text-decoration: none;
-  border-radius: 4px;
-  /* Bordes redondeados */
-  font-size: 0.85em;
-  font-weight: bold;
-  text-align: center;
-  transition: background-color 0.3s;
-}
-
-.partituras-table a:hover {
-  background-color: #0056b3;
-  /* Azul más oscuro al pasar el mouse */
-}
-
-#toggle-music {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  margin: 0;
-  /* Elimina cualquier margen */
-  padding: 2px 2px;
-  /* Ajusta el padding para un tamaño compacto */
-  background-color: var(--color-principal);
-  color: var(--color-secundario);
-  border: none;
-  border-radius: 0 0 0 0px;
-  /* Bordes redondeados solo en la esquina inferior izquierda */
-  cursor: pointer;
-  font-size: 0.8em;
-}
-
-#toggle-music:hover {
-  background-color: #c0392b;
-  /* Color más oscuro al pasar el mouse */
-}
 
 
 /* Botones de reproducción de audio */
