@@ -1,0 +1,973 @@
+/* Mejora UX: Evita salto visual al cambiar de pestaña de partituras */
+.tab-content-partituras {
+  min-height: 520px;
+  /* Ajusta este valor según la pestaña más alta */
+  transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+@media (max-width: 700px) {
+  .tab-content-partituras {
+    min-height: 320px;
+  }
+}
+
+/* Ocultar solo las secciones inactivas, mostrar la activa */
+section.seccion {
+  display: block;
+}
+
+section.seccion:not(.active) {
+  display: none;
+}
+
+/* Ajuste para evitar que la navbar tape el contenido al navegar por anclas */
+[id] {
+  scroll-margin-top: 44px;
+  /* Ajusta este valor si la navbar cambia de altura */
+}
+
+:root {
+  --color-principal: #9a2900;
+  --color-secundario: #e3e3e3;
+  --color-fondo: #181818;
+  --color-menu: #232323;
+  --color-link: #007bff;
+  --color-link-hover: #0056b3;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Courier Prime', monospace;
+  background: var(--color-fondo);
+  color: var(--color-secundario);
+  margin: 0;
+  min-height: 100vh;
+  font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* Siempre mostrar barra de scroll vertical */
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--color-secundario);
+  font-weight: 400;
+  margin-top: 0;
+}
+
+
+
+/* NAVBAR SUPERIOR MODERNO Y RESPONSIVE */
+.navbar {
+  width: 100%;
+  background: var(--color-menu);
+  color: var(--color-secundario);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.18rem 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1002;
+  min-height: 38px;
+  gap: 1.1rem;
+}
+
+/* Nuevo: bloque de usuario dentro de la navbar */
+.navbar .user-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #8ab4f8;
+  font-size: 1em;
+}
+
+.navbar .user-block button {
+  padding: 6px 14px;
+  font-size: 0.95em;
+  border-radius: 6px;
+  background: #23283a;
+  color: #8ab4f8;
+  border: 1px solid #444;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar .user-block button:hover {
+  background: #2a2f47;
+  color: #fff;
+}
+
+.navbar .brand {
+  color: var(--color-principal);
+  font-size: 1.18em;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex !important;
+  flex-direction: row;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  position: static;
+  background: none;
+  width: auto;
+  box-shadow: none;
+}
+
+.navbar li {
+  display: flex;
+}
+
+.navbar a {
+  color: var(--color-secundario);
+  padding: 0.32em 0.9em;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  font-size: 1.08em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.navbar a:hover,
+.navbar a.active {
+  background: var(--color-principal);
+  color: #fff;
+}
+
+/* Hamburguesa */
+.navbar .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-secundario);
+  font-size: 1.3em;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar ul {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .navbar .user-block {
+    order: 2;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    margin-bottom: 0.2rem;
+    padding-right: 0.5rem;
+  }
+
+  .navbar .menu-toggle {
+    display: block;
+    order: 1;
+    align-self: flex-end;
+    margin-bottom: 0.2rem;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100vw;
+    background: var(--color-menu);
+    position: absolute;
+    left: 0;
+    top: 56px;
+    display: none;
+    padding: 0.5rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+  }
+
+  .navbar ul.open {
+    display: flex !important;
+  }
+
+  .navbar ul li {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navbar ul li a {
+    width: 100%;
+    text-align: center;
+    padding: 1em 0.5em;
+    font-size: 1.1em;
+  }
+}
+
+main.content {
+  flex: 1;
+  padding: 2rem;
+  background: transparent;
+  min-width: 0;
+}
+
+/* Responsive: menú arriba y contenido abajo */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  nav.sidebar {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  nav.sidebar ul {
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  main.content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 15px;
+  }
+
+  nav.sidebar h1 {
+    font-size: 1.2em;
+    margin-bottom: 0.5rem;
+  }
+
+  main.content {
+    padding: 0.5rem;
+  }
+}
+
+/* NUEVOS ESTILOS PARA PESTAÑAS DE PARTITURAS */
+.tab-menu-partituras {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  overflow-x: auto;
+  border-bottom: 2px solid var(--color-principal);
+}
+
+.tab-menu-partituras li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 2px;
+  background: transparent;
+  /* Fondo transparente para pestañas inactivas */
+  color: var(--color-secundario);
+  /* Unificar el color de las pestañas */
+  font-weight: normal;
+  /* Eliminar negritas */
+  text-decoration: none;
+  border-radius: 8px;
+  /* Bordes redondeados */
+  white-space: nowrap;
+  transition: all 0.3s;
+  /* Transición suave */
+  border: 2px solid transparent;
+  /* Sin borde visible para pestañas inactivas */
+}
+
+.tab-menu-partituras li a:hover,
+.tab-menu-partituras li a.active {
+  background: var(--color-principal);
+  /* Fondo celeste para la pestaña activa */
+  color: var(--color-secundario);
+  /* Texto claro para la pestaña activa */
+  border: 2px solid var(--color-principal);
+  /* Borde del mismo color que el fondo */
+}
+
+.tab-content-partituras .tab-pane {
+  display: none;
+}
+
+.tab-content-partituras .tab-pane.active {
+  display: block;
+}
+
+.subtitulo-partituras {
+  font-size: 1.2em;
+  /* Tamaño más pequeño */
+  font-weight: normal;
+  /* Cambia a texto normal si no quieres negrita */
+  color: var(--color-secundario);
+  /* Usa el color claro definido en la página */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  grid-column: 1 / -1;
+  /* Asegura que ocupe toda la fila */
+}
+
+/* ---------------------------
+       VIDEOS: Menú interno (Pestañas) en la Sección Videos
+    --------------------------- */
+.video-tabs {
+  margin-bottom: 20px;
+}
+
+.tab-menu {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.tab-menu li a {
+  display: block;
+  padding: 2px 2px;
+  background: transparent;
+  color: var(--color-secundario);
+  /* Unificar el color de las pestañas */
+  font-weight: normal;
+  /* Eliminar negritas */
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.tab-menu li a:hover,
+.tab-menu li a.active {
+  background: var(--color-principal);
+}
+
+/* Estilos para el contenido de cada pestaña */
+.tab-content .tab-pane {
+  display: none;
+}
+
+.tab-content .tab-pane.active {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 columnas iguales en desktop */
+  gap: 10px;
+}
+
+.video {
+  background: rgba(50, 50, 50, 0.9);
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.video h4 {
+  font-weight: normal;
+  /* Cambia el peso de la fuente a normal */
+  font-size: 1em;
+  /* Ajusta el tamaño si es necesario */
+  color: var(--color-secundario);
+  /* Cambiar a color tenue */
+  /* Mantén el color del texto */
+  margin: 10px 0;
+  /* Ajusta el margen si es necesario */
+}
+
+.video iframe {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* ---------------------------
+       PARTITURAS
+       Uso de grid para lograr bloques uniformes en tamaño
+    --------------------------- */
+.obras-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  /* Grid flexible para partituras */
+  gap: 2px;
+  margin-top: 15px;
+}
+
+/* Contenedor de cada partitura */
+.obra {
+  background: rgba(50, 50, 50, 0.9);
+  /* Fondo oscuro */
+  border-radius: 4px;
+  /* Bordes redondeados */
+  font-size: 0.8em;
+  /* Tamaño de fuente pequeño */
+  display: flex;
+  /* Diseño flexible */
+  flex-direction: row;
+  /* Elementos en una fila */
+  justify-content: space-between;
+  /* Espaciado entre los elementos */
+  align-items: flex-start;
+  /* Alinea los elementos al inicio verticalmente */
+  height: auto;
+  /* Altura automática para adaptarse al contenido */
+  padding: 8px;
+  /* Espaciado interno */
+  box-sizing: border-box;
+  /* Incluye padding y bordes en el tamaño total */
+  overflow: hidden;
+  /* Oculta contenido desbordado */
+  min-height: 50px;
+  /* Altura mínima para mantener consistencia */
+}
+
+/* Título de la partitura */
+.obra h4 {
+  margin: 0;
+  /* Sin margen */
+  font-size: 0.9em;
+  /* Tamaño de fuente */
+  font-weight: 400;
+  /* Asegurar un peso normal consistente */
+  overflow: hidden;
+  /* Oculta texto desbordado */
+  text-overflow: ellipsis;
+  /* Agrega "..." si el texto es muy largo */
+  white-space: nowrap;
+  /* Evitar que el texto se divida en varias líneas */
+  flex: 1;
+  /* Ocupa el espacio disponible */
+  margin-bottom: 5px;
+  /* Espaciado entre el título y el botón */
+  color: var(--color-secundario);
+  /* Mantener el color unificado */
+}
+
+/* Botón PDF */
+
+.pdf-link {
+  color: var(--color-secundario);
+  font-weight: normal;
+  text-decoration: none;
+  background: #015b98;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.75em;
+  padding: 2px 5px;
+  transition: background 0.3s;
+}
+
+.pdf-link.updated {
+  background: #eaffea !important;
+  color: #015b98 !important;
+  border: 1px solid #9a2900;
+}
+
+.pdf-link:hover {
+  background: #2980b9;
+  /* Cambia el color de fondo al pasar el mouse */
+}
+
+.pdf-button {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--color-principal);
+  color: var(--color-secundario);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: background 0.3s;
+}
+
+.pdf-button:hover {
+  background: #c0392b;
+  /* Color más oscuro al pasar el mouse */
+}
+
+.pdf-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  /* Espacio entre el ícono y el texto */
+}
+
+/* ---------------------------
+       FOTOS
+    --------------------------- */
+.galeria-fotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.galeria-fotos .foto {
+  text-align: center;
+}
+
+.galeria-fotos .foto img {
+  max-width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+}
+
+.galeria-fotos .foto p {
+  margin-top: 5px;
+  font-size: 0.9em;
+  color: var(--color-secundario);
+  /* Cambiar a color tenue */
+}
+
+.galeria-fotos img {
+  height: 400px;
+  /* Mantén la altura fija */
+  width: auto;
+  /* El ancho se ajustará automáticamente */
+  object-fit: contain;
+  /* Asegura que la imagen no se recorte y mantenga su proporción */
+  border-radius: 5px;
+  /* Opcional: bordes redondeados */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  /* Sombra para destacar las imágenes */
+}
+
+/* ---------------------------
+       VIDEOS EMBEBIDOS EN BIO
+       Dimensiones fijas para una visualización más compacta
+    --------------------------- */
+.bio-video-embed {
+  width: 300px;
+  height: 170px;
+  margin: auto;
+}
+
+.bio-video-embed iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.seccion#partituras {
+  position: relative;
+}
+
+.creditos-partituras {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 2em;
+  color: var(--color-texto);
+  opacity: 0.7;
+  /* Hace el texto un poco transparente */
+  font-style: italic;
+}
+
+.subtitulo-partituras {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--color-principal);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.donation {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.donate-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--color-principal);
+  color: var(--color-secundario);
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: background 0.3s;
+}
+
+.donate-button:hover {
+  background: #c0392b;
+}
+
+/* ---------------------------
+       NUEVA SECCIÓN: PREMIOS
+    --------------------------- */
+#premios {
+  padding: 20px;
+  background: var(--color-overlay);
+  color: var(--color-secundario);
+  /* Cambiar a color tenue */
+}
+
+#premios h3 {
+  border-bottom: 2px solid var(--color-principal);
+  padding-bottom: 5px;
+}
+
+#premios ul {
+  list-style: none;
+  padding: 0;
+}
+
+#premios li {
+  margin-bottom: 10px;
+}
+
+/* Estilo para el enlace de YouTube */
+.youtube-link {
+  color: var(--color-secundario);
+  /* Unificar el color de los enlaces */
+  font-weight: normal;
+  /* Eliminar negritas */
+  text-decoration: none;
+}
+
+.youtube-link:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para el contador de visitas */
+#visit-counter {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: var(--color-secundario);
+  /* Unificar el color del contador */
+  font-weight: normal;
+  /* Eliminar negritas */
+}
+
+/* ---------------------------
+       TABLA DE PARTITURAS
+    --------------------------- */
+.partituras-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 12px;
+  text-align: left;
+  background-color: var(--color-overlay);
+  color: var(--color-secundario);
+}
+
+.partituras-table th,
+.partituras-table td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px;
+}
+
+.partituras-table th {
+  background-color: var(--color-principal);
+  color: var(--color-secundario);
+  font-weight: bold;
+}
+
+.partituras-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.partituras-table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.partituras-table a {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #005aba;
+  /* Azul estándar */
+  color: #fff;
+  /* Texto blanco */
+  text-decoration: none;
+  border-radius: 4px;
+  /* Bordes redondeados */
+  font-size: 0.85em;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.partituras-table a:hover {
+  background-color: #0056b3;
+  /* Azul más oscuro al pasar el mouse */
+}
+
+#toggle-music {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  margin: 0;
+  /* Elimina cualquier margen */
+  padding: 2px 2px;
+  /* Ajusta el padding para un tamaño compacto */
+  background-color: var(--color-principal);
+  color: var(--color-secundario);
+  border: none;
+  border-radius: 0 0 0 0px;
+  /* Bordes redondeados solo en la esquina inferior izquierda */
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+#toggle-music:hover {
+  background-color: #c0392b;
+  /* Color más oscuro al pasar el mouse */
+}
+
+
+/* Botones de reproducción de audio */
+.audio-button {
+  position: fixed;
+  right: 10px;
+  z-index: 1000;
+  padding: 10px 15px;
+  background-color: var(--color-principal);
+  color: var(--color-secundario);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+}
+
+.audio-button:hover {
+  background-color: #c0392b;
+}
+
+/* Ajuste de posición para evitar superposición */
+#audio-button-mi-refugio {
+  top: 10px;
+}
+
+#audio-button-la-familia {
+  top: 60px;
+}
+
+/* ---------------------------
+   MEDIA QUERIES RESPONSIVE
+---------------------------- */
+
+/* Tablets: Menú lateral más angosto, columnas menos numerosas */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  nav.sidebar {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 10px 0 10px;
+  }
+
+  main.content-container {
+    flex-direction: column;
+    height: auto;
+    min-width: 0;
+  }
+
+  section.seccion {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 5vw;
+  }
+
+  .tab-content .tab-pane.active {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columnas en tablets */
+  }
+
+  .obras-container {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .video-background {
+    right: 10%;
+    width: 50vw;
+    height: 50vw;
+  }
+}
+
+/* Móviles: Todo en columna, menú arriba, fuentes y paddings más chicos */
+@media (max-width: 700px) {
+  html {
+    font-size: 15px;
+  }
+
+  .container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  nav.sidebar {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 2vw 0 2vw;
+  }
+
+  nav.sidebar h1 {
+    font-size: 1.3em;
+    padding-left: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .pestañas a {
+    padding: 8px 0;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+
+  main.content-container {
+    flex-direction: column;
+    height: auto;
+    min-width: 0;
+  }
+
+  section.seccion {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 2vw;
+  }
+
+  .tab-content .tab-pane.active {
+    grid-template-columns: 1fr;
+    /* 1 columna en móviles */
+  }
+
+  .obras-container {
+    grid-template-columns: 1fr;
+  }
+
+  .video-background {
+    position: static;
+    width: 90vw;
+    height: 90vw;
+    margin: 0 auto 20px auto;
+    display: block;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .inicio-content {
+    padding: 20px 0 0 0;
+  }
+
+  .galeria-fotos {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .galeria-fotos img {
+    height: 200px;
+  }
+
+  .bio-video-embed {
+    width: 95vw;
+    height: 54vw;
+    min-height: 120px;
+    max-width: 400px;
+  }
+
+  .audio-button {
+    position: static;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 1em;
+    padding: 10px 0;
+  }
+
+  #audio-button-mi-refugio,
+  #audio-button-la-familia {
+    top: auto;
+  }
+}
+
+/* Contenedor para el audio */
+.audio-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #2c2c2c;
+  /* Fondo oscuro para coincidir con el diseño */
+  border: 1px solid #444;
+  border-radius: 5px;
+  text-align: center;
+  color: #e3e3e3;
+  /* Texto claro */
+}
+
+/* Botón de audio */
+.audio-button {
+  padding: 10px 15px;
+  background-color: #9a2900;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.audio-button:hover {
+  background-color: #c0392b;
+}
+
+.epigrafe {
+  font-size: 13px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  color: #a2a0a0;
+}

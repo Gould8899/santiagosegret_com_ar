@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- Adaptación para dispositivos móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Adaptación para dispositivos móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más.">
+  <title>Santiago Segret - Músico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<!-- necesito que al hacer click en santiagosegret redirija a main -->
+
+<body>
+  <nav class="navbar" role="navigation">
+    <a href="main.html" class="brand">Santiago Segret</a>
+    <button class="menu-toggle" aria-label="Menú">&#9776;</button>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#bio">Bio</a></li>
+      <li><a href="#premios">Premios</a></li>
+      <li><a href="#fotos">Fotos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+  <div id="main-content"></div>
+  <main class="content">
+
+    <!-- SECCIÓN INICIO -->
+    <section class="seccion" id="inicio">
+      <div class="video-background">
+        <iframe class="lazy-video"
+          data-src="https://www.youtube.com/embed/NamRfKTXcIY?autoplay=1&mute=1&loop=1&controls=0&showinfo=0&modestbranding=1&playlist=NamRfKTXcIY"
+          frameborder="0" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="inicio-content">
+        <p>
+          Hhhhola, soy Santiago Segret, músico y bandoneonista. Esta es mi base de datos en internet.
+        </p>
+        <p>
+          En la sección partituras se pueden descargar archivos .pdf de "Rúpulo Ediciones". Material curado
+          bajo mi seudónimo de creador y editor de partituras. Esta producción surge de mi trabajo como profesor y
+          está principalmente enfocado en el bandoneón y el tango.
+        </p>
+        <p>
+          Otras etiquetas del sitio son: canto, bombo, piano, composición, Bach, práctica musical,
+          malabares, Blender, Chopin, Lilypond, método de bandoneón, desgrabación, orquesta típica, 24 voces...
+        </p>
+        <p>
+          Además podés encontrar una breve biografía, fotos y videos.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN VIDEOS CON PESTAÑAS -->
+    <section class="seccion" id="videos">
+      <!-- Menú interno de pestañas para categorías -->
+      <div class="video-tabs">
+        <ul class="tab-menu">
+          <li><a href="#" class="active" data-tab="bandoneon">Bandoneón</a></li>
+          <li><a href="#" data-tab="bach">Bach</a></li>
+          <li><a href="#" data-tab="composicion">Composición</a></li>
+          <li><a href="#" data-tab="patio">Patio</a></li>
+          <li><a href="#" data-tab="dsq">Quinteto</a></li>
+          <li><a href="#" data-tab="piano">Piano</a></li>
+        </ul>
+      </div>
+      <!-- Contenedor de pestañas -->
+      <div class="tab-content">
+        <!-- Pestaña Bandoneón -->
+        <div class="tab-pane active" id="bandoneon">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/QoU6hMf7368" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Antes creía que este arreglo era de Máximo Mori, pero parece que no lo es. Sería bueno corroborarlo.
+              Yo lo aprendí de la grabación de Di Filippo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/6aaemoGeQl4" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Versión que armé en base a las instantáneas del maestro Julio Pane.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/nMwCvczszyI" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>El arreglo es de Máximo Mori y la referencia inevitable es Roberto Di Filippo.</h4>
+          </div>
+
+          <div class="video">
+            <iframe class="lazy-video"
+              data-src="https://www.youtube.com/embed/playlist?list=PLNIPF_IC2hGjhqz4G6xC8xaQt79D5soG-&si=7EDTDktBfnhbvWt6"
+              frameborder="0" allowfullscreen loading="lazy"></iframe>
+            <h4>Uno de los tantos y grandes arreglos de Néstor Marconi.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Kz_uOJ-k0-I" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Este es un arreglo que hice de sobre una música de los Hermanos Ábalos.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/49N1vSN7yNE" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Bernardo Fingas me invitó a grabar un arreglo suyo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/i0bUou53WtE" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Arreglo de Máximo Mori y la referencia de Di Filippo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/TQ-4Pm9zZos" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Desgrabando a Pedro Laurenz.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/l_-QvfO00Oo" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Algunos temas de folklore en bandoneón solo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/RkqJjs0q8u4" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Arreglo de Piazzolla que grabé en la planta 16.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/J9glAw7_Cis" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Más Piazzolla en bandoneón solo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/EagP-G0zKyQ" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Arreglo de Máximo Mori, versión de referencia: Di Filippo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/eHQptbfsayc" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Más Piazzolla en bandoneón solo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/N83SOLLKIzc" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Arreglos y más Piazzolla en bandoneón solo.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/GgJKm-4uLls" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Arreglo de Máximo Mori.</h4>
+          </div>
+        </div>
+        <!-- Pestaña Bach -->
+        <div class="tab-pane" id="bach">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/5RfQyTuEEtU" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Uno de los 4 duettos del maestro Bach en Piano.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/PIFw3yYBSiA" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Las 15 invenciones a dos voces de bach</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Z65BS4V5QS0" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Invención a dos voces de bach</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/DfEjFNj88Jg" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Varias piezas del libro de Ana Magdalena Bach</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/MalSKAOZvwg" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Tocando el piano en mi casa</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/MfuFe6EvJe0" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Estabamos con los Schissi en Panamá en una prueba de sonido y hubo una rato que me quedé solo en la
+              sala con un Stainway y grabe me grabé con el celular</h4>
+          </div>
+        </div>
+
+        <!-- Pestaña Composición -->
+        <div class="tab-pane" id="composicion">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/8o278V1rhOQ" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Un cuarteto de cuerdas que grabé yo mismo para la facultad en el '17, con un instrumentos prestados
+              por Guillermo Rubino, Román Peusner y mi papá.</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/3ALR8Dw1JH8" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Esta es una sonata de piano que hice en segundo año de composición en la UNA y la grabé en la casa del
+              tango un día que el piano estaba bastante desafinado, una pena pero quedo algo</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/NK-2FgAzlVs" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Una composición vocal que se me dio a muchas voces, no se cuantas pero por momentos hay como 20
+              sonando en algunos momeentos</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/oRJ49h56EY" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Una parte de Libro de Bucles, la música que hice para recibirme en la UNA</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/8kro5nMM7LE" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Una obra musical hecha en mi casa (2025)</h4>
+          </div>
+
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/3iCsWEcug30" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Un cuarteto de cuerdas con bandoneón de 4 minutos</h4>
+          </div>
+        </div>
+
+
+        <!-- Pestaña Patio -->
+        <div class="tab-pane" id="patio">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/h7Vgod91y4w" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Con los Patio</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/pMLhlzzbGvo" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Con Patio y Nadia Larsher</h4>
+          </div>
+
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/aVH4zURsmiI" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Una Zamba con el trío Patio</h4>
+          </div>
+        </div>
+
+        <!-- Pestaña DSQ -->
+        <div class="tab-pane" id="dsq">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/d2APcpOvB80" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Tanguera en Virasoro</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/IFGNrwcuD6M" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Concierto con música de Piazzolla</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/U2nPGZz9pXU" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Liquido 2 en el ex Centro Cultural Kirchner</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/fX6-X44yUuI" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Canción 4 en el ex Centro Cultural Kirchner</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Ujy4xD53UyQ" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Con el Diego Schissi Quinteto y Aca Seca en Café Vinilo</h4>
+          </div>
+        </div>
+
+
+        <!-- Pestaña Piano -->
+        <div class="tab-pane" id="piano">
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/J6rFnzN9lxs" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Una canción mía para piano</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/8Ww1KHg1xdM" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Oda a la bandera</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/_L_2JOsCIt0" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Estudiando Thelonius Monk</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ImYLetudYfw" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>Un videito divertido</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/grZuM4Rws8E" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>El estudio 1 de Chopin</h4>
+          </div>
+          <div class="video">
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/hn21pz3IN2g" frameborder="0"
+              allowfullscreen loading="lazy"></iframe>
+            <h4>El preludio 3 de Chopin</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- SECCIÓN BIO -->
+    <section class="seccion" id="bio">
+
+      <h3>Actualmente</h3>
+      <div class="bio-section">
+        <p>
+          Da clases de bandoneón y piano de forma privada desde 2005.<br>
+          Lleva adelante Rúpulo Ediciones.<br>
+          Integra el trío Patio que comparte con Andrés Pilar y Juan Quintero desde 2013.<br>
+          Actúa en colaboración con el Diego Schissi Quinteto desde el 2009.<br>
+        </p>
+        <p>
+          Trabaja en los siguientes cargos institucionales:<br>
+          - Asistente de dirección de la Orquesta de Tango de la UNA dirigida por Ariel Pirotti.<br>
+          - Profesor de bandoneón en el conservatorio de la ciudad de Buenos Aires “Astor Piazzolla” desde (2018?).<br>
+          - Profesor de bandoneón en la Universidad Nacional de San Martín desde (2013?).<br>
+        </p>
+      </div>
+
+      <h3>Formación</h3>
+      <div class="bio-section">
+        <p>
+          En 2005 realizó el programa de la Orquesta Escuela de Tango Emilio Balcarce. En aquel entonces el director era
+          Balcarce y los profesores eran Federico Pereiro, Ignacio Varchausky, Ramiro Gallo, Andrés Linezky, Germán
+          Martínez, compartiendo música con grandes maestros como Victor Lavallén, Raúl Garello, Lidia Borda, José
+          Colángelo, Néstor Marconi, entre otros.
+        </p>
+
+        <div class="bio-media">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/rupulo-ediciones.firebasestorage.app/o/fotos%2Fcon%20emilio%20balcarce%20en%20el%20pante%C3%B3n%20de%20roma.jpg?alt=media&token=9ae060ef-8581-4073-98f4-398f6b357aec"
+            alt="Foto con Emilio" width="280" loading="lazy">
+          <h4 class="epigrafe">Foto con Emilio Balcarce en el Panteón de Roma</h4>
+        </div>
+
+        <p>
+          En esos años conoció más de 20 países con diferentes grupos, especialmente con la Orquesta de Érica Di Salvo.
+        </p>
+
+        <div class="bio-media">
+          <iframe class="lazy-video" data-src="https://www.youtube.com/embed/gJ1iHV5GLf8" allowfullscreen width="280"
+            height="157"></iframe>
+          <h4 class="epigrafe">Mediometraje de la gira a Japón con la Orquesta de Érica Di Salvo</h4>
+        </div>
+
+        <p>
+          En 2019 se gradúa con el título de Licenciado en Artes Musicales con Orientación en Composición en la UNA
+          (Universidad Nacional de las Artes).
+        </p>
+
+        <div class="bio-media">
+          <iframe class="lazy-video" data-src="https://www.youtube.com/embed/-oRJ49h56EY" frameborder="0"
+            allowfullscreen width="280" height="157"></iframe>
+          <h4 class="epigrafe">"Libro de Bucles" – Trabajo final de la carrera</h4>
+        </div>
+
+        <p>
+          De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces por Raúl
+          Garello, Néstor Marconi y Carlos Cuacci.
+        </p>
+
+        <div class="bio-media">
+          <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ULfJkO40yQA" frameborder="0"
+            allowfullscreen width="280" height="157"></iframe>
+          <h4 class="epigrafe">Video de Japón con la Orquesta del Tango de la Ciudad</h4>
+        </div>
+
+        <p>
+          También compartió grabaciones y escenarios con Leopoldo Federico, Raúl Garello, Victor Lavallén, Vitillo
+          Ábalos, Susana Rinaldi, Amelita Baltar, Nadia Larcher, Luna Monti, Naty Peluso, Pablo Estigarribia, Jorge
+          Fandermole, Mono Fontana, Marcelo Moguilevsky.
+        </p>
+      </div>
+
+      <h3>Inicios</h3>
+      <div class="bio-section">
+        <p>
+          Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico
+          jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo
+          a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.
+        </p>
+
+        <div class="bio-media">
+          <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0"
+            allowfullscreen width="280" height="157"></iframe>
+          <img src="04) Fotos/con el marinero montes.jpg" alt="Foto con el Marinero" width="280" loading="lazy">
+          <h4 class="epigrafe">Tocando "Caminito" y foto con el Marinero Montes</h4>
+        </div>
+
+        <p>
+          Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier
+          Malosetti en La Trastienda tocando solos de Piazzolla.
+        </p>
+
+        <div class="audio-container" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+          <h4 class="epigrafe">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia"</h4>
+          <div class="audio-item" style="display: flex; align-items: center; gap: 10px;">
+            <p style="margin: 0; font-size: 12px;"><strong>Mi Refugio:</strong></p>
+            <audio controls style="width: 300px; height: 30px;">
+              <source src="audio/Versión-editada-separada-Mi-Refugio.mp3" type="audio/mpeg">
+              Tu navegador no soporta el elemento de audio.
+            </audio>
+          </div>
+          <div class="audio-item" style="display: flex; align-items: center; gap: 10px;">
+            <p style="margin: 0; font-size: 12px;"><strong>La Familia:</strong></p>
+            <audio controls style="width: 300px; height: 30px;">
+              <source src="audio/Versión-editada-separada-La-Familia.mp3" type="audio/mpeg">
+              Tu navegador no soporta el elemento de audio.
+            </audio>
+          </div>
+        </div>
+      </div>
+
+      <p>
+        Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes de
+        Música Argentina en Piano.
+      </p>
+
+      <p>
+        A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane, Mariano
+        "Paya" Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.
+      </p>
+
+      </div>
+    </section>
+
+    </section>
+    <!-- SECCIÓN PREMIOS -->
+    <section class="seccion" id="premios">
+      <h3>Premios</h3>
+      <ul>
+        <li>2013 - Gardel al Mejor Álbum de Tango: "Tipas y Tipos" con el Quinteto de Diego Schissi</li>
+        <li>2016 - Gardel al Mejor Álbum de Tango: "El rejunte" de la Orquesta de Tango de la UNA</li>
+        <li>2018 - Gardel al Mejor Álbum de Folklore: "Patio vol.1" con el trío que comparte con Andrés Pilar y Juan
+          Quintero</li>
+        <li>2023 - Grammy Latino al Mejor Álbum de Tango: "Apiazolado" con el Quinteto de Diego Schissi</li>
+        <li>2023 - Gardel al Mejor Álbum de Folklore: "Patio vol.2" con el trío que comparte con Andrés Pilar y Juan
+          Quintero</li>
+      </ul>
+    </section>
+
+
+
+    <!-- SECCIÓN FOTOS -->
+    <section class="seccion" id="fotos">
+      <!-- Se removió el título "Galería de Fotos" -->
+      <div class="galeria-fotos">
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Con el Marinero Montes" width="280"
+            loading="lazy">
+          <p>Con el Marinero Montes.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/de chiquito en la casa de goyo barja.jpg"
+            alt="De chiquito en la casa de Goyo Barja" loading="lazy">
+          <p>De chiquito en la casa de Goyo Barja.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con emilio balcarce en el panteón de roma.jpg"
+            alt="Con Emilio Balcarce en el Panteón de Roma" loading="lazy">
+          <p>Con Emilio Balcarce en el Panteón de Roma.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/pablo estigarribia y marco antonio fernandez.jpg"
+            alt="Pablo Estigarribia y Marco Antonio Fernández" loading="lazy">
+          <p>Con Pablo Estigarribia y Marco Antonio Fernández en Roma.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con Leopoldo Federico.jpg" alt="Con Leopoldo Federico" loading="lazy">
+          <p>Con Leopoldo Federico.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con andres pilar.jpg" alt="Con Andrés Pilar" loading="lazy">
+          <p>Con Andrés Pilar.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con fandermole.jpg" alt="Con Fandermole" loading="lazy">
+          <p>Con Jorge Fandermole y Tiqui Cantero en La Rioja.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con federico pereiro y marco antonio fernandez.jpg"
+            alt="Con Federico Pereiro y Marco Antonio Fernández" loading="lazy">
+          <p>Con Federico Pereiro y Marco Antonio Fernández en la Orquesta Escuela.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/Con furman y quintanilla y amerise.jpg"
+            alt="Con Furman, Quintanilla y Amerise" loading="lazy">
+          <p>Con Furman, Quintanilla y Amerise, acompañabamos a Morena Albert.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/andres y vitillo.jpg" alt="Andrés y Vitillo" loading="lazy">
+          <p>Con Andrés Pilar y Vitillo Ábalos.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con la madre de evgeny kisisn.jpg" alt="Con la madre de Evgeny Kissin"
+            loading="lazy">
+          <p>Con la madre de Evgeny Kissin en la puerta del Teatro Colón.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con los patio.jpg" alt="Con los Patio" loading="lazy">
+          <p>Con Patio en Rosario.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con louise cole.jpg" alt="Con Louise Cole" loading="lazy">
+          <p>Con Louise Cole.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con mariana rewersky y compania.jpg"
+            alt="Con Mariana Rewersky y Compañía" loading="lazy">
+          <p>Con Mariana Rewersky, Victor Villadangos y compañía.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/en lo de rafa villazón.jpg" alt="En lo de Rafa Villazón"
+            loading="lazy">
+          <p>En lo de Rafael Villazón.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/en virasoro.jpg" alt="En Virasoro" loading="lazy">
+          <p>En Virasoro con el Quinteto.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/juan y luna.jpg" alt="Juan y Luna" loading="lazy">
+          <p>Con Juan y Luna.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con los aca seca.jpg" alt="Con los Aca Seca" loading="lazy">
+          <p>Con los Aca Seca.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/con el mono fontana.jpg" alt="Con el Mono Fontana" loading="lazy">
+          <p>Con el Mono Fontana.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/palestrini y balta estol.jpg" alt="Palestrini y Balta Estol"
+            loading="lazy">
+          <p>Con Sergio Palestrini y Baltazar Estol.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/pane lautaro.jpg" alt="Pane Lautaro" loading="lazy">
+          <p>Con Julio Pane y Lautaro Greco.</p>
+        </div>
+        <div class="foto">
+          <img src="santiagosegretFOTOS/01_Fotos/quinteto de schissi más bolani.jpg" alt="Quinteto de Schissi y Bolani"
+            loading="lazy">
+          <p>Quinteto de Schissi con Bolani.</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECCIÓN CONTACTO -->
+    <section class="seccion" id="contacto">
+      <p><strong>Email:</strong> ssegret@gmail.com</p>
+      <p><strong>Celular:</strong> +54 11 4989-0559</p>
+      <p><strong>Youtube:</strong>
+        <a href="https://www.youtube.com/@SantiagoSegret" target="_blank" class="youtube-link">Visitar canal</a>
+      </p>
+      <div id="visit-counter"></div>
+    </section>
+
+  </main>
+  <script>
+    document.querySelector('.menu-toggle').onclick = function () {
+      document.querySelector('.navbar ul').classList.toggle('open');
+    };
+  </script>
+  <script src="scripts.js"></script>
+</body>
+
+</html>
