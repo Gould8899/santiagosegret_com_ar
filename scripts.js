@@ -94,19 +94,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Lazy load videos
   const lazyVideos = document.querySelectorAll("iframe.lazy-video");
+  let ytPlayers = [];
+  let pendingIframes = [];
+  function initYTPlayer(iframe) {
+    if (window.YT && window.YT.Player && iframe.src) {
+      ytPlayers.push(new YT.Player(iframe, {
+        events: {
+          'onStateChange': function (event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              ytPlayers.forEach(player => {
+                if (player && player.getIframe() !== iframe) {
+                  player.pauseVideo();
+                }
+              });
+            }
+          }
+        }
+      }));
+    } else {
+      pendingIframes.push(iframe);
+    }
+  }
+
+  function processPendingIframes() {
+    if (window.YT && window.YT.Player) {
+      pendingIframes.forEach(iframe => {
+        initYTPlayer(iframe);
+      });
+      pendingIframes = [];
+    }
+  }
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const iframe = entry.target;
         if (iframe.dataset.src) {
-          iframe.src = iframe.dataset.src;
+          let src = iframe.dataset.src;
+          // Agregar enablejsapi=1 si es un video de YouTube y no está presente
+          if (src.includes('youtube.com/embed') && !src.includes('enablejsapi=1')) {
+            if (src.includes('?')) {
+              src += '&enablejsapi=1';
+            } else {
+              src += '?enablejsapi=1';
+            }
+          }
+          iframe.src = src;
           delete iframe.dataset.src;
+          initYTPlayer(iframe);
+          processPendingIframes();
         }
         obs.unobserve(iframe);
       }
     });
   });
   lazyVideos.forEach(video => observer.observe(video));
+
+  // Asegurarse de inicializar los pendientes cuando la API esté lista
+  if (typeof window.onYouTubeIframeAPIReady === 'function') {
+    const prevFn = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () {
+      prevFn();
+      processPendingIframes();
+    };
+  } else {
+    window.onYouTubeIframeAPIReady = processPendingIframes;
+  }
 
   // Contador de visitas
   let visitCount = localStorage.getItem('visitCount') || 0;

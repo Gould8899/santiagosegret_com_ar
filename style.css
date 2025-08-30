@@ -410,7 +410,7 @@ main.content {
 /* Solo para la sección de videos, mostrar los videos en 4 columnas */
 #videos .tab-content .tab-pane.active {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
