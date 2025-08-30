@@ -1,6 +1,6 @@
 #bio .bio-section p,
 .bio-margins p {
-  max-width: 600px;
+  max-width: 750px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
@@ -376,9 +376,14 @@ main.content {
 }
 
 .tab-content .tab-pane.active {
+  display: block;
+  gap: 0;
+}
+
+/* Solo para la sección de videos, mostrar los videos en 4 columnas */
+#videos .tab-content .tab-pane.active {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* 4 columnas iguales en desktop */
   gap: 10px;
 }
 
