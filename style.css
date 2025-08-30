@@ -1,13 +1,26 @@
+/* Centrar fotos y videos en la sección Bio */
+.bio-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Unificar tamaño e interlineado en toda la sección Bio */
+#bio .bio-section,
 #bio .bio-section p,
+.bio-margins,
 .bio-margins p {
+  font-size: 1.08em;
+  line-height: 1.3;
   max-width: 750px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
-  line-height: 1.7;
   word-break: normal;
   white-space: normal;
-  font-size: 1.08em;
 }
 
 /* Estilos para la sección de inicio */
