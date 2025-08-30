@@ -151,46 +151,67 @@ h3 {
   font-size: 1em;
 }
 
-.navbar .user-block button {
-  padding: 6px 14px;
-  font-size: 0.95em;
-  border-radius: 6px;
-  background: #23283a;
-  color: #8ab4f8;
-  border: 1px solid #444;
-  cursor: pointer;
-  opacity: 0.85;
-  transition: background 0.2s, color 0.2s;
-}
-
-.navbar .user-block button:hover {
-  background: #2a2f47;
-  color: #fff;
-}
-
-.navbar .brand {
-  color: var(--color-principal);
-  font-size: 1.18em;
-  font-weight: 400;
-  text-decoration: none;
-}
-
-.navbar ul {
+/* Unificado: Menú de pestañas para navbar, videos y bio */
+.tab-menu {
   list-style: none;
-  display: flex !important;
-  flex-direction: row;
+  display: flex;
   gap: 1.5rem;
-  margin: 0 auto;
-  padding: 0;
+  margin: 0 auto 24px auto;
+  padding: 0.5em 0.5em 0 0.5em;
   align-items: center;
-  background: none;
+  background: #181818;
   width: fit-content;
-  box-shadow: none;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   justify-content: center;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 1.5px solid #232323;
+}
+
+.tab-menu li {
+  display: flex;
+}
+
+.tab-menu li a {
+  color: var(--color-secundario);
+  padding: 0.38em 1.2em;
+  border-radius: 8px 8px 0 0;
+  transition: background 0.25s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  text-decoration: none;
+  font-size: 1.12em;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  border: none;
+  position: relative;
+}
+}
+
+.tab-menu li a:hover,
+.tab-menu li a.active {
+  background: var(--color-principal);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
+  border-bottom: 2.5px solid #fff;
+  z-index: 2;
+}
+
+.tab-menu li a:hover {
+  background: #232323;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
+}
+
+align-items: center;
+background: none;
+width: fit-content;
+box-shadow: none;
+justify-content: center;
 }
 
 .navbar li {
   display: flex;
+  align-items: center;
 }
 
 .navbar a {
@@ -227,7 +248,7 @@ h3 {
     padding: 0.5rem 1rem;
   }
 
-  .navbar ul {
+  .tab-menu {
     gap: 1rem;
   }
 }
@@ -255,7 +276,7 @@ h3 {
     margin-bottom: 0.2rem;
   }
 
-  .navbar ul {
+  .tab-menu {
     flex-direction: column;
     width: 100vw;
     background: var(--color-menu);
@@ -268,16 +289,16 @@ h3 {
     z-index: 1001;
   }
 
-  .navbar ul.open {
+  .tab-menu.open {
     display: flex !important;
   }
 
-  .navbar ul li {
+  .tab-menu li {
     width: 100%;
     justify-content: center;
   }
 
-  .navbar ul li a {
+  .tab-menu li a {
     width: 100%;
     text-align: center;
     padding: 1em 0.5em;
@@ -340,7 +361,8 @@ main.content {
        VIDEOS: Menú interno (Pestañas) en la Sección Videos
     --------------------------- */
 .video-tabs {
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .tab-menu {
