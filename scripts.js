@@ -82,6 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
           if (pane.id === tabName) pane.classList.add('active');
           else pane.classList.remove('active');
         });
+        // Mantener la pestaña principal activa según la sección
+        if (tab.closest('#videos')) {
+          const mainVideosTab = document.querySelector('.navbar ul li a[href="#videos"]');
+          if (mainVideosTab) mainVideosTab.classList.add('active');
+        }
+        if (tab.closest('#bio')) {
+          const mainBioTab = document.querySelector('.navbar ul li a[href="#bio"]');
+          if (mainBioTab) mainBioTab.classList.add('active');
+        }
       });
     });
     // Activar la primera pestaña por defecto
