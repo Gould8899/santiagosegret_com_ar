@@ -35,6 +35,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const hash = this.getAttribute('href');
       window.location.hash = hash;
       showSectionFromHash(hash);
+
+      // Al hacer click en Videos o Bio, activar la primera pestaña interna
+      if (hash === '#videos') {
+        setTimeout(() => {
+          const videoTabs = document.querySelectorAll('#videos .tab-menu a');
+          const videoPanes = document.querySelectorAll('#videos .tab-content .tab-pane');
+          videoTabs.forEach(t => t.classList.remove('active'));
+          videoPanes.forEach(p => p.classList.remove('active'));
+          if (videoTabs.length && videoPanes.length) {
+            videoTabs[0].classList.add('active');
+            videoPanes[0].classList.add('active');
+          }
+        }, 10);
+      }
+      if (hash === '#bio') {
+        setTimeout(() => {
+          const bioTabs = document.querySelectorAll('#bio .tab-menu a');
+          const bioPanes = document.querySelectorAll('#bio .tab-content .tab-pane');
+          bioTabs.forEach(t => t.classList.remove('active'));
+          bioPanes.forEach(p => p.classList.remove('active'));
+          if (bioTabs.length && bioPanes.length) {
+            bioTabs[0].classList.add('active');
+            bioPanes[0].classList.add('active');
+          }
+        }, 10);
+      }
     });
   });
 
