@@ -869,7 +869,7 @@ main.content {
 
 /* Main video positioning */
 .main-video {
-  margin-top: 120px;
+  margin-top: -75px;
 }
 
 /* Mask for main video to show only the center */
@@ -893,7 +893,7 @@ main.content {
 
 .video-mask {
   position: absolute;
-  top: 70%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 480px;
@@ -910,28 +910,33 @@ main.content {
   font-family: 'Courier Prime', monospace;
   font-size: clamp(1.2em, 3vw, 2.2em);
   font-weight: bold;
-  background: linear-gradient(90deg, #ffb347, #ff5e62, #5ee7df, #b490ca);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-  letter-spacing: 2px;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.7);
   display: block;
-  animation: gradientMove 4s ease-in-out infinite;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 .hero-title-sub {
   font-family: inherit;
-  font-size: clamp(0.5em, 2vw, 1.3em);
+  font-size: 1.5em;
   font-weight: 400;
-  background: none !important;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
+  color: #fff;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
   margin-top: 0.2em;
   display: block;
 }
+
+.hero-title-cool {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 1em;
+  z-index: 10;
+  position: relative;
+  pointer-events: auto;
+}
+
 
 .hero-title-cool .hero-title-sub {
   background: none !important;
