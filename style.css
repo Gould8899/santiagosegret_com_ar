@@ -292,12 +292,14 @@ h3 {
 
 /* Hamburguesa */
 .navbar .menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--color-secundario);
-  font-size: 1.3em;
-  cursor: pointer;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  position: absolute !important;
+  visibility: hidden !important;
 }
 
 @media (max-width: 900px) {
@@ -328,10 +330,14 @@ h3 {
   }
 
   .navbar .menu-toggle {
-    display: block;
-    order: 1;
-    align-self: flex-end;
-    margin-bottom: 0.2rem;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    position: absolute !important;
+    visibility: hidden !important;
   }
 
   .navbar {
@@ -892,7 +898,7 @@ main.content {
 
 .hero-title-name {
   font-family: 'Courier Prime', monospace;
-  font-size: clamp(2.2em, 7vw, 5em);
+  font-size: clamp(1.5em, 5vw, 3.5em);
   font-weight: bold;
   background: linear-gradient(90deg, #ffb347, #ff5e62, #5ee7df, #b490ca);
   background-size: 200% 200%;
