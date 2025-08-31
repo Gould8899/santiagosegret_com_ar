@@ -892,7 +892,7 @@ main.content {
 
 .hero-title-name {
   font-family: 'Courier Prime', monospace;
-  font-size: 2.1em;
+  font-size: clamp(2.2em, 7vw, 5em);
   font-weight: bold;
   background: linear-gradient(90deg, #ffb347, #ff5e62, #5ee7df, #b490ca);
   background-size: 200% 200%;
@@ -907,7 +907,7 @@ main.content {
 
 .hero-title-sub {
   font-family: inherit;
-  font-size: 1em;
+  font-size: clamp(1em, 3vw, 2em);
   font-weight: 400;
   background: none !important;
   color: #fff !important;
