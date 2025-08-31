@@ -1,791 +1,817 @@
-/* Centrar fotos y videos en la sección Bio */
-.bio-media {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Unificar tamaño e interlineado en toda la sección Bio */
-#bio .bio-section,
-#bio .bio-section p,
-.bio-margins,
-.bio-margins p {
-  font-size: 1.08em;
-  line-height: 1.3;
-  max-width: 750px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-  word-break: normal;
-  white-space: normal;
-}
-
-/* Estilos para la sección de inicio */
-section.seccion#inicio {
-  border-left: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 10px 2vw;
-}
-
-.seccion#inicio {
-  /* ...otros estilos... */
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.seccion#bio {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-#premios,
-.bio-margins {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#contacto {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Mejora UX: Evita salto visual al cambiar de pestaña de partituras */
-.tab-content-partituras {
-  min-height: 520px;
-  /* Ajusta este valor según la pestaña más alta */
-  transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-@media (max-width: 700px) {
-  .tab-content-partituras {
-    min-height: 320px;
-  }
-}
-
-/* Ocultar solo las secciones inactivas, mostrar la activa */
-section.seccion {
-  display: block;
-}
-
-section.seccion:not(.active) {
-  display: none;
-}
-
-/* Ajuste para evitar que la navbar tape el contenido al navegar por anclas */
-[id] {
-  scroll-margin-top: 44px;
-  /* Ajusta este valor si la navbar cambia de altura */
-}
-
-:root {
-  --color-principal: #9a2900;
-  --color-secundario: #e3e3e3;
-  --color-fondo: #181818;
-  --color-menu: #232323;
-  --color-link: #007bff;
-  --color-link-hover: #0056b3;
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-
-body {
-  font-family: 'Courier Prime', monospace;
-  background: #000 !important;
-  color: var(--color-secundario);
-  margin: 0;
-  min-height: 100vh;
-  font-weight: 400;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  /* Siempre mostrar barra de scroll vertical */
-}
-
-a {
-  color: var(--color-link);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: var(--color-link-hover);
-  text-decoration: underline;
-}
-
-h1,
-h2,
-h3 {
-  color: var(--color-secundario);
-  font-weight: 400;
-  margin-top: 0;
-}
-
-
-
-/* NAVBAR SUPERIOR MODERNO Y RESPONSIVE */
-.navbar {
-  width: 100%;
   background: var(--color-menu);
-  color: var(--color-secundario);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.18rem 1.2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1002;
-  min-height: 38px;
-  gap: 1.1rem;
-}
-
-/* Nuevo: bloque de usuario dentro de la navbar */
-.navbar .user-block {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #8ab4f8;
-  font-size: 1em;
-}
-
-/* Unificado: Menú de pestañas para navbar, videos y bio */
-.tab-menu {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0 auto 24px auto;
-  padding: 0.5em 0.5em 0 0.5em;
-  align-items: center;
-  background: #181818;
-  width: fit-content;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  justify-content: center;
   border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   border-bottom: 1.5px solid #232323;
-}
+  margin-top: -0.5em;
+  margin-bottom: 0.5em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
 
-.tab-menu li {
-  display: flex;
-}
-
-.tab-menu li a {
-  color: var(--color-secundario);
-  padding: 0.38em 1.2em;
-  border-radius: 8px 8px 0 0;
-  transition: background 0.25s, color 0.2s, box-shadow 0.2s, border 0.2s;
-  text-decoration: none;
-  font-size: 1.12em;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  background: transparent;
-  border: none;
-  position: relative;
-}
-
-.tab-menu li a:hover,
-.tab-menu li a.active {
-  background: var(--color-principal);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
-  border-bottom: 2.5px solid #fff;
-  z-index: 2;
-}
-
-.tab-menu li a:hover {
-  background: #232323;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
-}
-
-.navbar li {
-  display: flex;
-  align-items: center;
-}
-
-.navbar a {
-  color: var(--color-secundario);
-  padding: 0.32em 0.9em;
-  border-radius: 4px;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-  font-size: 1.08em;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.navbar a:hover,
-.navbar a.active {
-  background: var(--color-principal);
-  color: #fff;
-}
-
-/* Hamburguesa */
-.navbar .menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--color-secundario);
-  font-size: 1.3em;
-  cursor: pointer;
-}
-
-@media (max-width: 900px) {
-  .navbar {
-    flex-wrap: wrap;
-    padding: 0.5rem 1rem;
-  }
-
-  .tab-menu {
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 700px) {
-  .navbar {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.5rem 0.5rem;
-    gap: 0.5rem;
-  }
-
-  .navbar .user-block {
-    order: 2;
-    justify-content: flex-end;
-    margin-top: 0.5rem;
-    margin-bottom: 0.2rem;
-    padding-right: 0.5rem;
-  }
-
-  .navbar .menu-toggle {
-    display: block;
-    order: 1;
-    align-self: flex-end;
-    margin-bottom: 0.2rem;
-  }
-
-  .navbar {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.5rem 0.5rem;
-    gap: 0.5rem;
-    position: static;
-    z-index: 1002;
-  }
-
-  .tab-menu {
-    flex-direction: row !important;
-    overflow-x: auto;
-    white-space: nowrap;
-    width: 100vw;
-    background: var(--color-menu);
-    position: static;
-    left: 0;
-    top: 0;
+  /* Centrar fotos y videos en la sección Bio */
+  .bio-media {
     display: flex;
-    padding: 0.5rem 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    margin-bottom: 0.5em;
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-principal) var(--color-menu);
-  }
-
-  .tab-menu li {
-    width: auto;
-    justify-content: center;
-  }
-
-  .tab-menu li a {
-    width: auto;
-    min-width: 90px;
-    text-align: center;
-    padding: 1em 0.5em;
-    font-size: 1.1em;
-    display: inline-block;
-  }
-
-  main.content {
-    margin-top: 0.5em;
-    padding-top: 0;
-  }
-}
-
-main.content {
-  flex: 1;
-  padding: 2rem;
-  background: transparent;
-  min-width: 0;
-}
-
-/* Responsive: menú arriba y contenido abajo */
-@media (max-width: 900px) {
-  .container {
     flex-direction: column;
-  }
-
-  nav.sidebar {
-    flex-direction: row;
     align-items: center;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 1rem;
-    gap: 1rem;
-  }
-
-  nav.sidebar ul {
-    flex-direction: row;
-    gap: 1rem;
-    width: 100%;
     justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  main.content {
-    padding: 1rem;
-  }
-}
-
-@media (max-width: 600px) {
-  html {
-    font-size: 15px;
-  }
-
-  nav.sidebar h1 {
-    font-size: 1.2em;
-    margin-bottom: 0.5rem;
-  }
-
-  main.content {
-    padding: 0.5rem;
-  }
-}
-
-
-/* ---------------------------
-       VIDEOS: Menú interno (Pestañas) en la Sección Videos
-    --------------------------- */
-.video-tabs {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
-.tab-menu {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-  padding: 0;
-  margin: 0 auto;
-  justify-content: center;
-}
-
-.tab-menu li a {
-  display: block;
-  padding: 2px 2px;
-  background: transparent;
-  color: var(--color-secundario);
-  /* Unificar el color de las pestañas */
-  font-weight: normal;
-  /* Eliminar negritas */
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-.tab-menu li a:hover,
-.tab-menu li a.active {
-  background: var(--color-principal);
-}
-
-/* Estilos para el contenido de cada pestaña */
-.tab-content .tab-pane {
-  display: none;
-}
-
-.tab-content .tab-pane.active {
-  display: block;
-  gap: 0;
-}
-
-/* Solo para la sección de videos, mostrar los videos en 4 columnas */
-#videos .tab-content .tab-pane.active {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.video {
-  background: rgba(50, 50, 50, 0.9);
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-
-.video h4 {
-  font-weight: normal;
-  /* Cambia el peso de la fuente a normal */
-  font-size: 1em;
-  /* Ajusta el tamaño si es necesario */
-  color: var(--color-secundario);
-  /* Cambiar a color tenue */
-  /* Mantén el color del texto */
-  margin: 10px 0;
-  /* Ajusta el margen si es necesario */
-}
-
-.video iframe {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-}
-
-
-/* ---------------------------
-       FOTOS
-    --------------------------- */
-.galeria-fotos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.galeria-fotos .foto {
-  text-align: center;
-}
-
-.galeria-fotos .foto img {
-  max-width: 100%;
-  border-radius: 4px;
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
-}
-
-.galeria-fotos .foto p {
-  margin-top: 5px;
-  font-size: 0.9em;
-  color: var(--color-secundario);
-  /* Cambiar a color tenue */
-}
-
-.galeria-fotos img {
-  height: 400px;
-  /* Mantén la altura fija */
-  width: auto;
-  /* El ancho se ajustará automáticamente */
-  object-fit: contain;
-  /* Asegura que la imagen no se recorte y mantenga su proporción */
-  border-radius: 5px;
-  /* Opcional: bordes redondeados */
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  /* Sombra para destacar las imágenes */
-}
-
-/* ---------------------------
-       VIDEOS EMBEBIDOS EN BIO
-       Dimensiones fijas para una visualización más compacta
-    --------------------------- */
-.bio-video-embed {
-  width: 300px;
-  height: 170px;
-  margin: auto;
-}
-
-.bio-video-embed iframe {
-  width: 100%;
-  height: 100%;
-}
-
-
-.subtitulo-partituras {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: var(--color-principal);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-
-/* ---------------------------
-       NUEVA SECCIÓN: PREMIOS
-    --------------------------- */
-#premios {
-  padding: 20px;
-  background: var(--color-overlay);
-  color: var(--color-secundario);
-  /* Cambiar a color tenue */
-}
-
-#premios h3 {
-  border-bottom: 2px solid var(--color-principal);
-  padding-bottom: 5px;
-}
-
-#premios ul {
-  list-style: none;
-  padding: 0;
-}
-
-#premios li {
-  margin-bottom: 10px;
-}
-
-/* Estilo para el enlace de YouTube */
-.youtube-link {
-  color: var(--color-secundario);
-  /* Unificar el color de los enlaces */
-  font-weight: normal;
-  /* Eliminar negritas */
-  text-decoration: none;
-}
-
-.youtube-link:hover {
-  text-decoration: underline;
-}
-
-/* Estilo para el contador de visitas */
-#visit-counter {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 1.2em;
-  color: var(--color-secundario);
-  /* Unificar el color del contador */
-  font-weight: normal;
-  /* Eliminar negritas */
-}
-
-
-
-
-/* Botones de reproducción de audio */
-.audio-button {
-  position: fixed;
-  right: 10px;
-  z-index: 1000;
-  padding: 10px 15px;
-  background-color: var(--color-principal);
-  color: var(--color-secundario);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.3s;
-}
-
-.audio-button:hover {
-  background-color: #c0392b;
-}
-
-/* Ajuste de posición para evitar superposición */
-#audio-button-mi-refugio {
-  top: 10px;
-}
-
-#audio-button-la-familia {
-  top: 60px;
-}
-
-/* ---------------------------
-   MEDIA QUERIES RESPONSIVE
----------------------------- */
-
-/* Tablets: Menú lateral más angosto, columnas menos numerosas */
-@media (max-width: 1024px) {
-  .container {
-    flex-direction: column;
-    height: auto;
+  /* Unificar tamaño e interlineado en toda la sección Bio */
+  #bio .bio-section,
+  #bio .bio-section p,
+  .bio-margins,
+  .bio-margins p {
+    font-size: 1.08em;
+    line-height: 1.3;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    word-break: normal;
+    white-space: normal;
   }
 
-  nav.sidebar {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px 10px 0 10px;
-  }
-
-  main.content-container {
-    flex-direction: column;
-    height: auto;
-    min-width: 0;
-  }
-
-  section.seccion {
-    border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px 5vw;
-  }
-
-  .tab-content .tab-pane.active {
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 columnas en tablets */
-  }
-
-  .obras-container {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-
-  .video-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto 20px auto;
-    height: auto;
-  }
-}
-
-/* Móviles: Todo en columna, menú arriba, fuentes y paddings más chicos */
-@media (max-width: 700px) {
-  html {
-    font-size: 15px;
-  }
-
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  nav.sidebar {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 2vw 0 2vw;
-  }
-
-  nav.sidebar h1 {
-    font-size: 1.3em;
-    padding-left: 0;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .pestañas a {
-    padding: 8px 0;
-    width: 100%;
-    margin: 0;
-    text-align: center;
-  }
-
-  main.content-container {
-    flex-direction: column;
-    height: auto;
-    min-width: 0;
-  }
-
-  section.seccion {
+  /* Estilos para la sección de inicio */
+  section.seccion#inicio {
     border-left: none;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 10px 2vw;
   }
 
-  .tab-content .tab-pane.active {
-    grid-template-columns: 1fr;
-    /* 1 columna en móviles */
+  .seccion#inicio {
+    /* ...otros estilos... */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .obras-container {
-    grid-template-columns: 1fr;
+  .seccion#bio {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .video-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  #premios,
+  .bio-margins {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #contacto {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Mejora UX: Evita salto visual al cambiar de pestaña de partituras */
+  .tab-content-partituras {
+    min-height: 520px;
+    /* Ajusta este valor según la pestaña más alta */
+    transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  @media (max-width: 700px) {
+    .tab-content-partituras {
+      min-height: 320px;
+    }
+  }
+
+  /* Ocultar solo las secciones inactivas, mostrar la activa */
+  section.seccion {
+    display: block;
+  }
+
+  section.seccion:not(.active) {
+    display: none;
+  }
+
+  /* Ajuste para evitar que la navbar tape el contenido al navegar por anclas */
+  [id] {
+    scroll-margin-top: 44px;
+    /* Ajusta este valor si la navbar cambia de altura */
+  }
+
+  :root {
+    --color-principal: #9a2900;
+    --color-secundario: #e3e3e3;
+    --color-fondo: #181818;
+    --color-menu: #232323;
+    --color-link: #007bff;
+    --color-link-hover: #0056b3;
+  }
+
+  html {
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    font-family: 'Courier Prime', monospace;
+    background: #000 !important;
+    color: var(--color-secundario);
+    margin: 0;
+    min-height: 100vh;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    /* Siempre mostrar barra de scroll vertical */
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  a:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-secundario);
+    font-weight: 400;
+    margin-top: 0;
+  }
+
+
+
+  /* NAVBAR SUPERIOR MODERNO Y RESPONSIVE */
+  .navbar {
     width: 100%;
-    margin: 0 auto 20px auto;
+    background: var(--color-menu);
+    color: var(--color-secundario);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.18rem 1.2rem 0 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1002;
+    min-height: 38px;
+    gap: 1.1rem;
+  }
+
+  /* Nuevo: bloque de usuario dentro de la navbar */
+  .navbar .user-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #8ab4f8;
+    font-size: 1em;
+  }
+
+  /* Unificado: Menú de pestañas para navbar, videos y bio */
+  .tab-menu {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0 auto 24px auto;
+    padding: 0.5em 0.5em 0 0.5em;
+    align-items: center;
+    background: #181818;
+    width: fit-content;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    justify-content: center;
+    border-radius: 12px 12px 0 0;
+    border-bottom: 1.5px solid #232323;
+  }
+
+  .tab-menu li {
+    display: flex;
+  }
+
+  .tab-menu li a {
+    color: var(--color-secundario);
+    padding: 0.38em 1.2em;
+    border-radius: 8px 8px 0 0;
+    transition: background 0.25s, color 0.2s, box-shadow 0.2s, border 0.2s;
+    text-decoration: none;
+    font-size: 1.12em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    background: transparent;
+    border: none;
+    position: relative;
+  }
+
+  .tab-menu li a:hover,
+  .tab-menu li a.active {
+    background: var(--color-principal);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
+    border-bottom: 2.5px solid #fff;
+    z-index: 2;
+  }
+
+  .tab-menu li a:hover {
+    background: #232323;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
+  }
+
+  .navbar li {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar a {
+    color: var(--color-secundario);
+    padding: 0.32em 0.9em;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    font-size: 1.08em;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  .navbar a:hover,
+  .navbar a.active {
+    background: var(--color-principal);
+    color: #fff;
+  }
+
+  /* Hamburguesa */
+  .navbar .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-secundario);
+    font-size: 1.3em;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .navbar {
+      flex-wrap: wrap;
+      padding: 0.5rem 1rem;
+    }
+
+    .tab-menu {
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .navbar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0.5rem 0.5rem;
+      gap: 0.5rem;
+    }
+
+    .navbar .user-block {
+      order: 2;
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+      margin-bottom: 0.2rem;
+      padding-right: 0.5rem;
+    }
+
+    .navbar .menu-toggle {
+      display: block;
+      order: 1;
+      align-self: flex-end;
+      margin-bottom: 0.2rem;
+    }
+
+    .navbar {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0.5rem 0.5rem;
+      gap: 0.5rem;
+      position: static;
+      z-index: 1002;
+    }
+
+    .tab-menu {
+      flex-direction: row !important;
+      overflow-x: auto;
+      white-space: nowrap;
+      width: 100vw;
+      background: var(--color-menu);
+      position: static;
+      left: 0;
+      top: 0;
+      display: flex;
+      padding: 0.5rem 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      margin-bottom: 0.5em;
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-principal) var(--color-menu);
+    }
+
+    .tab-menu li {
+      width: auto;
+      justify-content: center;
+    }
+
+    .tab-menu li a {
+      width: auto;
+      min-width: 90px;
+      text-align: center;
+      padding: 1em 0.5em;
+      font-size: 1.1em;
+      display: inline-block;
+    }
+
+    main.content {
+      margin-top: 0.5em;
+      padding-top: 0;
+    }
+  }
+
+  main.content {
+    flex: 1;
+    padding: 0;
+    background: transparent;
+    min-width: 0;
+  }
+
+  /* Responsive: menú arriba y contenido abajo */
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+    }
+
+    nav.sidebar {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    nav.sidebar ul {
+      flex-direction: row;
+      gap: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+
+    main.content {
+      padding: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    html {
+      font-size: 15px;
+    }
+
+    nav.sidebar h1 {
+      font-size: 1.2em;
+      margin-bottom: 0.5rem;
+    }
+
+    main.content {
+      padding: 0.5rem;
+    }
+  }
+
+
+  /* ---------------------------
+       VIDEOS: Menú interno (Pestañas) en la Sección Videos
+    --------------------------- */
+  .video-tabs {
+    background: var(--color-menu);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    border-bottom: 1.5px solid #232323;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0.2em;
+  }
+
+  .bio-tabs {
+    background: var(--color-menu);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    border-bottom: 1.5px solid #232323;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0.2em;
+  }
+
+  .tab-menu {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+  .tab-menu li a {
+    display: block;
+    padding: 2px 2px;
+    background: transparent;
+    color: var(--color-secundario);
+    /* Unificar el color de las pestañas */
+    font-weight: normal;
+    /* Eliminar negritas */
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+
+  .tab-menu li a:hover,
+  .tab-menu li a.active {
+    background: var(--color-principal);
+  }
+
+  /* Estilos para el contenido de cada pestaña */
+  .tab-content .tab-pane {
+    display: none;
+  }
+
+  .tab-content .tab-pane.active {
+    display: block;
+    gap: 0;
+  }
+
+  /* Solo para la sección de videos, mostrar los videos en 4 columnas */
+  #videos .tab-content .tab-pane.active {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .video {
+    background: rgba(50, 50, 50, 0.9);
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+
+  .video h4 {
+    font-weight: normal;
+    /* Cambia el peso de la fuente a normal */
+    font-size: 1em;
+    /* Ajusta el tamaño si es necesario */
+    color: var(--color-secundario);
+    /* Cambiar a color tenue */
+    /* Mantén el color del texto */
+    margin: 10px 0;
+    /* Ajusta el margen si es necesario */
+  }
+
+  .video iframe {
+    width: 100%;
     height: auto;
-    border-radius: 0;
-    box-shadow: none;
+    aspect-ratio: 16 / 9;
   }
 
-  .inicio-content {
-    padding: 20px 0 0 0;
-  }
 
+  /* ---------------------------
+       FOTOS
+    --------------------------- */
   .galeria-fotos {
-    flex-direction: column;
-    gap: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .galeria-fotos .foto {
+    text-align: center;
+  }
+
+  .galeria-fotos .foto img {
+    max-width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+  }
+
+  .galeria-fotos .foto p {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: var(--color-secundario);
+    /* Cambiar a color tenue */
   }
 
   .galeria-fotos img {
-    height: 200px;
+    height: 400px;
+    /* Mantén la altura fija */
+    width: auto;
+    /* El ancho se ajustará automáticamente */
+    object-fit: contain;
+    /* Asegura que la imagen no se recorte y mantenga su proporción */
+    border-radius: 5px;
+    /* Opcional: bordes redondeados */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    /* Sombra para destacar las imágenes */
   }
 
+  /* ---------------------------
+       VIDEOS EMBEBIDOS EN BIO
+       Dimensiones fijas para una visualización más compacta
+    --------------------------- */
   .bio-video-embed {
-    width: 95vw;
-    height: 54vw;
-    min-height: 120px;
-    max-width: 400px;
+    width: 300px;
+    height: 170px;
+    margin: auto;
   }
 
-  .audio-button {
-    position: static;
+  .bio-video-embed iframe {
     width: 100%;
-    margin: 10px 0;
-    font-size: 1em;
-    padding: 10px 0;
+    height: 100%;
   }
 
-  #audio-button-mi-refugio,
+
+  .subtitulo-partituras {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--color-principal);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+
+  /* ---------------------------
+       NUEVA SECCIÓN: PREMIOS
+    --------------------------- */
+  #premios {
+    padding: 20px;
+    background: var(--color-overlay);
+    color: var(--color-secundario);
+    /* Cambiar a color tenue */
+  }
+
+  #premios h3 {
+    border-bottom: 2px solid var(--color-principal);
+    padding-bottom: 5px;
+  }
+
+  #premios ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  #premios li {
+    margin-bottom: 10px;
+  }
+
+  /* Estilo para el enlace de YouTube */
+  .youtube-link {
+    color: var(--color-secundario);
+    /* Unificar el color de los enlaces */
+    font-weight: normal;
+    /* Eliminar negritas */
+    text-decoration: none;
+  }
+
+  .youtube-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Estilo para el contador de visitas */
+  #visit-counter {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: var(--color-secundario);
+    /* Unificar el color del contador */
+    font-weight: normal;
+    /* Eliminar negritas */
+  }
+
+
+
+
+  /* Botones de reproducción de audio */
+  .audio-button {
+    position: fixed;
+    right: 10px;
+    z-index: 1000;
+    padding: 10px 15px;
+    background-color: var(--color-principal);
+    color: var(--color-secundario);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+  }
+
+  .audio-button:hover {
+    background-color: #c0392b;
+  }
+
+  /* Ajuste de posición para evitar superposición */
+  #audio-button-mi-refugio {
+    top: 10px;
+  }
+
   #audio-button-la-familia {
-    top: auto;
+    top: 60px;
   }
-}
 
-/* Contenedor para el audio */
-.audio-container {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #2c2c2c;
-  /* Fondo oscuro para coincidir con el diseño */
-  border: 1px solid #444;
-  border-radius: 5px;
-  text-align: center;
-  color: #e3e3e3;
-  /* Texto claro */
-}
+  /* ---------------------------
+   MEDIA QUERIES RESPONSIVE
+---------------------------- */
 
-/* Botón de audio */
-.audio-button {
-  padding: 10px 15px;
-  background-color: #9a2900;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s;
-}
+  /* Tablets: Menú lateral más angosto, columnas menos numerosas */
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+    }
 
-.audio-button:hover {
-  background-color: #c0392b;
-}
+    nav.sidebar {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 10px 0 10px;
+    }
 
-.epigrafe {
-  font-size: 13px;
-  font-weight: bold;
-  font-style: italic;
-  margin-bottom: 8px;
-  margin-top: 8px;
-  color: #a2a0a0;
-}
+    main.content-container {
+      flex-direction: column;
+      height: auto;
+      min-width: 0;
+    }
+
+    section.seccion {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 5vw;
+    }
+
+    .tab-content .tab-pane.active {
+      grid-template-columns: repeat(2, 1fr);
+      /* 2 columnas en tablets */
+    }
+
+    .obras-container {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+
+    .video-background {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 0 auto 20px auto;
+      height: auto;
+    }
+  }
+
+  /* Móviles: Todo en columna, menú arriba, fuentes y paddings más chicos */
+  @media (max-width: 700px) {
+    html {
+      font-size: 15px;
+    }
+
+    .container {
+      flex-direction: column;
+      height: auto;
+    }
+
+    nav.sidebar {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 2vw 0 2vw;
+    }
+
+    nav.sidebar h1 {
+      font-size: 1.3em;
+      padding-left: 0;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .pestañas a {
+      padding: 8px 0;
+      width: 100%;
+      margin: 0;
+      text-align: center;
+    }
+
+    main.content-container {
+      flex-direction: column;
+      height: auto;
+      min-width: 0;
+    }
+
+    section.seccion {
+      border-left: none;
+      border-top: none;
+      padding: 0 2vw;
+    }
+
+    .tab-content .tab-pane.active {
+      grid-template-columns: 1fr;
+      /* 1 columna en móviles */
+    }
+
+    .obras-container {
+      grid-template-columns: 1fr;
+    }
+
+    .video-background {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 0 auto 20px auto;
+      height: auto;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .inicio-content {
+      padding: 20px 0 0 0;
+    }
+
+    .galeria-fotos {
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .galeria-fotos img {
+      height: 200px;
+    }
+
+    .bio-video-embed {
+      width: 95vw;
+      height: 54vw;
+      min-height: 120px;
+      max-width: 400px;
+    }
+
+    .audio-button {
+      position: static;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 1em;
+      padding: 10px 0;
+    }
+
+    #audio-button-mi-refugio,
+    #audio-button-la-familia {
+      top: auto;
+    }
+  }
+
+  /* Contenedor para el audio */
+  .audio-container {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #2c2c2c;
+    /* Fondo oscuro para coincidir con el diseño */
+    border: 1px solid #444;
+    border-radius: 5px;
+    text-align: center;
+    color: #e3e3e3;
+    /* Texto claro */
+  }
+
+  /* Botón de audio */
+  .audio-button {
+    padding: 10px 15px;
+    background-color: #9a2900;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+  }
+
+  .audio-button:hover {
+    background-color: #c0392b;
+  }
+
+  .epigrafe {
+    font-size: 13px;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    color: #a2a0a0;
+  }
