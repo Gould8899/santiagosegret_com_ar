@@ -31,6 +31,15 @@
     word-break: normal;
     white-space: normal;
   }
+  }
+
+  /* Centrar enlaces dentro de bio-section */
+  #bio .bio-section a {
+    display: inline-block;
+    margin: 0.5em auto;
+    text-align: center;
+  }
+  }
 
   /* Estilos para la sección de inicio */
   section.seccion#inicio {
@@ -458,7 +467,7 @@
   }
 
   .video {
-    background: rgba(50, 50, 50, 0.9);
+    background: #000;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 4px;

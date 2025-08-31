@@ -106,13 +106,18 @@ document.addEventListener("DOMContentLoaded", () => {
   let ytPlayers = [];
   let pendingIframes = [];
   function initYTPlayer(iframe) {
+    // Detectar si es el video de inicio
+    const isInicioVideo = iframe.closest('#inicio') !== null;
     if (window.YT && window.YT.Player && iframe.src) {
       ytPlayers.push(new YT.Player(iframe, {
         events: {
           'onStateChange': function (event) {
             if (event.data === YT.PlayerState.PLAYING) {
               ytPlayers.forEach(player => {
-                if (player && player.getIframe() !== iframe) {
+                // Si el video NO es el de inicio, puede pausar otros
+                if (player && player.getIframe() !== iframe && !isInicioVideo) {
+                  // No pausar el video de inicio
+                  if (player.getIframe().closest('#inicio')) return;
                   player.pauseVideo();
                 }
               });
