@@ -440,6 +440,8 @@ main.content {
        VIDEOS: Menú interno (Pestañas) en la Sección Videos
     --------------------------- */
 .video-tabs {
+  min-height: 56px;
+  transition: box-shadow 0.3s, background 0.3s;
   background: #000;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
@@ -448,9 +450,14 @@ main.content {
   margin-bottom: 0.5em;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+  position: sticky;
+  top: 44px;
+  z-index: 1001;
 }
 
 .bio-tabs {
+  min-height: 56px;
+  transition: box-shadow 0.3s, background 0.3s;
   background: #000;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
@@ -459,6 +466,9 @@ main.content {
   margin-bottom: 0.5em;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
+  position: sticky;
+  top: 44px;
+  z-index: 1001;
 }
 
 .tab-menu {
