@@ -66,14 +66,12 @@ padding-bottom: 0.2em;
   word-break: normal;
   white-space: normal;
 }
-}
 
 /* Centrar enlaces dentro de bio-section */
 #bio .bio-section a {
   display: inline-block;
   margin: 0.5em auto;
   text-align: center;
-}
 }
 
 /* Estilos para la sección de inicio */
@@ -505,6 +503,7 @@ main.content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  overflow: visible !important;
 }
 
 .video {
@@ -616,6 +615,25 @@ main.content {
 #premios ul {
   list-style: none;
   padding: 0;
+}
+
+#actual ul {
+  list-style: none;
+  padding: 0;
+  margin-left: 0;
+  max-width: 800px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 1.08em;
+  line-height: 1.3;
+  text-align: left;
+  word-break: normal;
+  white-space: normal;
+}
+
+#actual li {
+  margin-bottom: 10px;
+}
 }
 
 #premios li {
@@ -898,7 +916,7 @@ main.content {
 
 .hero-title-name {
   font-family: 'Courier Prime', monospace;
-  font-size: clamp(1.5em, 5vw, 3.5em);
+  font-size: clamp(1.2em, 3vw, 2.2em);
   font-weight: bold;
   background: linear-gradient(90deg, #ffb347, #ff5e62, #5ee7df, #b490ca);
   background-size: 200% 200%;
@@ -913,7 +931,7 @@ main.content {
 
 .hero-title-sub {
   font-family: inherit;
-  font-size: clamp(1em, 3vw, 2em);
+  font-size: clamp(0.5em, 2vw, 1.3em);
   font-weight: 400;
   background: none !important;
   color: #fff !important;
