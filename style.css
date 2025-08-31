@@ -392,24 +392,24 @@
        VIDEOS: Menú interno (Pestañas) en la Sección Videos
     --------------------------- */
   .video-tabs {
-    background: var(--color-menu);
-    border-radius: 0;
-    box-shadow: none;
-    border-bottom: none;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
+    background: #000;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    border-bottom: 1.5px solid #232323;
+    margin-top: -0.5em;
+    margin-bottom: 0.5em;
+    padding-top: 0.2em;
     padding-bottom: 0.2em;
   }
 
   .bio-tabs {
-    background: var(--color-menu);
-    border-radius: 0;
-    box-shadow: none;
-    border-bottom: none;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
+    background: #000;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    border-bottom: 1.5px solid #232323;
+    margin-top: -0.5em;
+    margin-bottom: 0.5em;
+    padding-top: 0.2em;
     padding-bottom: 0.2em;
   }
 
