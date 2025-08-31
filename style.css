@@ -151,7 +151,7 @@
   /* NAVBAR SUPERIOR MODERNO Y RESPONSIVE */
   .navbar {
     width: 100%;
-    background: var(--color-menu);
+    background: transparent;
     color: var(--color-secundario);
     display: flex;
     align-items: center;
@@ -393,9 +393,9 @@
     --------------------------- */
   .video-tabs {
     background: var(--color-menu);
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-    border-bottom: 1.5px solid #232323;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: none;
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;
@@ -404,9 +404,9 @@
 
   .bio-tabs {
     background: var(--color-menu);
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-    border-bottom: 1.5px solid #232323;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: none;
     margin-top: 0;
     margin-bottom: 0;
     padding-top: 0;
