@@ -863,12 +863,14 @@ main.content {
   font-size: 2.1em;
   font-weight: bold;
   background: linear-gradient(90deg, #ffb347, #ff5e62, #5ee7df, #b490ca);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
   letter-spacing: 2px;
   display: block;
+  animation: gradientMove 4s ease-in-out infinite;
 }
 
 .hero-title-sub {
