@@ -1,7 +1,7 @@
 // --- FUNCIONES PARA NAVEGACIÓN Y AUDIO ---
 document.addEventListener("DOMContentLoaded", () => {
-  // Navegación por secciones
-  const navLinks = document.querySelectorAll('.navbar ul li a');
+  // --- SECTION NAVIGATION ---
+  const navTabs = document.querySelectorAll('.navbar-tabs.tab-menu a');
   const secciones = document.querySelectorAll('section.seccion');
 
   function showSectionFromHash(hash) {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else sec.classList.remove('active');
       });
     }
-    navLinks.forEach(l => {
+    navTabs.forEach(l => {
       if (l.getAttribute('href') === hashToShow) l.classList.add('active');
       else l.classList.remove('active');
     });
@@ -29,49 +29,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showSectionFromHash(window.location.hash);
 
-  navLinks.forEach(link => {
+  navTabs.forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
       const hash = this.getAttribute('href');
+      // Always scroll to top when clicking 'Videos' tab, even if already in videos
+      if (hash === '#videos') {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
       window.location.hash = hash;
       showSectionFromHash(hash);
-
-      // Al hacer click en Videos o Bio, activar la primera pestaña interna
-      if (hash === '#videos') {
-        setTimeout(() => {
-          const videoTabs = document.querySelectorAll('#videos .tab-menu a');
-          const videoPanes = document.querySelectorAll('#videos .tab-content .tab-pane');
-          videoTabs.forEach(t => t.classList.remove('active'));
-          videoPanes.forEach(p => p.classList.remove('active'));
-          if (videoTabs.length && videoPanes.length) {
-            videoTabs[0].classList.add('active');
-            videoPanes[0].classList.add('active');
-          }
-        }, 10);
-      }
-      if (hash === '#bio') {
-        setTimeout(() => {
-          const bioTabs = document.querySelectorAll('#bio .tab-menu a');
-          const bioPanes = document.querySelectorAll('#bio .tab-content .tab-pane');
-          bioTabs.forEach(t => t.classList.remove('active'));
-          bioPanes.forEach(p => p.classList.remove('active'));
-          if (bioTabs.length && bioPanes.length) {
-            bioTabs[0].classList.add('active');
-            bioPanes[0].classList.add('active');
-          }
-        }, 10);
-      }
     });
   });
 
   window.addEventListener('hashchange', () => {
     showSectionFromHash(window.location.hash);
+    // On section change, activate default tab for videos/bio
+    if (window.location.hash === '#videos') {
+      activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
+    }
+    if (window.location.hash === '#bio') {
+      activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
+    }
   });
 
-  // Pestañas de videos
-  function setupTabs(tabSelector, paneSelector) {
-    const tabs = document.querySelectorAll(tabSelector);
-    const panes = document.querySelectorAll(paneSelector);
+  // --- REUSABLE TAB SYSTEM ---
+  function initTabs(tabMenuSelector, tabContentSelector) {
+    const tabMenu = document.querySelector(tabMenuSelector);
+    if (!tabMenu) return;
+    const tabs = tabMenu.querySelectorAll('a[data-tab]');
+    const tabContent = document.querySelector(tabContentSelector);
+    if (!tabContent) return;
+    const panes = tabContent.querySelectorAll('.tab-pane');
+
+    // Tab click handler with animation (no layout recalculation)
     tabs.forEach(tab => {
       tab.addEventListener('click', function (e) {
         e.preventDefault();
@@ -79,27 +70,49 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.classList.add('active');
         const tabName = tab.getAttribute('data-tab');
         panes.forEach(pane => {
-          if (pane.id === tabName) pane.classList.add('active');
-          else pane.classList.remove('active');
+          if (pane.id === tabName) {
+            pane.classList.add('active');
+          } else {
+            pane.classList.remove('active');
+          }
         });
-        // Mantener la pestaña principal activa según la sección
-        if (tab.closest('#videos')) {
-          const mainVideosTab = document.querySelector('.navbar ul li a[href="#videos"]');
-          if (mainVideosTab) mainVideosTab.classList.add('active');
-        }
-        if (tab.closest('#bio')) {
-          const mainBioTab = document.querySelector('.navbar ul li a[href="#bio"]');
-          if (mainBioTab) mainBioTab.classList.add('active');
+        // Scroll to top only for secondary tab menus
+        if (tabMenuSelector === '.video-tabs.tab-menu' || tabMenuSelector === '.bio-tabs.tab-menu') {
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }
       });
     });
-    // Activar la primera pestaña por defecto
+
+    // Default tab activation
+    activateDefaultTab(tabMenuSelector, tabContentSelector);
+  }
+
+  function activateDefaultTab(tabMenuSelector, tabContentSelector) {
+    const tabMenu = document.querySelector(tabMenuSelector);
+    if (!tabMenu) return;
+    const tabs = tabMenu.querySelectorAll('a[data-tab]');
+    const tabContent = document.querySelector(tabContentSelector);
+    if (!tabContent) return;
+    const panes = tabContent.querySelectorAll('.tab-pane');
+    tabs.forEach(t => t.classList.remove('active'));
+    panes.forEach(p => p.classList.remove('active'));
     if (tabs.length && panes.length) {
       tabs[0].classList.add('active');
       panes[0].classList.add('active');
     }
   }
-  setupTabs('.tab-menu a', '.tab-content .tab-pane');
+
+  // Initialize video and bio tabs
+  initTabs('.video-tabs.tab-menu', '.video-tabs-content');
+  initTabs('.bio-tabs.tab-menu', '.bio-tabs-content');
+
+  // On initial load, if section is videos/bio, activate default tab
+  if (window.location.hash === '#videos') {
+    activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
+  }
+  if (window.location.hash === '#bio') {
+    activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
+  }
 
   // Lazy load videos
   const lazyVideos = document.querySelectorAll("iframe.lazy-video");
