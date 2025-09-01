@@ -1,8 +1,33 @@
+/* Unified tabs container for main and secondary tabs */
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto 24px auto;
+  background: #181818;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  border-bottom: 1.5px solid #232323;
+  padding: 0.5em 0.5em 0 0.5em;
+}
+
+.tab-menu-main {
+  margin-bottom: 0.5em;
+}
+
+.tab-menu-secondary {
+  margin-top: 0.5em;
+}
+
 /* HERO TITLE COOL */
 }
 
-/* --- TAB SYSTEM CLEAN & UNIFIED --- */
-.tab-menu {
+
+/* --- TAB SYSTEM: BEM-LIKE NAMING --- */
+.navbar-tabs.tab-menu,
+.video-tabs.tab-menu,
+.bio-tabs.tab-menu {
   list-style: none;
   display: flex;
   gap: 1.2rem;
@@ -17,11 +42,15 @@
   border-bottom: 1.5px solid #232323;
 }
 
-.tab-menu li {
+.navbar-tabs.tab-menu li,
+.video-tabs.tab-menu li,
+.bio-tabs.tab-menu li {
   display: flex;
 }
 
-.tab-menu li a {
+.navbar-tabs.tab-menu li a,
+.video-tabs.tab-menu li a,
+.bio-tabs.tab-menu li a {
   color: var(--color-secundario);
   padding: 0.38em 1.2em;
   border-radius: 8px 8px 0 0;
@@ -36,8 +65,12 @@
   position: relative;
 }
 
-.tab-menu li a:hover,
-.tab-menu li a.active {
+.navbar-tabs.tab-menu li a:hover,
+.navbar-tabs.tab-menu li a.active,
+.video-tabs.tab-menu li a:hover,
+.video-tabs.tab-menu li a.active,
+.bio-tabs.tab-menu li a:hover,
+.bio-tabs.tab-menu li a.active {
   background: var(--color-principal);
   color: #fff;
   box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
@@ -45,29 +78,56 @@
   z-index: 2;
 }
 
-.tab-menu li a:hover {
+.navbar-tabs.tab-menu li a:hover,
+.video-tabs.tab-menu li a:hover,
+.bio-tabs.tab-menu li a:hover {
   background: #232323;
   color: #fff;
   box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
 }
 
-.video-tabs,
-.bio-tabs {
-  min-height: 56px;
-  transition: box-shadow 0.3s, background 0.3s;
-  background: #181818;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  border-bottom: 1.5px solid #232323;
-  margin: 0 auto 24px auto;
-  padding: 0.5em 0.5em 0 0.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  position: sticky;
-  top: 44px;
-  z-index: 1001;
+/* Tab content containers */
+.video-tabs-content.tab-content,
+.bio-tabs-content.tab-content {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Tab panes */
+.video-tabs-content .tab-pane,
+.bio-tabs-content .tab-pane {
+  display: none;
+}
+
+.video-tabs-content .tab-pane.active,
+.bio-tabs-content .tab-pane.active {
+  display: block;
+}
+
+/* Responsive grid for video tab panes */
+.video-tabs-content .tab-pane.active {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  overflow: visible !important;
+}
+
+@media (max-width: 1024px) {
+  .video-tabs-content .tab-pane.active {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .video-tabs-content .tab-pane.active {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bio tab panes: stack vertically, responsive */
+.bio-tabs-content .tab-pane.active {
+  display: block;
+  width: 100%;
 }
 
 .seccion#bio {
@@ -198,54 +258,7 @@ h3 {
 }
 
 /* Unificado: Menú de pestañas para navbar, videos y bio */
-.tab-menu {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0 auto 24px auto;
-  padding: 0.5em 0.5em 0 0.5em;
-  align-items: center;
-  background: #181818;
-  width: fit-content;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  justify-content: center;
-  border-radius: 12px 12px 0 0;
-  border-bottom: 1.5px solid #232323;
-}
 
-.tab-menu li {
-  display: flex;
-}
-
-.tab-menu li a {
-  color: var(--color-secundario);
-  padding: 0.38em 1.2em;
-  border-radius: 8px 8px 0 0;
-  transition: background 0.25s, color 0.2s, box-shadow 0.2s, border 0.2s;
-  text-decoration: none;
-  font-size: 1.12em;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  background: transparent;
-  border: none;
-  position: relative;
-}
-
-.tab-menu li a:hover,
-.tab-menu li a.active {
-  background: var(--color-principal);
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
-  border-bottom: 2.5px solid #fff;
-  z-index: 2;
-}
-
-.tab-menu li a:hover {
-  background: #232323;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
-}
 
 .navbar li {
   display: flex;
@@ -421,82 +434,7 @@ main.content {
 /* ---------------------------
        VIDEOS: Menú interno (Pestañas) en la Sección Videos
     --------------------------- */
-.video-tabs {
-  min-height: 56px;
-  transition: box-shadow 0.3s, background 0.3s;
-  background: #000;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  border-bottom: 1.5px solid #232323;
-  margin-top: -0.5em;
-  margin-bottom: 0.5em;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  position: sticky;
-  top: 44px;
-  z-index: 1001;
-}
 
-.bio-tabs {
-  min-height: 56px;
-  transition: box-shadow 0.3s, background 0.3s;
-  background: #000;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
-  border-bottom: 1.5px solid #232323;
-  margin-top: -0.5em;
-  margin-bottom: 0.5em;
-  padding-top: 0.2em;
-  padding-bottom: 0.2em;
-  position: sticky;
-  top: 44px;
-  z-index: 1001;
-}
-
-.tab-menu {
-  list-style: none;
-  display: flex;
-  gap: 10px;
-  padding: 0;
-  margin: 0 auto;
-  justify-content: center;
-}
-
-.tab-menu li a {
-  display: block;
-  padding: 2px 2px;
-  background: transparent;
-  color: var(--color-secundario);
-  /* Unificar el color de las pestañas */
-  font-weight: normal;
-  /* Eliminar negritas */
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background 0.3s;
-}
-
-.tab-menu li a:hover,
-.tab-menu li a.active {
-  background: var(--color-principal);
-}
-
-/* Estilos para el contenido de cada pestaña */
-.tab-content .tab-pane {
-  display: none;
-}
-
-.tab-content .tab-pane.active {
-  display: block;
-  gap: 0;
-}
-
-/* Solo para la sección de videos, mostrar los videos en 4 columnas */
-#videos .tab-content .tab-pane.active {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  overflow: visible !important;
-}
 
 .video {
   background: #000;
@@ -692,155 +630,7 @@ main.content {
 ---------------------------- */
 
 /* Tablets: Menú lateral más angosto, columnas menos numerosas */
-@media (max-width: 1024px) {
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
 
-  nav.sidebar {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 10px 10px 0 10px;
-  }
-
-  main.content-container {
-    flex-direction: column;
-    height: auto;
-    min-width: 0;
-  }
-
-  section.seccion {
-    border-left: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px 5vw;
-  }
-
-  .tab-content .tab-pane.active {
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 columnas en tablets */
-  }
-
-  .obras-container {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-
-  .video-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin-top: 220px !important;
-    margin-right: auto;
-    margin-bottom: 20px;
-    margin-left: auto;
-    /* Aumenta para bajar el video, disminuye para subirlo */
-    height: auto;
-  }
-}
-
-/* Móviles: Todo en columna, menú arriba, fuentes y paddings más chicos */
-@media (max-width: 700px) {
-  html {
-    font-size: 15px;
-  }
-
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  nav.sidebar {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 2vw 0 2vw;
-  }
-
-  nav.sidebar h1 {
-    font-size: 1.3em;
-    padding-left: 0;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-
-  .pestañas a {
-    padding: 8px 0;
-    width: 100%;
-    margin: 0;
-    text-align: center;
-  }
-
-  main.content-container {
-    flex-direction: column;
-    height: auto;
-    min-width: 0;
-  }
-
-  section.seccion {
-    border-left: none;
-    border-top: none;
-    padding: 0 2vw;
-  }
-
-  .tab-content .tab-pane.active {
-    grid-template-columns: 1fr;
-    /* 1 columna en móviles */
-  }
-
-  .obras-container {
-    grid-template-columns: 1fr;
-  }
-
-  .video-background {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    margin: 0 auto 20px auto;
-    height: auto;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  .inicio-content {
-    padding: 20px 0 0 0;
-  }
-
-  .galeria-fotos {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .galeria-fotos img {
-    height: 200px;
-  }
-
-  .bio-video-embed {
-    width: 95vw;
-    height: 54vw;
-    min-height: 120px;
-    max-width: 400px;
-  }
-
-  .audio-button {
-    position: static;
-    width: 100%;
-    margin: 10px 0;
-    font-size: 1em;
-    padding: 10px 0;
-  }
-
-  #audio-button-mi-refugio,
-  #audio-button-la-familia {
-    top: auto;
-  }
-}
 
 /* Contenedor para el audio */
 .audio-container {
