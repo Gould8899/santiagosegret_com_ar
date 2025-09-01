@@ -1,3 +1,15 @@
+.bio-tabs-content.tab-content {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 64px;
+  /* Height of fixed tabs + extra spacing */
+}
+
+.bio-tabs-content .tab-pane {
+  padding-top: 16px;
+  /* Extra space for safety */
+}
+
 .video-tabs.tab-menu li a,
 .bio-tabs.tab-menu li a {
   color: #fff !important;
@@ -89,10 +101,17 @@
 }
 
 /* Tab content containers */
-.video-tabs-content.tab-content,
-.bio-tabs-content.tab-content {
+
+.video-tabs-content.tab-content {
   width: 100%;
   margin: 0 auto;
+  padding-top: 64px;
+  /* Height of fixed tabs + extra spacing */
+}
+
+.video-tabs-content .tab-pane {
+  padding-top: 16px;
+  /* Extra space for safety */
 }
 
 /* Tab panes */
