@@ -32,11 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
   navTabs.forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
+      // Force scroll to top instantly
+      window.scrollTo({ top: 0, behavior: "auto" });
+      setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
       const hash = this.getAttribute('href');
-      // Always scroll to top when clicking 'Videos' tab, even if already in videos
-      if (hash === '#videos') {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
       window.location.hash = hash;
       showSectionFromHash(hash);
     });
@@ -66,6 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
     tabs.forEach(tab => {
       tab.addEventListener('click', function (e) {
         e.preventDefault();
+        // Force scroll to top instantly
+        window.scrollTo({ top: 0, behavior: "auto" });
+        setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         const tabName = tab.getAttribute('data-tab');
@@ -76,10 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
             pane.classList.remove('active');
           }
         });
-        // Scroll to top only for secondary tab menus
-        if (tabMenuSelector === '.video-tabs.tab-menu' || tabMenuSelector === '.bio-tabs.tab-menu') {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
       });
     });
 
