@@ -340,140 +340,476 @@
       <div class="bio-tabs-content tab-content">
         <!-- Pestaña Actual -->
         <div class="tab-pane active" id="actual">
-          <h3>Actual</h3>
-          <ul>
-            <li>Profesor de <strong>bandoneón</strong> en el <strong>Conservatorio “Astor Piazzolla”</strong> de la
-              ciudad de Buenos Aires (desde 2018).</li>
-            <li>Profesor de <strong>bandoneón</strong> en la <strong>Universidad Nacional de San Martín</strong> (desde
-              2013).</li>
-            <li>Integra el trío <strong>Patio</strong>, junto a Andrés Pilar y Juan Quintero, desde
-              <strong>2013</strong>.
-            </li>
-            <li>Actúa en colaboración con el <strong>Diego Schissi Quinteto</strong> desde <strong>2009</strong>.</li>
-            <li>Es asistente de dirección de la <strong>Orquesta de Tango de la UNA</strong>, dirigida por Ariel Pirotti
-              desde 2010.</li>
-            <li>Profesor particular de <strong>bandoneón</strong> y <strong>piano</strong>.</li>
-            <li>Lleva adelante la editorial propia de partituras <strong>Rúpulo Ediciones</strong>.</li>
-          </ul>
+          <h3 class="seccion-titulo">Actual</h3>
+          <div class="logros-lista">
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Profesor de <strong>bandoneón</strong> en el <strong>Conservatorio “Astor Piazzolla”</strong> de la
+                ciudad de Buenos Aires (desde 2018)
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Es profesor y asistente de dirección de la <strong>Orquesta de Tango de la UNA</strong>, dirigida por
+                Ariel Pirotti
+                desde 2010
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Profesor de <strong>bandoneón</strong> en la <strong>Universidad Nacional de San Martín</strong> (desde
+                2013)
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Integra el trío <strong>Patio</strong>, junto a Andrés Pilar y Juan Quintero, desde
+                <strong>2013</strong>
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Actúa en colaboración con el <strong>Diego Schissi Quinteto</strong> desde <strong>2009</strong>
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Profesor particular de <strong>bandoneón</strong> y <strong>piano</strong>
+              </p>
+            </div>
+            <div class="logro-item">
+              <p class="logro-detalle">
+                Lleva adelante la editorial propia de partituras <strong>Rúpulo Ediciones</strong>
+              </p>
+            </div>
+          </div>
         </div>
 
+        <style>
+          /* Fondo y estilo general */
+          #actual {
+            background-color: #0f0f0f;
+            padding: 50px 20px;
+            border-radius: 12px;
+            max-width: 850px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          }
+
+          /* Título de sección */
+          .seccion-titulo {
+            font-size: 2rem;
+            text-align: center;
+            color: #f5f5f5;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+          }
+
+          /* Lista de logros */
+          .logros-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+          }
+
+          /* Cada logro */
+          .logro-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 15px 20px;
+            background-color: #1a1a1a;
+            border-left: 5px solid #f39c12;
+            /* borde dorado */
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .logro-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+          }
+
+          /* Icono del logro */
+          .logro-icon {
+            font-size: 1.8rem;
+            min-width: 40px;
+            text-align: center;
+            color: #f39c12;
+            /* dorado */
+          }
+
+          /* Detalle del logro */
+          .logro-detalle {
+            font-size: 1rem;
+            color: #f5f5f5;
+            margin: 0;
+            line-height: 1.5;
+          }
+        </style>
         <!-- Pestaña Formación -->
         <div class="tab-pane" id="formacion">
-          <h3>Formación</h3>
+          <h3 class="seccion-titulo">Formación</h3>
           <div class="bio-section bio-margins">
 
-            <p>
-              En 2019 se gradúa con el título de Licenciado en Artes Musicales con Orientación en Composición en la UNA
-              (Universidad Nacional de las Artes).
-            </p>
-            <div class="bio-media">
-              <iframe class="lazy-video" data-src="https://www.youtube.com/embed/-oRJ49h56EY" frameborder="0"
-                allowfullscreen width="280" height="157"></iframe>
-              <h4 class="epigrafe">"Libro de Bucles" – Trabajo final de la carrera</h4>
+            <div class="formacion-item">
+              <p>En 2019 se gradúa con el título de <strong
+                  style="color:#f39c12;background:#222;padding:2px 6px;border-radius:6px;">Licenciado en Artes Musicales
+                  con Orientación en Composición en la UNA</strong>.</p>
+              <div class="bio-media">
+                <iframe class="lazy-video" data-src="https://www.youtube.com/embed/-oRJ49h56EY" frameborder="0"
+                  allowfullscreen width="280" height="157"></iframe>
+                <h4 class="epigrafe">"Libro de Bucles" – Trabajo final de la carrera</h4>
+              </div>
             </div>
-            <p>
-              De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces por
-              Raúl Garello, Néstor Marconi y Carlos Cuacci.
-            </p>
-            <div class="bio-media">
-              <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ULfJkO40yQA" frameborder="0"
-                allowfullscreen width="280" height="157"></iframe>
-              <h4 class="epigrafe">Video de Japón con la Orquesta del Tango de la Ciudad</h4>
+
+            <div class="formacion-item">
+              <p>De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces
+                por Raúl Garello, Néstor Marconi y Carlos Cuacci.</p>
+              <div class="bio-media">
+                <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ULfJkO40yQA" frameborder="0"
+                  allowfullscreen width="280" height="157"></iframe>
+                <h4 class="epigrafe">Video de Japón con la Orquesta del Tango de la Ciudad</h4>
+              </div>
             </div>
-            <p>
-              También compartió grabaciones y escenarios con Leopoldo Federico, Raúl Garello, Victor Lavallén, Vitillo
-              Ábalos, Susana Rinaldi, Amelita Baltar, Nadia Larcher, Luna Monti, Naty Peluso, Pablo Estigarribia, Jorge
-              Fandermole, Mono Fontana, Marcelo Moguilevsky.
-            </p>
-            <p>
-              En 2005 realizó el programa de la Orquesta Escuela de Tango Emilio Balcarce. En aquel entonces el director
-              era Balcarce y los profesores eran Federico Pereiro, Ignacio Varchausky, Ramiro Gallo, Andrés Linezky,
-              Germán Martínez, compartiendo música con grandes maestros como Victor Lavallén, Raúl Garello, Lidia Borda,
-              José Colángelo, Néstor Marconi, entre otros.
-            </p>
-            <div class="bio-media">
-              <img
-                src="https://firebasestorage.googleapis.com/v0/b/rupulo-ediciones.firebasestorage.app/o/fotos%2Fcon%20emilio%20balcarce%20en%20el%20pante%C3%B3n%20de%20roma.jpg?alt=media&token=9ae060ef-8581-4073-98f4-398f6b357aec"
-                alt="Foto con Emilio" width="280" loading="lazy">
-              <h4 class="epigrafe">Foto con Emilio Balcarce en el Panteón de Roma</h4>
+
+            <div class="formacion-item">
+              <p>También compartió grabaciones y escenarios con Leopoldo Federico, Raúl Garello, Victor Lavallén,
+                Vitillo Ábalos, Susana Rinaldi, Amelita Baltar, Nadia Larcher, Luna Monti, Naty Peluso, Pablo
+                Estigarribia, Jorge Fandermole, Mono Fontana, Marcelo Moguilevsky.</p>
             </div>
-            <p>
-              En esos años conoció más de 20 países con diferentes grupos, especialmente con la Orquesta de Érica Di
-              Salvo.
-            </p>
-            <div class="bio-media">
-              <iframe class="lazy-video" data-src="https://www.youtube.com/embed/gJ1iHV5GLf8" allowfullscreen
-                width="280" height="157"></iframe>
-              <h4 class="epigrafe">Mediometraje de la gira a Japón con la Orquesta de Érica Di Salvo</h4>
+
+            <div class="formacion-item">
+              <p>En 2005 realizó el programa de la Orquesta Escuela de Tango Emilio Balcarce, junto a grandes maestros
+                como Victor Lavallén, Raúl Garello, Lidia Borda, José Colángelo y Néstor Marconi.</p>
+              <div class="bio-media">
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/rupulo-ediciones.firebasestorage.app/o/fotos%2Fcon%20emilio%20balcarce%20en%20el%20pante%C3%B3n%20de%20roma.jpg?alt=media&token=9ae060ef-8581-4073-98f4-398f6b357aec"
+                  alt="Foto con Emilio" width="280" loading="lazy">
+                <h4 class="epigrafe">Foto con Emilio Balcarce en el Panteón de Roma</h4>
+              </div>
             </div>
+
+            <div class="inicio-item">
+              <p>Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes
+                de Música Argentina en Piano.</p>
+              <p>A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane,
+                Mariano "Paya" Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.</p>
+            </div>
+
+            <div class="formacion-item">
+              <p>En esos años conoció más de 20 países con diferentes grupos, especialmente con la Orquesta de Érica Di
+                Salvo.</p>
+              <div class="bio-media">
+                <iframe class="lazy-video" data-src="https://www.youtube.com/embed/gJ1iHV5GLf8" allowfullscreen
+                  width="280" height="157"></iframe>
+                <h4 class="epigrafe">Mediometraje de la gira a Japón con la Orquesta de Érica Di Salvo</h4>
+              </div>
+            </div>
+
           </div>
         </div>
-        <!-- Mover la pestaña Inicios aquí, al mismo nivel que las otras pestañas -->
+
+        <style>
+          /* Fondo y estilo general */
+          #formacion {
+            background-color: #0f0f0f;
+            padding: 50px 20px;
+            border-radius: 12px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: #f5f5f5;
+          }
+
+          /* Título de sección */
+          .seccion-titulo {
+            font-size: 2rem;
+            text-align: center;
+            color: #f5f5f5;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+          }
+
+          /* Cada ítem de formación */
+          .formacion-item {
+            background-color: #1a1a1a;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+            /* borde azul para diferenciar ítems */
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .formacion-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+          }
+
+          /* Multimedia */
+          .bio-media {
+            margin-top: 15px;
+            text-align: center;
+          }
+
+          .bio-media iframe,
+          .bio-media img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+          }
+
+          /* Epígrafe de multimedia */
+          .epigrafe {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+          }
+        </style>
+
+        <!-- Pestaña Inicios -->
         <div class="tab-pane" id="inicios">
-          <h3>Inicios</h3>
+          <h3 class="seccion-titulo">Inicios</h3>
           <div class="bio-section bio-margins">
-            <p>
-              Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico
-              jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el
-              bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.
-            </p>
-            <div class="bio-media">
-              <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0"
-                allowfullscreen width="280" height="157"></iframe>
-              <img src="04) Fotos/con el marinero montes.jpg" alt="Foto con el Marinero" width="280" loading="lazy">
-              <h4 class="epigrafe">Tocando "Caminito" y foto con el Marinero Montes</h4>
-            </div>
-            <p>
-              Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de
-              Javier
-              Malosetti en La Trastienda tocando solos de Piazzolla.
-            </p>
-            <div class="audio-container"
-              style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
-              <h4 class="epigrafe">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia"</h4>
-              <div class="audio-item" style="display: flex; align-items: center; gap: 10px;">
-                <p style="margin: 0; font-size: 12px;"><strong>Mi Refugio:</strong></p>
-                <audio controls style="width: 300px; height: 30px;">
-                  <source src="audio/Versión-editada-separada-Mi-Refugio.mp3" type="audio/mpeg">
-                  Tu navegador no soporta el elemento de audio.
-                </audio>
-              </div>
-              <div class="audio-item" style="display: flex; align-items: center; gap: 10px;">
-                <p style="margin: 0; font-size: 12px;"><strong>La Familia:</strong></p>
-                <audio controls style="width: 300px; height: 30px;">
-                  <source src="audio/Versión-editada-separada-La-Familia.mp3" type="audio/mpeg">
-                  Tu navegador no soporta el elemento de audio.
-                </audio>
+
+            <div class="inicio-item">
+              <p>Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De
+                chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba
+                con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.
+              </p>
+              <div class="bio-media">
+                <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0"
+                  allowfullscreen width="280" height="157"></iframe>
+                <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Foto con el Marinero"
+                  width="280" loading="lazy">
+                <h4 class="epigrafe">Tocando "Caminito" y foto con el Marinero Montes</h4>
               </div>
             </div>
-            <p>
-              Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes de
-              Música Argentina en Piano.
-            </p>
-            <p>
-              A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane,
-              Mariano "Paya" Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.
-            </p>
+
+            <div class="inicio-item">
+              <p>Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de
+                Javier Malosetti en La Trastienda tocando solos de Piazzolla.</p>
+              <div class="audio-container">
+                <h4 class="epigrafe">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia"</h4>
+                <div class="audio-item">
+                  <p><strong>Mi Refugio:</strong></p>
+                  <audio controls>
+                    <source src="audio/Versión-editada-separada-Mi-Refugio.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el elemento de audio.
+                  </audio>
+                </div>
+                <div class="audio-item">
+                  <p><strong>La Familia:</strong></p>
+                  <audio controls>
+                    <source src="audio/Versión-editada-separada-La-Familia.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el elemento de audio.
+                  </audio>
+                </div>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
-      </div>
-      </div>
-    </section>
+
+        <style>
+          /* Fondo y estilo general */
+          #inicios {
+            background-color: #0f0f0f;
+            padding: 50px 20px;
+            border-radius: 12px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: #f5f5f5;
+          }
+
+          /* Título de sección */
+          .seccion-titulo {
+            font-size: 2rem;
+            text-align: center;
+            color: #f5f5f5;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+          }
+
+          /* Cada ítem de inicio */
+          .inicio-item {
+            background-color: #1a1a1a;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #9b59b6;
+            /* borde violeta */
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+
+          .inicio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+          }
+
+          /* Multimedia */
+          .bio-media {
+            margin-top: 15px;
+            text-align: center;
+          }
+
+          .bio-media iframe,
+          .bio-media img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+          }
+
+          /* Epígrafe de multimedia */
+          .epigrafe {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+            margin-top: 8px;
+            text-align: center;
+            font-style: italic;
+          }
+
+          /* Audio */
+          .audio-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+          }
+
+          .audio-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+          }
+
+          .audio-item audio {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 5px;
+          }
+        </style>
+
 
     </section>
     <!-- SECCIÓN PREMIOS -->
     <section class="seccion" id="premios">
-      <h3>Premios</h3>
-      <ul>
-        <li>2013 - Gardel al Mejor Álbum de Tango: "Tipas y Tipos" con el Quinteto de Diego Schissi</li>
-        <li>2016 - Gardel al Mejor Álbum de Tango: "El rejunte" de la Orquesta de Tango de la UNA</li>
-        <li>2018 - Gardel al Mejor Álbum de Folklore: "Patio vol.1" con el trío que comparte con Andrés Pilar y Juan
-          Quintero</li>
-        <li>2023 - Grammy Latino al Mejor Álbum de Tango: "Apiazolado" con el Quinteto de Diego Schissi</li>
-        <li>2023 - Gardel al Mejor Álbum de Folklore: "Patio vol.2" con el trío que comparte con Andrés Pilar y Juan
-          Quintero</li>
-      </ul>
+      <h3 class="seccion-titulo">Premios</h3>
+      <div class="premios-lista">
+        <div class="premio-item">
+          <span class="premio-ano">2013</span>
+          <p class="premio-detalle">
+            <strong>Gardel al Mejor Álbum de Tango:</strong> "Tipas y Tipos" con el Quinteto de Diego Schissi
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2016</span>
+          <p class="premio-detalle">
+            <strong>Gardel al Mejor Álbum de Tango:</strong> "El rejunte" de la Orquesta de Tango de la UNA
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2018</span>
+          <p class="premio-detalle">
+            <strong>Gardel al Mejor Álbum de Folklore:</strong> "Patio vol.1" con el trío que comparte con Andrés Pilar
+            y Juan Quintero
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2023</span>
+          <p class="premio-detalle">
+            <strong>Grammy Latino al Mejor Álbum de Tango:</strong> "Apiazolado" con el Quinteto de Diego Schissi
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2023</span>
+          <p class="premio-detalle">
+            <strong>Gardel al Mejor Álbum de Folklore:</strong> "Patio vol.2" con el trío que comparte con Andrés Pilar
+            y Juan Quintero
+          </p>
+        </div>
+      </div>
     </section>
+
+    <style>
+      /* Estilo general de la sección */
+      #premios {
+        background-color: #0f0f0f;
+        padding: 50px 20px;
+        border-radius: 12px;
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Título de sección */
+      .seccion-titulo {
+        font-size: 2rem;
+        text-align: center;
+        color: #f5f5f5;
+        margin-bottom: 40px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      /* Lista de premios */
+      .premios-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      /* Cada premio */
+      .premio-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 15px 20px;
+        background-color: #1a1a1a;
+        border-left: 5px solid #e74c3c;
+        /* acento rojo */
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .premio-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+      }
+
+      /* Año del premio */
+      .premio-ano {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #e74c3c;
+        /* rojo */
+        min-width: 70px;
+        text-align: right;
+      }
+
+      /* Detalle del premio */
+      .premio-detalle {
+        font-size: 1rem;
+        color: #f5f5f5;
+        /* blanco suave */
+        margin: 0;
+      }
+    </style>
+
+
 
 
 
@@ -584,13 +920,97 @@
     </section>
     <!-- SECCIÓN CONTACTO -->
     <section class="seccion" id="contacto">
-      <p><strong>Email:</strong> ssegret@gmail.com</p>
-      <p><strong>Celular:</strong> +54 11 4989-0559</p>
-      <p><strong>Youtube:</strong>
-        <a href="https://www.youtube.com/@SantiagoSegret" target="_blank" class="youtube-link">Visitar canal</a>
-      </p>
-      <div id="visit-counter"></div>
+      <h3 class="seccion-titulo">Contacto</h3>
+      <div class="contacto-lista">
+
+        <div class="contacto-item">
+          <span class="contacto-icon">📧</span>
+          <p><strong>Email:</strong> <a href="mailto:ssegret@gmail.com" class="contacto-link">ssegret@gmail.com</a></p>
+        </div>
+
+        <div class="contacto-item">
+          <span class="contacto-icon">📱</span>
+          <p><strong>Celular:</strong> <a href="tel:+541149890559" class="contacto-link">+54 11 4989-0559</a></p>
+        </div>
+
+        <div class="contacto-item">
+          <span class="contacto-icon">▶️</span>
+          <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank"
+              class="contacto-link">Visitar canal</a></p>
+        </div>
+
+      </div>
     </section>
+
+    <style>
+      /* Fondo y estilo general */
+      #contacto {
+        background-color: #0f0f0f;
+        padding: 50px 20px;
+        border-radius: 12px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        color: #f5f5f5;
+      }
+
+      /* Título de sección */
+      .seccion-titulo {
+        font-size: 2rem;
+        text-align: center;
+        color: #f5f5f5;
+        margin-bottom: 30px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      /* Lista de contactos */
+      .contacto-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* Cada contacto */
+      .contacto-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        background-color: #1a1a1a;
+        border-left: 5px solid #e67e22;
+        /* borde naranja/dorado para resaltar */
+        border-radius: 8px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .contacto-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+      }
+
+      /* Iconos de contacto */
+      .contacto-icon {
+        font-size: 1.5rem;
+        min-width: 40px;
+        text-align: center;
+        color: #e67e22;
+        /* naranja/dorado */
+      }
+
+      /* Links de contacto */
+      .contacto-link {
+        color: #f5f5f5;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contacto-link:hover {
+        color: #e67e22;
+      }
+    </style>
+
 
   </main>
   <script>

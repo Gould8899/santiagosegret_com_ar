@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santiago Segret - Portfolio</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f7f7f7;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            color: #222;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .canvas-wrapper {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas-fixed {
+            width: 375px;
+            height: 667px;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-origin: center center;
+            transition: transform 0.2s;
+        }
+
+        .canvas-header {
+            padding: 32px 0 16px 0;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: #222;
+            background: #f2f2f2;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .canvas-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5em;
+            background: #f2f2f2;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0.5em 0;
+        }
+
+        .canvas-tab {
+            padding: 0.5em 1.2em;
+            border-radius: 16px;
+            background: transparent;
+            color: #222;
+            font-weight: 500;
+            font-size: 1em;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .canvas-tab.active {
+            background: #e0e0e0;
+            color: #007bff;
+        }
+
+        .canvas-tab:hover:not(.active) {
+            background: #e9e9e9;
+            color: #007bff;
+        }
+
+        .canvas-content {
+            flex: 1;
+            padding: 2em 1.2em;
+            overflow-y: auto;
+            font-size: 1.08em;
+            background: #fff;
+        }
+
+        /* estilos zoom-controls */
+        .zoom-controls {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 0.5em;
+        }
+
+        .zoom-controls button {
+            font-size: 1.3em;
+            padding: 0.3em 0.8em;
+            border-radius: 50%;
+            border: none;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .zoom-controls button#zoom-reset {
+            border-radius: 16px;
+            font-size: 1.1em;
+        }
+
+        .zoom-controls button:hover {
+            background: #d0d0d0;
+        }
+
+        @media (max-width: 400px) {
+            .canvas-fixed {
+                border-radius: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="zoom-controls">
+        <button id="zoom-out" title="Reducir zoom">-</button>
+        <button id="zoom-in" title="Aumentar zoom">+</button>
+        <button id="zoom-reset" title="Restablecer zoom">Reset</button>
+    </div>
+    <div class="canvas-wrapper">
+        <div class="canvas-fixed" id="canvas">
+            <div class="canvas-header">Santiago Segret - Portfolio</div>
+            <div class="canvas-tabs">
+                <button class="canvas-tab active" data-tab="inicio">Inicio</button>
+                <button class="canvas-tab" data-tab="videos">Videos</button>
+                <button class="canvas-tab" data-tab="premios">Premios</button>
+                <button class="canvas-tab" data-tab="biografia">Biografía</button>
+            </div>
+            <div class="canvas-content" id="canvas-content">
+                <div class="tab-pane" data-tab="inicio" style="display:block;">
+                    <h2>Bienvenido</h2>
+                    <p>¡Hola! Este es el portfolio de Santiago Segret. Aquí encontrarás información, videos y premios
+                        destacados.</p>
+                </div>
+                <div class="tab-pane" data-tab="videos" style="display:none;">
+                    <h2>Videos</h2>
+                    <div style="text-align:center;">
+                        <iframe width="320" height="180" src="https://www.youtube.com/embed/QoU6hMf7368" frameborder="0"
+                            allowfullscreen style="border-radius:12px;"></iframe>
+                    </div>
+                </div>
+                <div class="tab-pane" data-tab="premios" style="display:none;">
+                    <h2>Premios</h2>
+                    <ul>
+                        <li>2013 - Gardel al Mejor Álbum de Tango</li>
+                        <li>2016 - Gardel al Mejor Álbum de Tango</li>
+                        <li>2018 - Gardel al Mejor Álbum de Folklore</li>
+                        <li>2023 - Grammy Latino al Mejor Álbum de Tango</li>
+                        <li>2023 - Gardel al Mejor Álbum de Folklore</li>
+                    </ul>
+                </div>
+                <div class="tab-pane" data-tab="biografia" style="display:none;">
+                    <h2>Biografía</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris euismod, urna eu tincidunt
+                        consectetur, nisi nisl aliquam enim, nec dictum sem urna nec enim. Etiam vitae velit nec sem
+                        cursus dictum.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Escalado automático y manual del lienzo fijo
+        let userZoom = null; // null = auto, number = manual zoom
+        const canvas = document.getElementById('canvas');
+        const zoomInBtn = document.getElementById('zoom-in');
+        const zoomOutBtn = document.getElementById('zoom-out');
+        const zoomResetBtn = document.getElementById('zoom-reset');
+        const cw = 375;
+        const ch = 667;
+        function getAutoScale() {
+            const ww = window.innerWidth;
+            const wh = window.innerHeight;
+            return Math.min(ww / cw, wh / ch);
+        }
+
+        function applyScale() {
+            let scale = userZoom !== null ? userZoom : getAutoScale();
+            canvas.style.transformOrigin = 'center center';
+            canvas.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        }
+
+        zoomInBtn.addEventListener('click', () => {
+            let current = userZoom !== null ? userZoom : getAutoScale();
+            userZoom = Math.min(current + 0.1, 3);
+            applyScale();
+        });
+
+        zoomOutBtn.addEventListener('click', () => {
+            let current = userZoom !== null ? userZoom : getAutoScale();
+            userZoom = Math.max(current - 0.1, 0.2);
+            applyScale();
+        });
+
+        zoomResetBtn.addEventListener('click', () => {
+            userZoom = null;
+            applyScale();
+        });
+
+        window.addEventListener('resize', applyScale);
+        window.addEventListener('orientationchange', applyScale);
+        window.addEventListener('DOMContentLoaded', applyScale);
+
+        // Tabs
+        const tabs = document.querySelectorAll('.canvas-tab');
+        const panes = document.querySelectorAll('.tab-pane');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const name = tab.getAttribute('data-tab');
+                panes.forEach(pane => {
+                    pane.style.display = pane.getAttribute('data-tab') === name ? 'block' : 'none';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

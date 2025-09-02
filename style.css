@@ -1,3 +1,22 @@
+/* --- UNIFICAR BORDES REDONDEADOS EN CONTENEDORES Y PESTAÑAS --- */
+
+/* Contenedores de pestañas principales y secundarias */
+.navbar-tabs.tab-menu,
+.video-tabs.tab-menu,
+.bio-tabs.tab-menu,
+.video-tabs.video-tabs-dynamic,
+.bio-tabs.bio-tabs-dynamic,
+.tabs-container {
+  border-radius: 16px !important;
+}
+
+/* Links de pestañas */
+.navbar-tabs.tab-menu li a,
+.video-tabs.tab-menu li a,
+.bio-tabs.tab-menu li a {
+  border-radius: 12px !important;
+}
+
 .bio-tabs-content.tab-content {
   width: 100%;
   margin: 0 auto;
