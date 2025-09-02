@@ -3,6 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- SECTION NAVIGATION ---
   const navTabs = document.querySelectorAll('.navbar-tabs.tab-menu a');
   const secciones = document.querySelectorAll('section.seccion');
+  // Accessibility: label navbar if not present
+  const navbar = document.querySelector('.navbar');
+  if (navbar && !navbar.getAttribute('aria-label')) {
+    navbar.setAttribute('aria-label', 'Navegación principal');
+  }
 
   function showSectionFromHash(hash) {
     let found = false;
@@ -56,7 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function initTabs(tabMenuSelector, tabContentSelector) {
     const tabMenu = document.querySelector(tabMenuSelector);
     if (!tabMenu) return;
+    // ARIA: mark as tablist
+    if (!tabMenu.getAttribute('role')) tabMenu.setAttribute('role', 'tablist');
     const tabs = tabMenu.querySelectorAll('a[data-tab]');
+    // Add role and aria-selected to tabs
+    tabs.forEach((t, i) => {
+      if (!t.getAttribute('role')) t.setAttribute('role', 'tab');
+      if (!t.hasAttribute('aria-selected')) t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
+      // ensure focusable
+      t.setAttribute('tabindex', t.classList.contains('active') ? '0' : '-1');
+    });
     const tabContent = document.querySelector(tabContentSelector);
     if (!tabContent) return;
     const panes = tabContent.querySelectorAll('.tab-pane');
@@ -68,8 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Force scroll to top instantly
         window.scrollTo({ top: 0, behavior: "auto" });
         setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
-        tabs.forEach(t => t.classList.remove('active'));
+        tabs.forEach((t, idx) => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
         tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
         const tabName = tab.getAttribute('data-tab');
         panes.forEach(pane => {
           if (pane.id === tabName) {

@@ -5,20 +5,19 @@
   <meta charset="UTF-8">
   <!-- Adaptación para dispositivos móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Adaptación para dispositivos móviles -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más.">
   <title>Santiago Segret - Músico</title>
   <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
-  <!-- YouTube IFrame Player API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
+  <!-- YouTube IFrame Player API (carga async para no bloquear parsing) -->
+  <script async src="https://www.youtube.com/iframe_api"></script>
 </head>
 <!-- necesito que al hacer click en santiagosegret redirija a main -->
 
 <body>
+  <a class="skip-link" href="#inicio">Saltar al contenido</a>
   <nav class="navbar" role="navigation">
     <ul class="navbar-tabs tab-menu">
       <li><a href="#inicio">Inicio</a></li>
@@ -35,7 +34,7 @@
     <!-- SECCIÓN INICIO -->
     <section class="seccion" id="inicio">
       <div class="hero-title-cool">
-        <span class="hero-title-name">Santiago Segret</span>
+        <a href="#inicio" class="hero-title-name" aria-label="Ir al inicio">Santiago Segret</a>
         <br>
         <span class="hero-title-sub">músico, bandoneonista</span>
       </div>
@@ -104,7 +103,7 @@
 
           <div class="video">
             <iframe class="lazy-video"
-              data-src="https://www.youtube.com/embed/playlist?list=PLNIPF_IC2hGjhqz4G6xC8xaQt79D5soG-&si=7EDTDktBfnhbvWt6"
+              data-src="https://www.youtube.com/embed/videoseries?list=PLNIPF_IC2hGjhqz4G6xC8xaQt79D5soG-"
               frameborder="0" allowfullscreen loading="lazy"></iframe>
             <h4>Uno de los tantos y grandes arreglos de Néstor Marconi.</h4>
           </div>
@@ -936,7 +935,7 @@
         <div class="contacto-item">
           <span class="contacto-icon">▶️</span>
           <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank"
-              class="contacto-link">Visitar canal</a></p>
+              rel="noopener noreferrer" class="contacto-link">Visitar canal</a></p>
         </div>
 
       </div>
