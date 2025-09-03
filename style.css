@@ -64,8 +64,10 @@
   width: fit-content;
   margin: 0 auto 24px auto;
   background: #181818;
+  background: #000000;
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
+  /* quitar sombras semitransparentes para mantener negro puro */
   border-bottom: 1.5px solid #232323;
   padding: 0.5em 0.5em 0 0.5em;
 }
@@ -97,8 +99,10 @@
   padding: 0.5em 0.5em 0 0.5em;
   align-items: center;
   background: #181818;
+  background: #000000;
   width: fit-content;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
+  /* quitar sombra */
   justify-content: center;
   border-radius: 12px 12px 0 0;
   border-bottom: 1.5px solid #232323;
@@ -121,7 +125,7 @@
   align-items: center;
   background: #181818;
   width: fit-content;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   justify-content: center;
   border-radius: 12px 12px 0 0;
   border-bottom: 1.5px solid #232323;
@@ -133,7 +137,7 @@
 .bio-tabs.tab-menu li a.active {
   background: var(--color-principal);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(154, 41, 0, 0.12);
+  box-shadow: none;
   border-bottom: 2.5px solid #fff;
   z-index: 2;
 }
@@ -143,7 +147,7 @@
 .bio-tabs.tab-menu li a:hover:not(.active) {
   background: #232323;
   color: #fff;
-  box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
+  box-shadow: none;
 }
 
 /* CONTENEDORES DE CONTENIDO DE PESTAÑAS
@@ -202,9 +206,9 @@
   align-items: center;
   width: fit-content;
   margin: 0 auto 24px auto;
-  background: #181818;
+  background: #000000;
   border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   border-bottom: 1.5px solid #232323;
   padding: 0.5em 0.5em 0 0.5em;
   position: fixed;
@@ -307,7 +311,8 @@ section.seccion:not(.active) {
 :root {
   --color-principal: #9a2900;
   --color-secundario: #e3e3e3;
-  --color-fondo: #181818;
+  --color-fondo: #000000;
+  /* fondo principal: negro puro */
   --color-menu: #232323;
   --color-link: #007bff;
   --color-link-hover: #0056b3;
@@ -407,12 +412,14 @@ h3 {
 /* SECCIÓN: #actual (movido desde index.html) */
 /* Fondo y estilo general */
 #actual {
-  background-color: #0f0f0f;
+  background-color: #000000;
+  /* reemplazado por negro puro */
   padding: 50px 20px;
   border-radius: 12px;
   max-width: 850px;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
+  /* quitar sombra translúcida que aclara el negro */
 }
 
 /* Título de sección */
@@ -439,7 +446,7 @@ h3 {
   align-items: flex-start;
   gap: 20px;
   padding: 15px 20px;
-  background-color: #1a1a1a;
+  background-color: #000000;
   border-left: 5px solid #f39c12;
   /* borde dorado */
   border-radius: 8px;
@@ -448,7 +455,7 @@ h3 {
 
 .logro-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+  box-shadow: none;
 }
 
 /* Icono del logro */
@@ -471,12 +478,12 @@ h3 {
 /* SECCIÓN: #formacion (movido desde index.html) */
 /* Fondo y estilo general */
 #formacion {
-  background-color: #0f0f0f;
+  background-color: #000000;
   padding: 50px 20px;
   border-radius: 12px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
   color: #f5f5f5;
 }
 
@@ -493,7 +500,7 @@ h3 {
 
 .formacion-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 /* Multimedia */
@@ -506,7 +513,7 @@ h3 {
 .bio-media img {
   max-width: 100%;
   border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 /* Epígrafe de multimedia */
@@ -520,17 +527,17 @@ h3 {
 
 /* SECCIÓN: #inicios (movido desde index.html) */
 #inicios {
-  background-color: #0f0f0f;
+  background-color: #000000;
   padding: 50px 20px;
   border-radius: 12px;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
   color: #f5f5f5;
 }
 
 .inicio-item {
-  background-color: #1a1a1a;
+  background-color: #000000;
   padding: 20px 25px;
   margin-bottom: 25px;
   border-left: 5px solid #9b59b6;
@@ -541,7 +548,7 @@ h3 {
 
 .inicio-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 /* Audio */
@@ -571,7 +578,7 @@ h3 {
   border-radius: 12px;
   max-width: 800px;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
 }
 
 .premios-lista {
@@ -594,7 +601,7 @@ h3 {
 
 .premio-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+  box-shadow: none;
 }
 
 .premio-ano {
@@ -620,7 +627,7 @@ h3 {
   border-radius: 12px;
   max-width: 600px;
   margin: 0 auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: none;
   color: #f5f5f5;
 }
 
@@ -644,7 +651,7 @@ h3 {
 
 .contacto-item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .contacto-icon {
@@ -704,7 +711,7 @@ h3 {
   font-size: 1.08em;
   font-weight: 500;
   letter-spacing: 0.02em;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: none;
 }
 
 
@@ -808,7 +815,7 @@ h3 {
     top: 0;
     display: flex;
     padding: 0.5rem 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: none;
     z-index: 1001;
     margin-bottom: 0.5em;
     scrollbar-width: thin;
@@ -935,7 +942,7 @@ main.content {
 .galeria-fotos .foto img {
   max-width: 100%;
   border-radius: 4px;
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 .galeria-fotos .foto p {
@@ -954,7 +961,7 @@ main.content {
   /* Asegura que la imagen no se recorte y mantenga su proporción */
   border-radius: 5px;
   /* Opcional: bordes redondeados */
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   /* Sombra para destacar las imágenes */
 }
 
@@ -1149,7 +1156,7 @@ main.content {
   width: 480px;
   height: 480px;
   border-radius: 50%;
-  box-shadow: 0 0 0 9999px rgba(20, 20, 20, 0.98);
+  box-shadow: none;
   pointer-events: none;
   z-index: 2;
 }
@@ -1165,7 +1172,7 @@ main.content {
   font-weight: bold;
   color: #fff;
   letter-spacing: 0.04em;
-  text-shadow: 0 4px 32px rgba(0, 0, 0, 0.7);
+  text-shadow: none;
   display: block;
   margin-top: 0;
   margin-bottom: 0.5em;
@@ -1176,7 +1183,7 @@ main.content {
   font-size: 1.5em;
   font-weight: 400;
   color: #fff;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.18);
+  text-shadow: none;
   margin-top: 0.2em;
   display: block;
 }
@@ -1204,7 +1211,7 @@ main.content {
   font-weight: 700;
   color: #ff5e57;
   /* rojo-anaranjado vibrante */
-  text-shadow: 0 4px 18px rgba(255, 94, 87, 0.18);
+  text-shadow: none;
   display: inline-block;
 }
 
@@ -1219,4 +1226,64 @@ main.content {
   margin-bottom: 8px;
   margin-top: 8px;
   color: #a2a0a0;
+}
+
+/* ---------------------------
+   FORZAR NEGRO PURO Y ELIMINAR TRANSPARENCIAS
+   - Aplica reglas de refuerzo que reemplazan gradientes, rgba y sombras
+     en elementos visuales clave para garantizar negro #000000 consistente
+     en distintos dispositivos. Son específicas (no un reset global) pero
+     usan !important para sobreescribir reglas menos específicas.
+*/
+html,
+body,
+.seccion,
+.tabs-container,
+.tab-menu,
+.video,
+.galeria-fotos .foto img,
+.formacion-item,
+.inicio-item,
+#premios,
+#contacto,
+.audio-container,
+.video-mask,
+.hero-title-name,
+.hero-title-sub {
+  background-color: #000000 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  color-scheme: dark;
+}
+
+/* Asegurar que elementos con sombras blancas/translúcidas no aclaren el negro */
+.galeria-fotos .foto img,
+.galeria-fotos img,
+.video-mask,
+.navbar a,
+.tab-menu,
+.tab-menu li a,
+.video iframe,
+.bio-media iframe,
+.bio-media img {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Eliminar overlay tipo 'box-shadow: 0 0 0 9999px rgba(...)' usado para máscaras */
+.video-mask {
+  background: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Móvil: quitar sombras en tab-menu móvil */
+@media (max-width: 500px) {
+  .tab-menu {
+    box-shadow: none !important;
+  }
+}
+
+/* Forzar fondos puros en variables si alguna regla usa var(--color-overlay) */
+:root {
+  --color-overlay: #000000;
 }
