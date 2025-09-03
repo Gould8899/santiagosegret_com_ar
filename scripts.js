@@ -1,9 +1,29 @@
-// --- FUNCIONES PARA NAVEGACIÓN Y AUDIO ---
+/* --------------------------------------------------------------------
+   FUNCIONES PARA NAVEGACIÓN, PESTAÑAS, Y CONTROL DE AUDIO
+
+   Explicación general (para quien no programa):
+   - Este script se ejecuta cuando la página terminó de cargarse.
+   - Maneja la navegación entre secciones (usando enlaces con #hash).
+   - Implementa un sistema reutilizable de pestañas (tabs) que muestra
+     contenido distinto según la pestaña seleccionada.
+   - Carga los videos de YouTube sólo cuando entran en pantalla (lazy-load)
+     y, cuando es posible, los registra con la API de YouTube para poder
+     pausar otros videos cuando uno empieza a reproducirse.
+   - Lleva un contador simple de visitas usando localStorage.
+   - Controla botones que reproducen/pausan audios embebidos.
+
+   Todos los comentarios dentro del archivo están escritos en castellano
+   y explican, paso a paso, qué hace cada bloque para que cualquiera
+   pueda entender y modificar con seguridad.
+-------------------------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
-  // --- SECTION NAVIGATION ---
+  // --- NAVEGACIÓN ENTRE SECCIONES (anclas/hash) ---
+  // Selecciona los enlaces del menú principal y las secciones de la página
   const navTabs = document.querySelectorAll('.navbar-tabs.tab-menu a');
   const secciones = document.querySelectorAll('section.seccion');
-  // Accessibility: label navbar if not present
+  // Accesibilidad: si la barra de navegación no tiene un atributo
+  // aria-label, se le añade uno. Esto ayuda a los lectores de pantalla
+  // a identificar el elemento como el menú principal.
   const navbar = document.querySelector('.navbar');
   if (navbar && !navbar.getAttribute('aria-label')) {
     navbar.setAttribute('aria-label', 'Navegación principal');
@@ -37,7 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
   navTabs.forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
-      // Force scroll to top instantly
+      // Forzar el desplazamiento hacia arriba inmediatamente.
+      // Esto evita que el contenido quede cubierto por la barra fija
+      // al navegar entre secciones (mejora la experiencia visual).
       window.scrollTo({ top: 0, behavior: "auto" });
       setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
       const hash = this.getAttribute('href');
@@ -48,7 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener('hashchange', () => {
     showSectionFromHash(window.location.hash);
-    // On section change, activate default tab for videos/bio
+    // Cuando cambia la sección (por ejemplo al ir a #videos o #bio),
+    // activamos la pestaña por defecto correspondiente para asegurarnos
+    // de que siempre haya contenido visible dentro de esa sección.
     if (window.location.hash === '#videos') {
       activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
     }
@@ -57,29 +81,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- REUSABLE TAB SYSTEM ---
+  // --- SISTEMA REUTILIZABLE DE PESTAÑAS (tabs) ---
+  // Esta función inicializa el comportamiento de un menú de pestañas:
+  // - añade roles ARIA para accesibilidad
+  // - establece qué pestaña está activa
+  // - gestiona el cambio de pestañas al hacer click
   function initTabs(tabMenuSelector, tabContentSelector) {
     const tabMenu = document.querySelector(tabMenuSelector);
     if (!tabMenu) return;
-    // ARIA: mark as tablist
+    // ARIA: marcar el contenedor como una lista de pestañas (tablist)
     if (!tabMenu.getAttribute('role')) tabMenu.setAttribute('role', 'tablist');
     const tabs = tabMenu.querySelectorAll('a[data-tab]');
-    // Add role and aria-selected to tabs
+    // Asignar a cada enlace el role "tab" y atributos ARIA que indican
+    // si la pestaña está seleccionada, además de tabindex para que
+    // el teclado pueda navegar correctamente entre pestañas.
     tabs.forEach((t, i) => {
       if (!t.getAttribute('role')) t.setAttribute('role', 'tab');
       if (!t.hasAttribute('aria-selected')) t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
-      // ensure focusable
+      // Asegurar que la pestaña activa sea accesible con TAB (tabindex=0)
       t.setAttribute('tabindex', t.classList.contains('active') ? '0' : '-1');
     });
     const tabContent = document.querySelector(tabContentSelector);
     if (!tabContent) return;
     const panes = tabContent.querySelectorAll('.tab-pane');
 
-    // Tab click handler with animation (no layout recalculation)
+    // Manejador de clicks en pestañas:
+    // - evita el comportamiento por defecto del enlace
+    // - actualiza clases y atributos para marcar la pestaña activa
+    // - muestra/oculta los paneles correspondientes
     tabs.forEach(tab => {
       tab.addEventListener('click', function (e) {
         e.preventDefault();
-        // Force scroll to top instantly
+        // Forzar desplazamiento al tope para que el panel activo quede visible
         window.scrollTo({ top: 0, behavior: "auto" });
         setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
         tabs.forEach((t, idx) => {
@@ -101,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Default tab activation
+    // Activar la pestaña por defecto (la primera) si no hay ninguna activa.
     activateDefaultTab(tabMenuSelector, tabContentSelector);
   }
 
@@ -120,11 +153,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Initialize video and bio tabs
+  // Inicializar las pestañas de 'videos' y 'bio' al cargar la página
   initTabs('.video-tabs.tab-menu', '.video-tabs-content');
   initTabs('.bio-tabs.tab-menu', '.bio-tabs-content');
 
-  // On initial load, if section is videos/bio, activate default tab
+  // Si la URL ya apunta a #videos o #bio al cargar la página, activar
+  // la pestaña por defecto correspondiente para mostrar contenido.
   if (window.location.hash === '#videos') {
     activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
   }
@@ -132,12 +166,17 @@ document.addEventListener("DOMContentLoaded", () => {
     activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
   }
 
-  // Lazy load videos
+  // CARGA PEREZOSA (lazy-load) DE VIDEOS
+  // Los iframes tienen data-src y no se les pone src hasta que entran
+  // en pantalla. Esto mejora el rendimiento y evita cargar muchos
+  // reproductores innecesarios al abrir la página.
   const lazyVideos = document.querySelectorAll("iframe.lazy-video");
   let ytPlayers = [];
   let pendingIframes = [];
   function initYTPlayer(iframe) {
-    // Detectar si es el video de inicio
+    // Detectar si el iframe está dentro de la sección "inicio".
+    // El video de inicio se trata con prioridad: si está reproduciéndose
+    // no queremos pausar ese video automáticamente.
     const isInicioVideo = iframe.closest('#inicio') !== null;
     if (window.YT && window.YT.Player && iframe.src) {
       ytPlayers.push(new YT.Player(iframe, {
@@ -145,9 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
           'onStateChange': function (event) {
             if (event.data === YT.PlayerState.PLAYING) {
               ytPlayers.forEach(player => {
-                // Si el video NO es el de inicio, puede pausar otros
+                // Si otro reproductor empieza a reproducir, pausar los
+                // demás players para evitar que suenen varios a la vez.
+                // Excepción: si el player afectado es el video de inicio,
+                // no lo pausamos (se trata como fondo especial).
                 if (player && player.getIframe() !== iframe && !isInicioVideo) {
-                  // No pausar el video de inicio
                   if (player.getIframe().closest('#inicio')) return;
                   player.pauseVideo();
                 }
@@ -176,7 +217,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const iframe = entry.target;
         if (iframe.dataset.src) {
           let src = iframe.dataset.src;
-          // Agregar enablejsapi=1 si es un video de YouTube y no está presente
+          // Si la URL es de YouTube, añadir el parámetro enablejsapi=1
+          // (necesario para poder controlar el reproductor desde JS).
           if (src.includes('youtube.com/embed') && !src.includes('enablejsapi=1')) {
             if (src.includes('?')) {
               src += '&enablejsapi=1';
@@ -195,7 +237,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   lazyVideos.forEach(video => observer.observe(video));
 
-  // Asegurarse de inicializar los pendientes cuando la API esté lista
+  // La API de YouTube puede cargar después de que asignamos iframes.
+  // Si ya existen iframes pendientes, los inicializamos cuando la API
+  // llama a window.onYouTubeIframeAPIReady.
   if (typeof window.onYouTubeIframeAPIReady === 'function') {
     const prevFn = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = function () {
@@ -206,14 +250,18 @@ document.addEventListener("DOMContentLoaded", () => {
     window.onYouTubeIframeAPIReady = processPendingIframes;
   }
 
-  // Contador de visitas
+  // CONTADOR SIMPLE DE VISITAS
+  // Se guarda un número en localStorage para contar cuántas veces
+  // el mismo navegador abrió el sitio. No es un contador global.
   let visitCount = localStorage.getItem('visitCount') || 0;
   visitCount++;
   localStorage.setItem('visitCount', visitCount);
   const counter = document.getElementById('visit-counter');
   if (counter) counter.textContent = `Visitas: ${visitCount}`;
 
-  // Audio toggle
+  // BOTONES DE AUDIO: reproducir / pausar
+  // setupAudioToggle conecta un botón con un elemento <audio> y cambia
+  // su texto según el estado (reproduciendo/pausado).
   function setupAudioToggle(audioId, buttonId, label) {
     const audio = document.getElementById(audioId);
     const button = document.getElementById(buttonId);

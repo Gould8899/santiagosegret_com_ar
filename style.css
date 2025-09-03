@@ -17,16 +17,35 @@
   border-radius: 12px !important;
 }
 
+/* APARIENCIA DE LAS "BURBUJAS" (ENLACES DE PESTAÑAS)
+   - Controla el tamaño interior (padding) y el tamaño de texto
+     de los botones que actúan como pestañas.
+   - Para hacer las burbujas más grandes o más pequeñas, ajustar
+     aquí `padding` y `font-size`.
+*/
+.navbar-tabs.tab-menu li a,
+.video-tabs.tab-menu li a,
+.bio-tabs.tab-menu li a,
+.tab-menu li a {
+  padding: 0.65em 1.2em;
+  /* espacio vertical | horizontal aumentado */
+  font-size: 1.18em;
+  /* texto más grande para pestañas */
+  border-radius: 14px !important;
+  /* redondeo de la esquina */
+}
+
 .bio-tabs-content.tab-content {
   width: 100%;
   margin: 0 auto;
   padding-top: 64px;
-  /* Height of fixed tabs + extra spacing */
+  /* Espacio superior reservado para que el contenido no quede
+     oculto bajo las pestañas fijadas (tabs fijos). */
 }
 
 .bio-tabs-content .tab-pane {
   padding-top: 16px;
-  /* Extra space for safety */
+  /* Espacio extra entre la parte superior del panel y su contenido */
 }
 
 .video-tabs.tab-menu li a,
@@ -34,7 +53,10 @@
   color: #fff !important;
 }
 
-/* Unified tabs container for main and secondary tabs */
+/* CONTENEDOR UNIFICADO DE PESTAÑAS (PRINCIPALES Y SECUNDARIAS)
+  - Define un contenedor visual compartido para menús de pestañas.
+  - Mantiene coherencia de fondo, sombra y bordes entre pestañas.
+*/
 .tabs-container {
   display: flex;
   flex-direction: column;
@@ -59,7 +81,12 @@
 
 
 
-/* --- TAB SYSTEM: BEM-LIKE NAMING --- */
+/* --- SISTEMA DE PESTAÑAS: CONVENCIONES (BEM-LIKE) ---
+   - Agrupa las reglas CSS que afectan a los menús de pestañas
+     (navbar, videos, bio). Está escrito para que quien lea el
+     código entienda la intención: estas clases forman el "sistema"
+     visual de pestañas. No modifica comportamiento, solo documenta.
+*/
 .navbar-tabs.tab-menu,
 .video-tabs.tab-menu,
 .bio-tabs.tab-menu {
@@ -119,21 +146,31 @@
   box-shadow: 0 2px 8px rgba(154, 41, 0, 0.10);
 }
 
-/* Tab content containers */
+/* CONTENEDORES DE CONTENIDO DE PESTAÑAS
+   - Reglas que separan y dan espacio al contenido mostrado dentro
+     de cada pestaña para que no quede oculto por la cabecera.
+*/
 
 .video-tabs-content.tab-content {
   width: 100%;
   margin: 0 auto;
   padding-top: 64px;
-  /* Height of fixed tabs + extra spacing */
+  /* Espacio superior reservado: altura de las pestañas fijadas + margen
+    extra para que el contenido quede visible y no quede oculto.
+  */
 }
 
 .video-tabs-content .tab-pane {
   padding-top: 16px;
-  /* Extra space for safety */
+  /* Espacio extra de seguridad entre el borde superior del panel
+     y su contenido (evita que texto/quedado muy pegado al borde). */
 }
 
-/* Tab panes */
+/* PANELES DE PESTAÑAS
+   - Cada .tab-pane es el bloque de contenido para una pestaña.
+   - Estas reglas controlan la animación, visibilidad y el display
+     cuando una pestaña se activa o desactiva.
+*/
 .video-tabs-content .tab-pane,
 .bio-tabs-content .tab-pane {
   opacity: 0;
@@ -151,7 +188,11 @@
   display: block;
 }
 
-/* Dynamic shift for secondary tabs based on main tab selection */
+/* Ajuste dinámico de las pestañas secundarias según la pestaña principal
+   - Este bloque contiene estilos para las pestañas secundarias que
+     aparecen fijas y centradas cuando se activan secciones principales.
+   - Mantener aquí reglas de posicionamiento (fixed, transform, z-index).
+*/
 
 
 .video-tabs.video-tabs-dynamic,
@@ -184,7 +225,9 @@
   transition: none;
 }
 
-/* Responsive grid for video tab panes */
+/* GRID RESPONSIVO PARA LOS PANELES DE VIDEO
+   - Define el número de columnas según el ancho de pantalla:
+     3 columnas en escritorio, 2 en tablet y 1 en móvil. */
 .video-tabs-content .tab-pane.active {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -204,7 +247,9 @@
   }
 }
 
-/* Bio tab panes: stack vertically, responsive */
+/* PANELES DE BIO: apilan verticalmente y son responsive
+   - Las entradas de la sección "bio" se muestran en bloque,
+     ocupando todo el ancho disponible. */
 .bio-tabs-content .tab-pane.active {
   display: block;
   width: 100%;
@@ -268,7 +313,8 @@ section.seccion:not(.active) {
   --color-link-hover: #0056b3;
 }
 
-/* Skip link: hidden but visible on keyboard focus */
+/* Enlace "saltar al contenido": oculto visualmente pero visible
+  cuando se navega con teclado (mejora accesibilidad). */
 .skip-link {
   position: absolute;
   left: -999px;
@@ -350,6 +396,275 @@ h3 {
   gap: 1.1rem;
 }
 
+/* ---------------------------
+   ESTILOS MOVIDOS DESDE index.html
+   - Se integraron aquí las reglas específicas de secciones (#actual,
+     #formacion, #inicios, #premios, #contacto) para centralizar el
+     mantenimiento. He mantenido el orden original para que sea
+     fácil localizar el origen de cada bloque.
+   --------------------------- */
+
+/* SECCIÓN: #actual (movido desde index.html) */
+/* Fondo y estilo general */
+#actual {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 850px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Título de sección */
+.seccion-titulo {
+  font-size: 2rem;
+  text-align: center;
+  color: #f5f5f5;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Lista de logros */
+.logros-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Cada logro */
+.logro-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  border-left: 5px solid #f39c12;
+  /* borde dorado */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logro-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+/* Icono del logro */
+.logro-icon {
+  font-size: 1.8rem;
+  min-width: 40px;
+  text-align: center;
+  color: #f39c12;
+  /* dorado */
+}
+
+/* Detalle del logro */
+.logro-detalle {
+  font-size: 1rem;
+  color: #f5f5f5;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* SECCIÓN: #formacion (movido desde index.html) */
+/* Fondo y estilo general */
+#formacion {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: #f5f5f5;
+}
+
+/* Cada ítem de formación */
+.formacion-item {
+  background-color: #1a1a1a;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  border-left: 5px solid #3498db;
+  /* borde azul para diferenciar ítems */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.formacion-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Multimedia */
+.bio-media {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.bio-media iframe,
+.bio-media img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+/* Epígrafe de multimedia */
+.epigrafe {
+  font-size: 0.9rem;
+  color: #bdc3c7;
+  margin-top: 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+/* SECCIÓN: #inicios (movido desde index.html) */
+#inicios {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: #f5f5f5;
+}
+
+.inicio-item {
+  background-color: #1a1a1a;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  border-left: 5px solid #9b59b6;
+  /* borde violeta */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inicio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Audio */
+.audio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.audio-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.audio-item audio {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 5px;
+}
+
+/* SECCIÓN: #premios (movido desde index.html) */
+#premios {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.premios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.premio-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  border-left: 5px solid #e74c3c;
+  /* acento rojo */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.premio-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+.premio-ano {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e74c3c;
+  /* rojo */
+  min-width: 70px;
+  text-align: right;
+}
+
+.premio-detalle {
+  font-size: 1rem;
+  color: #f5f5f5;
+  /* blanco suave */
+  margin: 0;
+}
+
+/* SECCIÓN: #contacto (movido desde index.html) */
+#contacto {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: #f5f5f5;
+}
+
+.contacto-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 20px;
+  background-color: #1a1a1a;
+  border-left: 5px solid #e67e22;
+  /* borde naranja/dorado para resaltar */
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contacto-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 255, 255, 0.1);
+}
+
+.contacto-icon {
+  font-size: 1.5rem;
+  min-width: 40px;
+  text-align: center;
+  color: #e67e22;
+  /* naranja/dorado */
+}
+
+.contacto-link {
+  color: #f5f5f5;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contacto-link:hover {
+  color: #e67e22;
+}
+
 /* Nuevo: bloque de usuario dentro de la navbar */
 .navbar .user-block {
   display: flex;
@@ -367,6 +682,19 @@ h3 {
   align-items: center;
 }
 
+/* Enlaces de la barra superior (.navbar a)
+   - Qué son: elementos <a> dentro del nav principal. Usados para
+   navegar entre secciones (Inicio, Videos, Bio, etc.).
+   - Propósito de las propiedades:
+     * color: define el color del texto de los enlaces.
+     * padding: aumenta el área "clicable" (importante para usabilidad
+       en pantallas táctiles y para que visualmente parezcan "botones").
+     * border-radius: suaviza las esquinas de los botones enlazados.
+     * transition: hace que el cambio de color/sombra sea suave al hacer
+       hover o activar la pestaña.
+     * font-size / font-weight / letter-spacing: controlan legibilidad y peso.
+     * box-shadow: ligero relieve para separar visualmente del fondo.
+*/
 .navbar a {
   color: var(--color-secundario);
   padding: 0.32em 0.9em;
@@ -379,13 +707,27 @@ h3 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
+
+/* Estado hover y activo de los enlaces de la navbar
+   - .navbar a:hover: estilo cuando el cursor pasa por encima (feedback
+     visual inmediato).
+   - .navbar a.active: estilo para la pestaña activa (muestra qué sección
+     está seleccionada). Se usan colores de alto contraste para accesibilidad.
+*/
 .navbar a:hover,
 .navbar a.active {
   background: var(--color-principal);
   color: #fff;
 }
 
-/* Hamburguesa */
+/* Botón "hamburguesa" (menu-toggle)
+   - Selector: .navbar .menu-toggle
+   - Propósito: control para desplegar/ocultar el menú en diseños móviles.
+     En este proyecto está intencionalmente oculto (display:none) porque
+     el diseño actual usa scroll horizontal para las tabs o no requiere
+     el control desplegable. Se conserva la regla para futura activación
+     si se decide usar un menú collapsible.
+*/
 .navbar .menu-toggle {
   display: none !important;
   width: 0 !important;
@@ -397,6 +739,11 @@ h3 {
   visibility: hidden !important;
 }
 
+/* Punto de quiebre: pantallas medianas / tablets (<= 900px)
+   - Cambia el comportamiento de la barra para envolver elementos
+     y reducir padding. Aquí se busca adaptabilidad sin romper la disposición
+     horizontal principal.
+*/
 @media (max-width: 900px) {
   .navbar {
     flex-wrap: wrap;
@@ -408,7 +755,13 @@ h3 {
   }
 }
 
-@media (max-width: 700px) {
+/* Punto de quiebre: móviles estrechos (<= 500px)
+   - Objetivo: en pantallas pequeñas apilar la navbar para dar más espacio
+     vertical y mejorar la interacción táctil. Las tabs pasan a un modo
+     horizontal desplazable (scroll) en su propio bloque para no romper
+     la legibilidad.
+*/
+@media (max-width: 500px) {
   .navbar {
     flex-direction: column;
     align-items: stretch;
@@ -469,10 +822,12 @@ h3 {
 
   .tab-menu li a {
     width: auto;
-    min-width: 90px;
+    min-width: 92px;
+    /* mínimo más ancho para mantener legibilidad en móvil */
     text-align: center;
-    padding: 1em 0.5em;
-    font-size: 1.1em;
+    padding: 1.05em 0.55em;
+    /* burbujas móviles aumentadas para consistencia */
+    font-size: 1.12em;
     display: inline-block;
   }
 
@@ -551,8 +906,8 @@ main.content {
   font-size: 1em;
   /* Ajusta el tamaño si es necesario */
   color: var(--color-secundario);
-  /* Cambiar a color tenue */
-  /* Mantén el color del texto */
+  /* Usar un color tenue para el texto */
+  /* Mantener legibilidad con color claro */
   margin: 10px 0;
   /* Ajusta el margen si es necesario */
 }
@@ -758,12 +1113,16 @@ main.content {
   transition: background-color 0.3s;
 }
 
-/* Main video positioning */
+/* Posicionamiento del video principal (main-video)
+   - Ajustes para colocar el video principal en pantalla y permitir
+     efectos de máscara sin afectar el flujo del documento. */
 .main-video {
   margin-top: -75px;
 }
 
-/* Mask for main video to show only the center */
+/* Máscara para el video principal: mostrar solo el centro
+   - Se usa un elemento circular con sombra para enfocar la parte
+     central del video y oscurecer los bordes. */
 .video-mask-container {
   position: relative;
   display: flex;
@@ -795,7 +1154,10 @@ main.content {
   z-index: 2;
 }
 
-/* Hero title styless */
+/* Estilos del título principal (hero)
+   - Controlan tamaño, familia tipográfica, color llamativo y sombreado
+     para que el nombre destaque en la entrada de la página.
+*/
 
 .hero-title-name {
   font-family: 'Courier Prime', monospace;
@@ -833,6 +1195,17 @@ main.content {
   background: none !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
+}
+
+/* Hero title styling: un 'color crazy' llamativo pero legible */
+.hero-title-name {
+  font-family: 'Courier Prime', monospace;
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #ff5e57;
+  /* rojo-anaranjado vibrante */
+  text-shadow: 0 4px 18px rgba(255, 94, 87, 0.18);
+  display: inline-block;
 }
 
 .audio-button:hover {
