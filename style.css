@@ -1125,6 +1125,10 @@ main.content {
      efectos de máscara sin afectar el flujo del documento. */
 .main-video {
   margin-top: -75px;
+  pointer-events: auto !important;
+  /* asegurar que el iframe principal sea interactivo */
+  z-index: 1;
+  /* por debajo de la máscara (.video-mask tiene z-index:2) */
 }
 
 /* Máscara para el video principal: mostrar solo el centro
@@ -1272,8 +1276,12 @@ body,
 
 /* Eliminar overlay tipo 'box-shadow: 0 0 0 9999px rgba(...)' usado para máscaras */
 .video-mask {
-  background: #000000 !important;
-  box-shadow: none !important;
+  background: transparent !important;
+  /* permitir ver el video debajo */
+  /* sombra grande que genera la máscara circular oscureciendo todo fuera del círculo */
+  box-shadow: 0 0 0 9999px rgba(20, 20, 20, 0.98) !important;
+  pointer-events: none !important;
+  /* no bloquear interacción */
 }
 
 /* Móvil: quitar sombras en tab-menu móvil */
