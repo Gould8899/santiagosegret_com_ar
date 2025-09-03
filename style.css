@@ -1120,49 +1120,45 @@ main.content {
   transition: background-color 0.3s;
 }
 
-/* Posicionamiento del video principal (main-video)
-   - Ajustes para colocar el video principal en pantalla y permitir
-     efectos de máscara sin afectar el flujo del documento. */
-.main-video {
-  margin-top: -75px;
-  pointer-events: auto !important;
-  /* asegurar que el iframe principal sea interactivo */
-  z-index: 1;
-  /* por debajo de la máscara (.video-mask tiene z-index:2) */
-}
+/* Hero video removed — related layout rules deleted */
 
-/* Máscara para el video principal: mostrar solo el centro
-   - Se usa un elemento circular con sombra para enfocar la parte
-     central del video y oscurecer los bordes. */
-.video-mask-container {
-  position: relative;
+/* Nuevo hero video local (003-balcon-3.mp4) */
+.video-background {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 506px;
-  max-width: 98vw;
+  margin: 0 auto 1.2em auto;
 }
 
-.video-mask-container .main-video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
+.video-mask-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.video-mask {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 480px;
-  height: 480px;
-  border-radius: 50%;
-  box-shadow: none;
-  pointer-events: none;
-  z-index: 2;
+.hero-video {
+  width: 100%;
+  height: auto;
+  max-height: 60vw;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.7);
+  background: #000;
+}
+
+@media (max-width: 600px) {
+  .video-mask-container {
+    max-width: 98vw;
+  }
+
+  .hero-video {
+    border-radius: 8px;
+  }
 }
 
 /* Estilos del título principal (hero)
@@ -1251,7 +1247,6 @@ body,
 #premios,
 #contacto,
 .audio-container,
-.video-mask,
 .hero-title-name,
 .hero-title-sub {
   background-color: #000000 !important;
@@ -1263,7 +1258,6 @@ body,
 /* Asegurar que elementos con sombras blancas/translúcidas no aclaren el negro */
 .galeria-fotos .foto img,
 .galeria-fotos img,
-.video-mask,
 .navbar a,
 .tab-menu,
 .tab-menu li a,
@@ -1274,15 +1268,7 @@ body,
   text-shadow: none !important;
 }
 
-/* Eliminar overlay tipo 'box-shadow: 0 0 0 9999px rgba(...)' usado para máscaras */
-.video-mask {
-  background: transparent !important;
-  /* permitir ver el video debajo */
-  /* sombra grande que genera la máscara circular oscureciendo todo fuera del círculo */
-  box-shadow: 0 0 0 9999px rgba(20, 20, 20, 0.98) !important;
-  pointer-events: none !important;
-  /* no bloquear interacción */
-}
+/* .video-mask rules removed because the hero video was deleted */
 
 /* Móvil: quitar sombras en tab-menu móvil */
 @media (max-width: 500px) {

@@ -172,25 +172,64 @@ document.addEventListener("DOMContentLoaded", () => {
   // reproductores innecesarios al abrir la página.
   const lazyVideos = document.querySelectorAll("iframe.lazy-video");
   let ytPlayers = [];
+  // MediaManager: asegura que no suenen dos medios a la vez.
+  const MediaManager = {
+    htmlMedias: new Set(),
+    // Registrar un elemento HTMLMediaElement para escuchar 'play' y pausar los demás
+    registerHtmlMedia(el) {
+      if (!el) return;
+      this.htmlMedias.add(el);
+      // Cuando un elemento empieza a reproducir, pausamos los demás
+      el.addEventListener('play', () => {
+        this.pauseAllExcept(el);
+      });
+    },
+    // Pausar todos los HTML media excepto el provisto
+    pauseAllExcept(except) {
+      try {
+        this.htmlMedias.forEach(m => {
+          if (m !== except && !m.paused) {
+            try { m.pause(); } catch (e) { /* ignore */ }
+          }
+        });
+        // También pausar cualquier reproductor de YouTube que esté sonando
+        if (window.YT && Array.isArray(ytPlayers)) {
+          ytPlayers.forEach(p => {
+            try {
+              if (p && typeof p.getPlayerState === 'function' && p.getPlayerState() === YT.PlayerState.PLAYING) {
+                p.pauseVideo();
+              }
+            } catch (e) { /* ignore */ }
+          });
+        }
+      } catch (e) {
+        console.error('MediaManager.pauseAllExcept error', e);
+      }
+    },
+    // Pausar únicamente HTML medias (útil cuando un YT empieza a sonar)
+    pauseAllHtmlMedia() {
+      try {
+        this.htmlMedias.forEach(m => {
+          if (!m.paused) try { m.pause(); } catch (e) { }
+        });
+      } catch (e) { console.error('MediaManager.pauseAllHtmlMedia', e); }
+    }
+  };
+  // Registrar los elementos <audio> y <video> ya presentes en la página
+  document.querySelectorAll('audio, video').forEach(el => MediaManager.registerHtmlMedia(el));
   let pendingIframes = [];
   function initYTPlayer(iframe) {
-    // Detectar si el iframe está dentro de la sección "inicio".
-    // El video de inicio se trata con prioridad: si está reproduciéndose
-    // no queremos pausar ese video automáticamente.
-    const isInicioVideo = iframe.closest('#inicio') !== null;
     if (window.YT && window.YT.Player && iframe.src) {
       ytPlayers.push(new YT.Player(iframe, {
         events: {
           'onStateChange': function (event) {
             if (event.data === YT.PlayerState.PLAYING) {
+              // Pausar primero cualquier <audio> o <video> HTML que pueda estar sonando
+              try { MediaManager.pauseAllHtmlMedia(); } catch (e) { }
+              // Pausar otros reproductores de YouTube
               ytPlayers.forEach(player => {
-                // Si otro reproductor empieza a reproducir, pausar los
-                // demás players para evitar que suenen varios a la vez.
-                // Excepción: si el player afectado es el video de inicio,
-                // no lo pausamos (se trata como fondo especial).
-                if (player && player.getIframe() !== iframe && !isInicioVideo) {
-                  if (player.getIframe().closest('#inicio')) return;
-                  player.pauseVideo();
+                if (player && player.getIframe && player.getIframe() !== iframe) {
+                  try { player.pauseVideo(); } catch (e) { }
                 }
               });
             }
@@ -268,6 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (audio && button) {
       button.addEventListener('click', () => {
         if (audio.paused) {
+          // Asegurar que no haya otro medio sonando
+          try { MediaManager.pauseAllExcept(audio); } catch (e) { }
           audio.play();
           button.textContent = `Pausar ${label}`;
         } else {
