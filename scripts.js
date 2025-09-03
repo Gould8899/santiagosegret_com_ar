@@ -57,14 +57,17 @@ document.addEventListener("DOMContentLoaded", () => {
   navTabs.forEach(link => {
     link.addEventListener('click', function (e) {
       e.preventDefault();
-      // Forzar el desplazamiento hacia arriba inmediatamente.
-      // Esto evita que el contenido quede cubierto por la barra fija
-      // al navegar entre secciones (mejora la experiencia visual).
-      window.scrollTo({ top: 0, behavior: "auto" });
-      setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
       const hash = this.getAttribute('href');
-      window.location.hash = hash;
+      // Use pushState to update URL without causing the browser to scroll
+      if (history && history.pushState) {
+        history.pushState(null, '', hash);
+      } else {
+        // Fallback: set hash (may scroll)
+        window.location.hash = hash;
+      }
       showSectionFromHash(hash);
+      // remove focus to prevent mobile browsers from scrolling focused element into view
+      try { this.blur(); } catch (e) { /* ignore */ }
     });
   });
 
@@ -73,6 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cuando cambia la sección (por ejemplo al ir a #videos o #bio),
     // activamos la pestaña por defecto correspondiente para asegurarnos
     // de que siempre haya contenido visible dentro de esa sección.
+    if (window.location.hash === '#videos') {
+      activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
+    }
+    if (window.location.hash === '#bio') {
+      activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
+    }
+  });
+
+  // Handle browser back/forward when using pushState (popstate fires)
+  window.addEventListener('popstate', () => {
+    showSectionFromHash(window.location.hash);
     if (window.location.hash === '#videos') {
       activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
     }
@@ -112,9 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
     tabs.forEach(tab => {
       tab.addEventListener('click', function (e) {
         e.preventDefault();
-        // Forzar desplazamiento al tope para que el panel activo quede visible
-        window.scrollTo({ top: 0, behavior: "auto" });
-        setTimeout(() => { window.scrollTo({ top: 0, behavior: "auto" }); }, 0);
         tabs.forEach((t, idx) => {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
@@ -131,6 +142,8 @@ document.addEventListener("DOMContentLoaded", () => {
             pane.classList.remove('active');
           }
         });
+        // remove focus to avoid automatic scroll on mobile when element is focused
+        try { tab.blur(); } catch (e) { /* ignore */ }
       });
     });
 
