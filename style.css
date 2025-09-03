@@ -446,7 +446,7 @@ h3 {
   align-items: flex-start;
   gap: 20px;
   padding: 15px 20px;
-  background-color: #000000;
+  background-color: hsl(60, 5%, 17%);
   border-left: 5px solid #f39c12;
   /* borde dorado */
   border-radius: 8px;
@@ -537,7 +537,7 @@ h3 {
 }
 
 .inicio-item {
-  background-color: #000000;
+  background-color: #1a1a1a;
   padding: 20px 25px;
   margin-bottom: 25px;
   border-left: 5px solid #9b59b6;
@@ -671,6 +671,42 @@ h3 {
 .contacto-link:hover {
   color: #e67e22;
 }
+
+/* SECCIÓN: #rupulo (estilo coherente con premios/contacto) */
+#rupulo {
+  background-color: #0f0f0f;
+  padding: 50px 20px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: none;
+  color: #f5f5f5;
+}
+
+.rupulo-content {
+  background-color: #1a1a1a;
+  padding: 18px 22px;
+  border-left: 5px solid var(--color-principal);
+  border-radius: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rupulo-content:hover {
+  transform: translateY(-4px);
+  box-shadow: none;
+}
+
+.rupulo-content p {
+  margin: 0 0 10px 0;
+  color: #f5f5f5;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.rupulo-content a {
+  color: var(--color-link);
+}
+
 
 /* Nuevo: bloque de usuario dentro de la navbar */
 .navbar .user-block {
