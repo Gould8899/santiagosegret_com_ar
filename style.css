@@ -4,13 +4,14 @@
 .navbar-tabs.tab-menu,
 .video-tabs.tab-menu,
 .bio-tabs.tab-menu,
-.video-tabs.video-tabs-dynamic,
-.bio-tabs.bio-tabs-dynamic,
-.tabs-container {
-  border-radius: 16px !important;
-  /* fixed width to avoid layout shifts */
-  width: 900px;
-  margin: 0 auto 24px auto;
+.video-tabs.video-tabs-dynamic {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.bio-tabs.bio-tabs-dynamic {
+  background-color: transparent;
+  color: var(--color-secundario);
 }
 
 /* Links de pestañas */
@@ -24,18 +25,20 @@
    - Controla el tamaño interior (padding) y el tamaño de texto
      de los botones que actúan como pestañas.
 */
+
 .navbar-tabs.tab-menu li a,
 .video-tabs.tab-menu li a,
 .bio-tabs.tab-menu li a,
 .tab-menu li a {
-  padding: 0.65em 1.2em;
+  padding: 0.55em 1.2em;
   font-size: 1.18em;
   border-radius: 14px !important;
 }
 
 .bio-tabs-content.tab-content {
   /* fixed container width to prevent resizing */
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   padding-top: 64px;
 }
@@ -60,7 +63,7 @@
   background: #000000;
   border-radius: 12px 12px 0 0;
   box-shadow: none;
-  border-bottom: 1.5px solid #232323;
+  border-bottom: none;
   padding: 0.5em 0.5em 0 0.5em;
 }
 
@@ -82,12 +85,13 @@
   margin: 0 auto 24px auto;
   padding: 0.5em 0.5em 0 0.5em;
   align-items: center;
-  background: #000000;
+  background: transparent;
   width: 900px;
   box-shadow: none;
   justify-content: center;
   border-radius: 12px 12px 0 0;
-  border-bottom: 1.5px solid #232323;
+  /* remove ul border because the wrapper already provides the bottom border */
+  border-bottom: none;
 }
 
 .navbar-tabs.tab-menu li,
@@ -116,8 +120,8 @@
 
 /* CONTENEDORES DE CONTENIDO DE PESTAÑAS */
 .video-tabs-content.tab-content {
-  width: 1100px;
-  /* fixed width */
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   padding-top: 64px;
 }
@@ -154,7 +158,7 @@
   background: #000000;
   border-radius: 12px 12px 0 0;
   box-shadow: none;
-  border-bottom: 1.5px solid #232323;
+  border-bottom: none;
   padding: 0.5em 0.5em 0 0.5em;
   position: fixed;
   top: 44px;
@@ -175,33 +179,51 @@
 /* GRID: use fixed column widths so items don't reflow */
 .video-tabs-content .tab-pane.active {
   display: grid;
-  grid-template-columns: 360px 360px 360px;
-  /* fixed column widths totaling 1080px */
+  grid-template-columns: repeat(3, 1fr);
+  /* distribute available width evenly across three columns so they fit the container */
   gap: 10px;
   overflow: visible !important;
+  max-width: var(--site-width);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure each video fills its grid cell and keeps a 16:9 ratio */
+.video-tabs-content .tab-pane.active .video {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.video-tabs-content .tab-pane.active .video iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  display: block;
 }
 
 /* PANELES DE BIO: fixed block width */
 .bio-tabs-content .tab-pane.active {
   display: block;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
 }
 
 .seccion#bio {
-  width: 1100px;
+  max-width: var(--site-width);
   margin-left: auto;
   margin-right: auto;
 }
 
 #premios,
 .bio-margins {
-  width: 1100px;
+  max-width: var(--site-width);
   margin-left: auto;
   margin-right: auto;
 }
 
 #contacto {
-  width: 1100px;
+  max-width: var(--site-width);
   margin-left: auto;
   margin-right: auto;
 }
@@ -222,14 +244,24 @@ section.seccion:not(.active) {
   display: none;
 }
 
+/* Ensure each section starts lower to avoid overlap with fixed tab bubbles */
+section.seccion {
+  margin-top: var(--section-vertical);
+}
+
 /* Ajuste para evitar que la navbar tape el contenido al navegar por anclas */
 [id] {
-  scroll-margin-top: 44px;
+  scroll-margin-top: var(--section-vertical);
 }
 
 :root {
   --color-principal: #9a2900;
   --color-secundario: #e3e3e3;
+  --site-width: 1100px;
+  --site-max-width: 95vw;
+  --gutter: 24px;
+  --video-width: 360px;
+  --section-vertical: 50px;
   --color-fondo: #000000;
   --color-menu: #232323;
   --color-link: #007bff;
@@ -275,11 +307,16 @@ body {
   color: var(--color-secundario);
   margin: 0;
   min-height: 100vh;
-  font-weight: 400;
-  overflow-x: visible;
+  --video-width: 360px;
+  /* Increased fixed vertical spacing so main section containers start lower
+     and do not overlap with fixed tab bubbles. */
+  --section-vertical: 30px;
   /* allow horizontal overflow instead of shrinking */
   overflow-y: scroll;
+
 }
+
+/* (scroll-margin-top already set above) */
 
 a {
   color: var(--color-link);
@@ -302,7 +339,8 @@ h3 {
 
 /* NAVBAR: fixed width so it doesn't resize */
 .navbar {
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   background: transparent;
   color: var(--color-secundario);
   display: flex;
@@ -320,9 +358,10 @@ h3 {
 /* SECCIÓN: #actual */
 #actual {
   background-color: #000000;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
 }
@@ -376,9 +415,10 @@ h3 {
 /* SECCIÓN: #formacion */
 #formacion {
   background-color: #000000;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
   color: #f5f5f5;
@@ -416,10 +456,10 @@ h3 {
 
 /* SECCIÓN: #inicios */
 #inicios {
-  background-color: #000000;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
   color: #f5f5f5;
@@ -456,9 +496,10 @@ h3 {
 /* SECCIÓN: #premios */
 #premios {
   background-color: #0f0f0f;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
 }
@@ -496,9 +537,10 @@ h3 {
 /* SECCIÓN: #contacto */
 #contacto {
   background-color: #0f0f0f;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
   color: #f5f5f5;
@@ -540,9 +582,10 @@ h3 {
 /* SECCIÓN: #rupulo */
 #rupulo {
   background-color: #0f0f0f;
-  padding: 50px 20px;
+  padding: var(--section-vertical) var(--gutter);
   border-radius: 12px;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
   box-shadow: none;
   color: #f5f5f5;
@@ -608,7 +651,8 @@ main.content {
 
 /* container/sidebar kept fixed */
 .container {
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -626,7 +670,7 @@ nav.sidebar ul {
   padding: 10px;
   box-sizing: border-box;
   border-radius: 4px;
-  width: 360px;
+  width: var(--video-width);
 }
 
 .video h4 {
@@ -637,8 +681,9 @@ nav.sidebar ul {
 }
 
 .video iframe {
-  width: 360px;
-  height: 203px;
+  width: var(--video-width);
+  height: calc(var(--video-width) * 0.5625);
+  /* 16:9 */
 }
 
 .galeria-fotos {
@@ -705,7 +750,8 @@ nav.sidebar ul {
   list-style: none;
   padding: 0;
   margin-left: 0;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   font-size: 1.08em;
   line-height: 1.3;
   text-align: left;
@@ -758,22 +804,33 @@ nav.sidebar ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   margin: 0 auto 1.2em auto;
 }
 
 .video-mask-container {
   position: relative;
-  width: 900px;
-  height: 540px;
+  width: calc(var(--video-width) * 2.5);
+  height: calc((var(--video-width) * 2.5) * 0.5625);
+  /* keep 16:9 */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+/* Remove the colored panels that appear behind the hero video only in the #inicio section */
+#inicio,
+#inicio .video-background,
+#inicio .video-mask-container {
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
 .hero-video {
-  width: 900px;
-  height: 540px;
+  width: calc(var(--video-width) * 2.5);
+  height: calc((var(--video-width) * 2.5) * 0.5625);
   border-radius: 12px;
   display: block;
   box-shadow: none;
@@ -797,7 +854,8 @@ nav.sidebar ul {
   z-index: 10;
   position: relative;
   pointer-events: auto;
-  width: 1100px;
+  max-width: var(--site-width);
+  width: 100%;
   /* center within the main fixed container */
   margin-left: auto;
   margin-right: auto;
@@ -835,11 +893,14 @@ body,
 .audio-container,
 .hero-title-name,
 .hero-title-sub {
-  background-color: #000000 !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
+  background-color: transparent;
+  box-shadow: none;
+  text-shadow: none;
   color-scheme: dark;
+  /* Keep this for dark mode */
 }
+
+/* removed global forced-black to allow distinct container colors */
 
 .galeria-fotos .foto img,
 .galeria-fotos img,
@@ -855,4 +916,199 @@ body,
 
 :root {
   --color-overlay: #000000;
+}
+
+/* Palette: vivid, higher-saturation colors for containers */
+:root {
+  --bg-1: #0b3d91;
+  /* vivid blue */
+  --bg-2: #1a7a4b;
+  /* vivid green */
+  --bg-3: #b51f3a;
+  /* vivid crimson */
+  --bg-4: #d46a1f;
+  /* vivid orange */
+  --bg-5: #0db5b5;
+  /* vivid teal */
+  --bg-6: #6a2fb0;
+  /* vivid purple */
+  --bg-7: #e0a800;
+  /* vivid gold */
+  --bg-8: #0b6a9b;
+  /* vivid sky */
+  --bg-9: #9b1f6a;
+  /* vivid magenta */
+  --bg-10: #2b5a9e;
+  /* vivid indigo */
+  --bg-12: #c0552b;
+  /* vivid terracotta */
+  --global-radius: 12px;
+}
+
+/* Apply vivid colors to main containers (no !important) */
+.tabs-container {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.navbar {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.video-tabs.video-tabs-dynamic {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.bio-tabs.bio-tabs-dynamic {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.navbar-tabs.tab-menu {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.video-tabs.tab-menu {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+.bio-tabs.tab-menu {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+/* Sections and main areas */
+section.seccion {
+  background-color: var(--bg-8);
+  color: var(--color-secundario);
+}
+
+#actual {
+  background-color: var(--bg-9);
+  color: var(--color-secundario);
+}
+
+#formacion {
+  background-color: var(--bg-10);
+  color: var(--color-secundario);
+}
+
+#inicios {
+  background-color: var(--bg-11);
+  color: var(--color-secundario);
+}
+
+#premios {
+  background-color: var(--bg-12);
+  color: var(--color-secundario);
+}
+
+#contacto {
+  background-color: var(--bg-1);
+  color: var(--color-secundario);
+}
+
+#rupulo {
+  background-color: transparent;
+  color: var(--color-secundario);
+}
+
+/* Layout containers */
+.container {
+  background-color: var(--bg-3);
+  color: var(--color-secundario);
+}
+
+main.content {
+  background-color: var(--bg-4);
+  color: var(--color-secundario);
+}
+
+.video-background {
+  background-color: var(--bg-5);
+  color: var(--color-secundario);
+}
+
+.video {
+  background-color: var(--bg-6);
+  color: var(--color-secundario);
+}
+
+/* Media / small panels */
+.galeria-fotos .foto {
+  background-color: var(--bg-7);
+  color: var(--color-secundario);
+}
+
+.bio-video-embed {
+  background-color: var(--bg-8);
+  color: var(--color-secundario);
+}
+
+.audio-container {
+  background-color: var(--bg-9);
+  color: var(--color-secundario);
+}
+
+/* Sidebar and hero */
+nav.sidebar {
+  background-color: var(--bg-10);
+  color: var(--color-secundario);
+}
+
+.hero-title-cool {
+  background-color: transparent;
+}
+
+/* Ensure text inside these containers remains readable */
+.tabs-container,
+.navbar,
+section.seccion,
+.container,
+main.content,
+.video,
+.galeria-fotos .foto,
+.audio-container {
+  color: var(--color-secundario);
+}
+
+/* Global rounded corners for main containers:
+   Use a single variable so all panels stay visually consistent.
+*/
+.container,
+main.content,
+section.seccion,
+.tabs-container,
+.navbar,
+.video,
+.galeria-fotos .foto,
+.audio-container,
+.bio-media,
+.bio-video-embed,
+.video-background,
+.video-mask-container,
+.hero-video,
+.video-tabs.video-tabs-dynamic,
+.bio-tabs.bio-tabs-dynamic,
+.navbar-tabs.tab-menu,
+.video-tabs.tab-menu,
+.bio-tabs.tab-menu,
+.tab-menu li a,
+.navbar a,
+.logro-item,
+.formacion-item,
+.inicio-item,
+.premio-item,
+.contacto-item,
+.rupulo-content,
+.hero-title-cool,
+.audio-button,
+.video iframe,
+.bio-media iframe,
+.galeria-fotos .foto img {
+  border-radius: var(--global-radius) !important;
 }
