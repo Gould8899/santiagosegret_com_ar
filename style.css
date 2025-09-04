@@ -819,10 +819,18 @@ nav.sidebar ul {
   align-items: center;
 }
 
-/* Remove the colored panels that appear behind the hero video only in the #inicio section */
-#inicio,
+/* Remove the colored panels that appear behind the hero video only in the #inicio section.
+   Keep the section itself using the site background so it covers parent backgrounds, but
+   make inner panels transparent. */
+#inicio {
+  background-color: var(--color-fondo) !important;
+  background: var(--color-fondo) !important;
+  box-shadow: none !important;
+}
+
 #inicio .video-background,
-#inicio .video-mask-container {
+#inicio .video-mask-container,
+#inicio * {
   background-color: transparent !important;
   background: transparent !important;
   box-shadow: none !important;
