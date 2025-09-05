@@ -836,6 +836,17 @@ nav.sidebar ul {
   box-shadow: none !important;
 }
 
+/* Transparencia específica para el contenedor grande de contenido de pestañas en #videos */
+section#videos .video-tabs-content.tab-content,
+section#videos .video-tabs-content.tab-content>.tab-pane,
+section#videos .video-tabs.video-tabs-dynamic,
+section#videos .video-tabs.tab-menu {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
 .hero-video {
   width: calc(var(--video-width) * 2.5);
   height: calc((var(--video-width) * 2.5) * 0.5625);
