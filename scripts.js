@@ -329,8 +329,114 @@ document.addEventListener("DOMContentLoaded", () => {
           button.textContent = `Reproducir ${label}`;
         }
       });
+      // Cuando el audio termina, volver el texto a 'Reproducir'
+      audio.addEventListener('ended', () => {
+        try { button.textContent = `Reproducir ${label}`; } catch (e) { }
+      });
+      // Si el audio es pausado desde el control nativo, actualizamos el texto
+      audio.addEventListener('pause', () => {
+        try { if (!audio.ended) button.textContent = `Reproducir ${label}`; } catch (e) { }
+      });
     }
   }
   setupAudioToggle("audio-mi-refugio", "audio-button-mi-refugio", "'Mi Refugio'");
   setupAudioToggle("audio-la-familia", "audio-button-la-familia", "'La Familia'");
+
+  // Botones STOP: detener y resetear al inicio
+  function setupAudioStop(audioId, stopButtonId, playButtonId, label) {
+    const audio = document.getElementById(audioId);
+    const stopBtn = document.getElementById(stopButtonId);
+    const playBtn = document.getElementById(playButtonId);
+    if (audio && stopBtn) {
+      stopBtn.addEventListener('click', () => {
+        try { audio.pause(); audio.currentTime = 0; } catch (e) { }
+        try { if (playBtn) playBtn.textContent = `Reproducir ${label}`; } catch (e) { }
+      });
+    }
+  }
+  setupAudioStop('audio-mi-refugio', 'audio-stop-mi-refugio', 'audio-button-mi-refugio', "'Mi Refugio'");
+  setupAudioStop('audio-la-familia', 'audio-stop-la-familia', 'audio-button-la-familia', "'La Familia'");
+
+  /* Compact custom controls: play/pause, progress, time, volume */
+  function setupCompactAudioControls(audioId, rootId) {
+    const audio = document.getElementById(audioId);
+    const root = document.getElementById(rootId);
+    if (!audio || !root) return;
+
+    const playBtn = root.querySelector('.compact-play');
+    const progress = root.querySelector('.compact-progress');
+    const timeLabel = root.querySelector('.compact-time');
+    const volume = root.querySelector('.compact-volume');
+
+    // Ensure MediaManager knows about this audio
+    try { MediaManager.registerHtmlMedia(audio); } catch (e) { }
+
+    // Update UI when metadata is loaded (duration)
+    audio.addEventListener('loadedmetadata', () => {
+      if (progress) progress.max = Math.floor(audio.duration * 100) / 100;
+    });
+
+    // Play/pause
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        try { MediaManager.pauseAllExcept(audio); } catch (e) { }
+        audio.play();
+        playBtn.textContent = '⏸';
+      } else {
+        audio.pause();
+        playBtn.textContent = '▶';
+      }
+    });
+
+    // Progress update while playing
+    audio.addEventListener('timeupdate', () => {
+      if (progress && !progress.dragging) {
+        progress.value = audio.currentTime;
+      }
+      if (timeLabel) timeLabel.textContent = formatTime(audio.currentTime);
+    });
+
+    // When audio ends, reset button
+    audio.addEventListener('ended', () => {
+      if (playBtn) playBtn.textContent = '▶';
+      if (progress) progress.value = 0;
+      if (timeLabel) timeLabel.textContent = formatTime(0);
+    });
+
+    // Seeking via progress bar
+    if (progress) {
+      progress.addEventListener('input', () => {
+        progress.dragging = true;
+        if (timeLabel) timeLabel.textContent = formatTime(progress.value);
+      });
+      progress.addEventListener('change', () => {
+        audio.currentTime = parseFloat(progress.value);
+        progress.dragging = false;
+      });
+    }
+
+    // Volume control
+    if (volume) {
+      volume.addEventListener('input', () => {
+        audio.volume = parseFloat(volume.value);
+      });
+      // initialize
+      audio.volume = parseFloat(volume.value || 1);
+    }
+
+    // Utility to format seconds to M:SS
+    function formatTime(s) {
+      if (!s || isNaN(s)) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60).toString().padStart(2, '0');
+      return `${m}:${sec}`;
+    }
+
+    // Initialize label
+    if (timeLabel) timeLabel.textContent = formatTime(0);
+  }
+
+  // Wire compact controls for both audios in Inicios
+  setupCompactAudioControls('audio-mi-refugio', 'compact-mi-refugio');
+  setupCompactAudioControls('audio-la-familia', 'compact-la-familia');
 });

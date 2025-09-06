@@ -471,7 +471,7 @@
                 chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba
                 con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.
               </p>
-              <div class="bio-media">
+              <div class="bio-media inline-media">
                 <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0"
                   allowfullscreen width="280" height="157"></iframe>
                 <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Foto con el Marinero"
@@ -487,17 +487,33 @@
                 <h4 class="epigrafe">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia"</h4>
                 <div class="audio-item">
                   <p><strong>Mi Refugio:</strong></p>
-                  <audio controls>
+                  <audio id="audio-mi-refugio" preload="metadata">
                     <source src="audio/Versión-editada-separada-Mi-Refugio.mp3" type="audio/mpeg">
                     Tu navegador no soporta el elemento de audio.
                   </audio>
+                  <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio">
+                    <button class="compact-play" id="compact-play-mi-refugio" aria-label="Reproducir">▶</button>
+                    <input type="range" class="compact-progress" id="compact-progress-mi-refugio" min="0" max="100"
+                      step="0.1" value="0">
+                    <span class="compact-time" id="compact-time-mi-refugio">0:00</span>
+                    <input type="range" class="compact-volume" id="compact-volume-mi-refugio" min="0" max="1"
+                      step="0.01" value="1" aria-label="Volumen">
+                  </div>
                 </div>
                 <div class="audio-item">
                   <p><strong>La Familia:</strong></p>
-                  <audio controls>
+                  <audio id="audio-la-familia" preload="metadata">
                     <source src="audio/Versión-editada-separada-La-Familia.mp3" type="audio/mpeg">
                     Tu navegador no soporta el elemento de audio.
                   </audio>
+                  <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia">
+                    <button class="compact-play" id="compact-play-la-familia" aria-label="Reproducir">▶</button>
+                    <input type="range" class="compact-progress" id="compact-progress-la-familia" min="0" max="100"
+                      step="0.1" value="0">
+                    <span class="compact-time" id="compact-time-la-familia">0:00</span>
+                    <input type="range" class="compact-volume" id="compact-volume-la-familia" min="0" max="1"
+                      step="0.01" value="1" aria-label="Volumen">
+                  </div>
                 </div>
               </div>
             </div>

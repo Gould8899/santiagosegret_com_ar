@@ -266,6 +266,10 @@ section.seccion {
   --color-menu: #232323;
   --color-link: #007bff;
   --color-link-hover: #0056b3;
+  /* Bio-specific media sizing */
+  --bio-media-max-width: 640px;
+  --bio-media-inline-width: 320px;
+  --bio-media-max-height: 480px;
 }
 
 .skip-link {
@@ -428,22 +432,31 @@ h3 {
   background-color: #1a1a1a;
   padding: 20px 25px;
   margin-bottom: 25px;
-  border-left: 5px solid #3498db;
+  border-left: 5px solid var(--color-principal);
   border-radius: 8px;
 }
 
-/* Multimedia */
-.bio-media {
+/* Multimedia (scoped to Bio): unified sizing and responsive behavior */
+section#bio .bio-media {
   margin-top: 15px;
   text-align: center;
+  display: block;
 }
 
-.bio-media iframe,
-.bio-media img {
-  width: 600px;
-  height: 338px;
+/* Images and iframes inside #bio: keep aspect ratio, limit size, object-fit for consistent cropping */
+section#bio .bio-media iframe,
+section#bio .bio-media img {
+  max-width: var(--bio-media-max-width);
+  width: 100%;
+  height: auto;
+  max-height: var(--bio-media-max-height);
   border-radius: 8px;
   box-shadow: none;
+  object-fit: cover;
+}
+
+section#bio .bio-media iframe {
+  aspect-ratio: 16 / 9;
 }
 
 .epigrafe {
@@ -469,7 +482,7 @@ h3 {
   background-color: #1a1a1a;
   padding: 20px 25px;
   margin-bottom: 25px;
-  border-left: 5px solid #9b59b6;
+  border-left: 5px solid var(--color-principal);
   border-radius: 8px;
 }
 
@@ -482,15 +495,161 @@ h3 {
   border-radius: 5px;
   text-align: center;
   color: #e3e3e3;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .audio-item audio {
-  width: 320px;
+  width: 100%;
+  max-width: 420px;
   height: auto;
   border-radius: 5px;
+}
+
+/* Inline media layout inside Bio: fixed orderly pairings with responsive fallback */
+section#bio .bio-media.inline-media {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+section#bio .bio-media.inline-media iframe,
+section#bio .bio-media.inline-media img {
+  width: var(--bio-media-inline-width);
+  max-width: 100%;
+  height: auto;
+  flex: 0 0 var(--bio-media-inline-width);
+}
+
+/* On very small screens, stack media vertically for readability */
+@media (max-width: 720px) {
+  section#bio .bio-media.inline-media {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  section#bio .bio-media.inline-media iframe,
+  section#bio .bio-media.inline-media img {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+}
+
+/* Unificar estilo de contenedores de la sección Bio */
+section#bio,
+section#bio .tab-pane,
+section#bio .tab-pane .formacion-item,
+section#bio .tab-pane .inicio-item,
+section#bio .tab-pane .logro-item {
+  background-color: #07122b;
+  /* oscuro pero distinto del fondo global */
+  color: var(--color-secundario);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+/* Contraste de paneles internos */
+section#bio .formacion-item,
+section#bio .inicio-item,
+section#bio .logro-item {
+  background-color: #0b2340;
+  border-left: 5px solid var(--color-principal);
+}
+
+/* Ajustes visuales para audio controls y botones dentro de bio */
+.audio-container {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  padding: 18px;
+}
+
+.audio-button.inline {
+  margin-right: 8px;
+}
+
+/* Compact custom audio controls (scoped to Bio) */
+section#bio .compact-audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+section#bio .compact-audio .compact-play {
+  background: var(--color-principal);
+  color: #fff;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+section#bio .compact-audio .compact-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 180px;
+  height: 6px;
+  background: #444;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+section#bio .compact-audio .compact-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-principal);
+  box-shadow: none;
+}
+
+section#bio .compact-audio .compact-time {
+  font-size: 12px;
+  color: #cfcfcf;
+  min-width: 36px;
+  text-align: center;
+}
+
+section#bio .compact-audio .compact-volume {
+  width: 88px;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #444;
+  border-radius: 6px;
+}
+
+section#bio .compact-audio .compact-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+@media (max-width: 520px) {
+  section#bio .compact-audio {
+    width: 100%;
+    gap: 6px;
+  }
+
+  section#bio .compact-audio .compact-progress {
+    width: 120px;
+  }
+
+  section#bio .compact-audio .compact-volume {
+    width: 60px;
+  }
 }
 
 /* SECCIÓN: #premios */
@@ -709,6 +868,14 @@ nav.sidebar ul {
   box-shadow: none;
 }
 
+/* If gallery is used inside Bio, enforce bio sizing variables so images match other media */
+section#bio .galeria-fotos .foto img {
+  width: var(--bio-media-inline-width);
+  max-width: 100%;
+  height: calc(var(--bio-media-inline-width) * 0.75);
+  object-fit: cover;
+}
+
 .galeria-fotos .foto p {
   margin-top: 5px;
   font-size: 0.9em;
@@ -716,14 +883,16 @@ nav.sidebar ul {
 }
 
 .bio-video-embed {
-  width: 300px;
-  height: 170px;
+  width: var(--bio-media-inline-width);
+  max-width: 100%;
+  height: auto;
   margin: auto;
 }
 
 .bio-video-embed iframe {
-  width: 300px;
-  height: 170px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
 }
 
 .subtitulo-partituras {
@@ -798,6 +967,17 @@ nav.sidebar ul {
 
 #audio-button-la-familia {
   top: 60px;
+}
+
+/* Botones de audio inline dentro de contenido (no fixed) */
+.audio-button.inline {
+  position: relative;
+  right: auto;
+  top: auto;
+  margin: 8px 0 12px 0;
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 0.95em;
 }
 
 .video-background {
@@ -927,8 +1107,8 @@ body,
 .tab-menu,
 .tab-menu li a,
 .video iframe,
-.bio-media iframe,
-.bio-media img {
+section#bio .bio-media iframe,
+section#bio .bio-media img {
   box-shadow: none !important;
   text-shadow: none !important;
 }
@@ -1106,8 +1286,8 @@ section.seccion,
 .video,
 .galeria-fotos .foto,
 .audio-container,
-.bio-media,
-.bio-video-embed,
+section#bio .bio-media,
+section#bio .bio-video-embed,
 .video-background,
 .video-mask-container,
 .hero-video,
@@ -1127,7 +1307,24 @@ section.seccion,
 .hero-title-cool,
 .audio-button,
 .video iframe,
-.bio-media iframe,
+section#bio .bio-media iframe,
 .galeria-fotos .foto img {
   border-radius: var(--global-radius) !important;
 }
+
+/* ***** DEBUG TEMPORAL: resaltar todas las secciones (excepto #inicio) para localizar el elemento que cambia color ***** */
+section.seccion:not(#inicio),
+#videos,
+#premios,
+#bio,
+#fotos,
+#contacto,
+#rupulo {
+  outline: 4px dashed rgba(255, 255, 0, 0.95) !important;
+  /* borde llamativo amarillo */
+  background-color: rgba(255, 255, 0, 0.08) !important;
+  /* fondo amarillo muy tenue */
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Si confirmás, reemplazo este bloque por el cambio final y lo elimino del repo. */
