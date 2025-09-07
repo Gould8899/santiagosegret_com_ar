@@ -1,24 +1,3 @@
-/* =====================================================
-   🌐 VARIABLES GLOBALES (añadidas, no rompen nada)
-   ===================================================== */
-:root {
-  --color-blanco: #ffffff;
-  --color-negro: #000000;
-  --color-gris-claro: #f9f9f9;
-  --color-gris: #666666;
-  --color-gris-oscuro: #222222;
-  --color-acento: #c0392b;
-  --radio-borde: 8px;
-  --ancho-maximo: 1200px;
-  --fuente-base: 'Arial', sans-serif;
-  --tamano-base: 16px;
-}
-
-/* Aclaración: estas variables están disponibles para que
-   puedas usarlas, pero no afectan al resultado todavía.
-   Todo el CSS original sigue intacto debajo.
-   ===================================================== */
-
 :root {
   /* Minimal monochrome theme: white backgrounds and black text */
   --color-fondo: #ffffff;
@@ -35,12 +14,8 @@
   /* Layout helpers */
   --site-width: 1100px;
   --gutter: 24px;
-  --
-  /* =====================================================
-   🎬 VIDEOS Y MULTIMEDIA
-   ===================================================== */
-  video-width: 360px;
-  --section-vertical: 5px;
+  --video-width: 360px;
+  --section-vertical: 50px;
 
   /* Media sizing */
   --bio-media-max-width: 640px;
@@ -94,12 +69,7 @@
   padding-top: 16px;
 }
 
-.video-tabs
-
-/* =====================================================
-   📑 SISTEMA DE PESTAÑAS
-   ===================================================== */
-.tab-menu li a,
+.video-tabs.tab-menu li a,
 .bio-tabs.tab-menu li a {
   color: var(--color-secundario) !important;
 }
@@ -150,10 +120,6 @@
 }
 
 /* --- SISTEMA DE PESTAÑAS: CONVENCIONES (BEM-LIKE) --- */
-
-/* =====================================================
-   📌 NAVBAR Y CABECERA
-   ===================================================== */
 .navbar-tabs.tab-menu,
 .video-tabs.tab-menu,
 .bio-tabs.tab-menu {
@@ -295,21 +261,12 @@
   width: 100%;
 }
 
-.seccion
-
-/* =====================================================
-   👤 SECCIÓN BIO
-   ===================================================== */
-#bio {
+.seccion#bio {
   max-width: var(--site-width);
   margin-left: auto;
   margin-right: auto;
 }
 
-
-/* =====================================================
-   🏆 SECCIÓN PREMIOS
-   ===================================================== */
 #premios,
 .bio-margins {
   max-width: var(--site-width);
@@ -571,12 +528,7 @@ section#bio .bio-media iframe {
 }
 
 /* Audio */
-.
-
-/* =====================================================
-   🎵 AUDIO Y REPRODUCTORES
-   ===================================================== */
-audio-container {
+.audio-container {
   margin: 20px 0;
   padding: 15px;
   background-color: var(--surface);

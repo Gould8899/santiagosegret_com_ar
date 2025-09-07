@@ -423,4 +423,67 @@ document.addEventListener("DOMContentLoaded", () => {
   // Wire compact controls for both audios in Inicios
   setupCompactAudioControls('audio-mi-refugio', 'compact-mi-refugio');
   setupCompactAudioControls('audio-la-familia', 'compact-la-familia');
+
+  // Runtime safeguard: append an authoritative stylesheet that forces
+  // the navbar and tab elements to remain fixed and immobile. This
+  // helps neutralize any runtime class/style changes that may cause
+  // the bubbles to shift while scrolling.
+  (function enforceFixedHeaderCSS() {
+    try {
+      const cssId = '__fixed_header_guard__';
+      const cssText = `
+        /* Authoritative header/tab fixes (injected at runtime) */
+        .navbar {
+          position: fixed !important;
+          top: 0 !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: var(--site-width) !important;
+          max-width: var(--site-width) !important;
+          z-index: 1200 !important;
+          transition: none !important;
+        }
+        .video-tabs.video-tabs-dynamic,
+        .bio-tabs.bio-tabs-dynamic {
+          position: fixed !important;
+          top: var(--navbar-height) !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: var(--site-width) !important;
+          max-width: var(--site-width) !important;
+          z-index: 1150 !important;
+          transition: none !important;
+        }
+        .tab-menu-secondary {
+          position: fixed !important;
+          top: calc(var(--navbar-height) + var(--primary-tabs-height)) !important;
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: var(--site-width) !important;
+          max-width: var(--site-width) !important;
+          z-index: 1140 !important;
+          transition: none !important;
+        }
+      `;
+
+      function ensureStyle() {
+        if (!document.getElementById(cssId)) {
+          const s = document.createElement('style');
+          s.id = cssId;
+          s.type = 'text/css';
+          s.appendChild(document.createTextNode(cssText));
+          document.head.appendChild(s);
+        }
+      }
+
+      ensureStyle();
+
+      // If any script removes the injected style, re-insert it.
+      const headObserver = new MutationObserver(() => ensureStyle());
+      headObserver.observe(document.head, { childList: true });
+    } catch (e) {
+      // Non-critical: don't break the rest of the page if this fails
+      console.warn('enforceFixedHeaderCSS error', e);
+    }
+  })();
 });
