@@ -1,100 +1,53 @@
 /* =====================================================
-   🌐 VARIABLES GLOBALES (añadidas, no rompen nada)
+   🌐 VARIABLES GLOBALES CONSOLIDADAS
+   Simplificadas y sin duplicados. Mantener aquí los valores
+   centrales evita referencias dispersas por el archivo.
    ===================================================== */
 :root {
-  --color-blanco: #ffffff;
-  --color-negro: #000000;
-  --color-gris-claro: #f9f9f9;
-  --color-gris: #666666;
-  --color-gris-oscuro: #222222;
-  --color-acento: #c0392b;
-  --radio-borde: 8px;
-  --ancho-maximo: 1200px;
-  --fuente-base: 'Arial', sans-serif;
-  --tamano-base: 16px;
-}
-
-/* Aclaración: estas variables están disponibles para que
-   puedas usarlas, pero no afectan al resultado todavía.
-   Todo el CSS original sigue intacto debajo.
-   ===================================================== */
-
-:root {
-  /* Minimal monochrome theme: white backgrounds and black text */
+  /* core colors */
   --color-fondo: #ffffff;
   --color-text: #000000;
   --color-overlay: rgba(0, 0, 0, 0.02);
-
-  /* Keep a few semantic aliases to avoid touching many selectors below */
   --surface: var(--color-fondo);
   --elev: var(--color-fondo);
-  --color-accent: var(--color-text);
-  --color-link: var(--color-accent);
-  --color-link-hover: var(--color-text);
 
-  /* Layout helpers */
+  /* accents / semantic */
+  --accent-red: #000000;
+  --accent-orange: #0a0a0a;
+  --accent-steel: #0a0a0a;
+  --color-principal: var(--color-text);
+  --color-secundario: var(--color-text);
+  --color-muted: rgba(0, 0, 0, 0.72);
+
+  /* layout */
   --site-width: 1100px;
   --gutter: 24px;
-  --
-  /* =====================================================
-   🎬 VIDEOS Y MULTIMEDIA
-   ===================================================== */
-  video-width: 360px;
-  --section-vertical: 5px;
+  --video-width: 360px;
+  --section-vertical: 50px;
 
-  /* Media sizing */
+  /* media sizing */
   --bio-media-max-width: 640px;
   --bio-media-inline-width: 320px;
   --bio-media-max-height: 480px;
 
+  /* UI helpers */
   --global-radius: 12px;
-  --shadow-dark: rgba(0, 0, 0, 0.04);
+  --shadow-dark: rgba(199, 57, 57, 0.04);
 
-  /* Header stacking sizes (used to pin and stack nav + tabs) */
-  --navbar-height: 56px;
-  --primary-tabs-height: 48px;
-  --secondary-tabs-height: 40px;
+  /* header/tabs stacking */
+  --navbar-height: 45px;
+  --primary-tabs-height: 5px;
+  --secondary-tabs-height: 15px;
 
-  /* Compact bg alias set (map all bg-* to elev/surface) */
-  --bg-1: var(--elev);
-  --bg-2: var(--elev);
-  --bg-3: var(--color-accent);
-  --bg-4: var(--elev);
-  --bg-5: var(--surface);
-  --bg-6: var(--elev);
-  --bg-7: var(--elev);
-  --bg-8: var(--surface);
-  --bg-9: var(--elev);
-  --bg-10: var(--elev);
-  --bg-11: var(--elev);
-  --bg-12: var(--elev);
-
-  /* Accent aliases mapped to single monochrome accent */
-  /* stronger, near-black accents for higher contrast */
-  --accent-red: #000000;
-  --accent-orange: #0a0a0a;
-  --accent-steel: #0a0a0a;
-  /* Semantic aliases kept for legacy selectors used across the stylesheet */
-  --color-principal: var(--color-text);
-  --color-secundario: var(--color-text);
-  /* Slightly stronger muted text for epigraphs and meta */
-  --color-muted: rgba(0, 0, 0, 0.72);
-  /* Clear, very light panel backgrounds to make blocks 'claro y vivo' */
+  /* handy panel colors */
   --bg-logro: #fbfbfb;
   --bg-panel: #ffdd47;
-
-  /* Header stacking sizes (used to pin and stack nav + tabs) */
-  --navbar-height: 56px;
-  --primary-tabs-height: 48px;
-  --secondary-tabs-height: 40px;
-
 }
 
+/* small spacing for tab content */
 .bio-tabs-content .tab-pane {
   padding-top: 16px;
 }
-
-.video-tabs
 
 /* =====================================================
    📑 SISTEMA DE PESTAÑAS
@@ -571,12 +524,11 @@ section#bio .bio-media iframe {
 }
 
 /* Audio */
-.
 
 /* =====================================================
    🎵 AUDIO Y REPRODUCTORES
    ===================================================== */
-audio-container {
+.audio-container {
   margin: 20px 0;
   padding: 15px;
   background-color: var(--surface);
@@ -1461,6 +1413,13 @@ section#bio,
 section#bio .tab-pane,
 section#bio .bio-media {
   text-align: center !important;
+}
+
+/* Corregir alineación de los items de logros: deben quedar alineados a la izquierda
+   (anulan la regla global de centrado en la sección Bio) */
+section#bio .logro-item,
+section#bio .logro-item .logro-detalle {
+  text-align: left !important;
 }
 
 /* Make --bg-panel vivid only inside the Bio section */
