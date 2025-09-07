@@ -70,11 +70,7 @@
   --color-elev: var(--elev);
 }
 
-/* Backwards-compatible aliases for older variable names used throughout the file */
-:root {
-  --color-surface: var(--surface);
-  --color-elev: var(--elev);
-}
+/* Backwards-compatible aliases kept in the main :root above. */
 
 .bio-tabs-content .tab-pane {
   padding-top: 16px;
@@ -1004,33 +1000,6 @@ section#bio .galeria-fotos .foto img {
   color: var(--color-secundario);
 }
 
-.audio-button {
-  position: fixed;
-  right: 10px;
-  z-index: 1000;
-  padding: 10px 15px;
-  background-color: #000000;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.3s;
-}
-
-.audio-button:hover {
-  background-color: var(--accent-red);
-}
-
-#audio-button-mi-refugio {
-  top: 10px;
-}
-
-#audio-button-la-familia {
-  top: 60px;
-}
-
-/* Botones de audio inline dentro de contenido (no fixed) */
 .audio-button.inline {
   position: relative;
   right: auto;

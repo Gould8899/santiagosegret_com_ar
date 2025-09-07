@@ -339,23 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-  setupAudioToggle("audio-mi-refugio", "audio-button-mi-refugio", "'Mi Refugio'");
-  setupAudioToggle("audio-la-familia", "audio-button-la-familia", "'La Familia'");
-
-  // Botones STOP: detener y resetear al inicio
-  function setupAudioStop(audioId, stopButtonId, playButtonId, label) {
-    const audio = document.getElementById(audioId);
-    const stopBtn = document.getElementById(stopButtonId);
-    const playBtn = document.getElementById(playButtonId);
-    if (audio && stopBtn) {
-      stopBtn.addEventListener('click', () => {
-        try { audio.pause(); audio.currentTime = 0; } catch (e) { }
-        try { if (playBtn) playBtn.textContent = `Reproducir ${label}`; } catch (e) { }
-      });
-    }
-  }
-  setupAudioStop('audio-mi-refugio', 'audio-stop-mi-refugio', 'audio-button-mi-refugio', "'Mi Refugio'");
-  setupAudioStop('audio-la-familia', 'audio-stop-la-familia', 'audio-button-la-familia', "'La Familia'");
+  // Not using fixed position audio buttons; compact audio controls are wired below.
 
   /* Compact custom controls: play/pause, progress, time, volume */
   function setupCompactAudioControls(audioId, rootId) {
