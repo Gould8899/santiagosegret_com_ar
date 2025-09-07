@@ -1412,14 +1412,20 @@ body {
 section#bio,
 section#bio .tab-pane,
 section#bio .bio-media {
-  text-align: center !important;
+  /* Alineación por defecto dentro de Bio: texto al margen izquierdo */
+  text-align: left !important;
 }
 
-/* Corregir alineación de los items de logros: deben quedar alineados a la izquierda
-   (anulan la regla global de centrado en la sección Bio) */
-section#bio .logro-item,
-section#bio .logro-item .logro-detalle {
-  text-align: left !important;
+/* Mantener las imágenes y iframes centrados visualmente dentro de #bio
+   mientras que el texto del contenido queda alineado a la izquierda */
+section#bio .bio-media img,
+section#bio .bio-media iframe,
+section#bio img,
+section#bio iframe,
+section#bio .video iframe {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* Make --bg-panel vivid only inside the Bio section */
