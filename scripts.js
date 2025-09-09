@@ -368,13 +368,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const GLOBAL_MUTE_KEY = 'siteGlobalMuted';
   let globalMuted = !!JSON.parse(localStorage.getItem(GLOBAL_MUTE_KEY) || 'false');
 
-  function setGlobalMuted(mute) {
+  function setGlobalMuted(mute, options) {
+    const initial = options && options.initial;
     globalMuted = !!mute;
     localStorage.setItem(GLOBAL_MUTE_KEY, JSON.stringify(globalMuted));
     // mutear/desmutear todos los medios HTML registrados
     try {
       MediaManager.htmlMedias.forEach(m => {
-        try { m.muted = globalMuted; } catch (e) { /* ignore */ }
+        try {
+          // Si es la inicialización, mantener muted en elementos autoplay
+          // para evitar conflictos con políticas del navegador.
+          if (!globalMuted && initial && m.hasAttribute && m.hasAttribute('autoplay')) {
+            m.muted = true;
+          } else {
+            m.muted = globalMuted;
+          }
+        } catch (e) { /* ignore */ }
       });
     } catch (e) { /* ignore */ }
     // mutear/desmutear players de YouTube si la API lo permite
@@ -393,10 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Toggle desde el botón
-  function toggleGlobalMute() { setGlobalMuted(!globalMuted); }
+  function toggleGlobalMute() { setGlobalMuted(!globalMuted, { initial: false }); }
 
-  // Aplicar estado inicial una vez DOM cargado
-  setGlobalMuted(globalMuted);
+  // Aplicar estado inicial una vez DOM cargado (marcar initial=true para respetar autoplay)
+  setGlobalMuted(globalMuted, { initial: true });
 
   // Vincular el botón si existe (se inserta desde index.html)
   try {
@@ -411,6 +420,19 @@ document.addEventListener('DOMContentLoaded', () => {
       try { if (el && typeof el.setAttribute === 'function') el.muted = globalMuted; } catch (e) { /* ignore */ }
     };
   } catch (e) { /* ignore */ }
+
+  // Intento mejor esfuerzo: reproducir el hero video al cargar la página.
+  try {
+    const hero = document.querySelector('.hero-video');
+    if (hero) {
+      // asegurar que el hero arranque muted
+      try { hero.muted = true; } catch (e) { /* ignore */ }
+      const p = hero.play();
+      if (p && typeof p.then === 'function') {
+        p.catch(() => { /* reproducción bloqueada por política, no forzamos */ });
+      }
+    }
+  } catch (e) { /* ignore hero play errors */ }
 
   (function enforceFixedHeaderCSS() {
     try {

@@ -41,7 +41,7 @@
 
   /* handy panel colors */
   --bg-logro: #fbfbfb;
-  --bg-panel: #ffdd47;
+  --bg-panel: #83aedf;
 }
 
 /* small spacing for tab content */
@@ -1362,7 +1362,7 @@ a,
 }
 
 #global-mute-btn[aria-pressed="true"] {
-  background: #b30000;
+  background: #169607;
   /* rojo cuando está silenciado */
 }
 
@@ -1460,16 +1460,16 @@ section#bio .video iframe {
 /* Make --bg-panel vivid only inside the Bio section */
 section#bio {
   --bg-panel: #ffdd47;
-  --bg-logro: #ffdd47;
+  --bg-logro: #edd54d;
 }
 
 /* Make --bg-panel vivid only inside Contacto and Rupulo as well */
 section#contacto {
-  --bg-panel: #ffdd47;
+  --bg-panel: #6dcb80;
 }
 
 section#rupulo {
-  --bg-panel: #ffdd47;
+  --bg-panel: #db9bcb;
 }
 
 /* Force item panels in those sections to use the panel color (match Premios/Bio) */
