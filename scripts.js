@@ -157,7 +157,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!el || typeof el.addEventListener !== 'function') return;
       if (this.htmlMedias.has(el)) return; // idempotente
       this.htmlMedias.add(el);
-      const onPlay = () => { try { if (el.muted) return; this.pauseAllExcept(el); /* pausar también reproductores de YouTube controlados */ ytPlayers.forEach(p => { try { if (p && typeof p.pauseVideo === 'function') p.pauseVideo(); } catch (e) { /* ignore */ } }); } catch (e) { /* ignore */ } };
+      const onPlay = () => {
+        try {
+          this.pauseAllExcept(el);
+          /* pausar también reproductores de YouTube controlados */
+          ytPlayers.forEach(p => { try { if (p && typeof p.pauseVideo === 'function') p.pauseVideo(); } catch (e) { /* ignore */ } });
+          /* además pausar el hero video si existe y no es el que acaba de iniciar */
+          try {
+            const hero = document.querySelector('.hero-video');
+            if (hero && hero !== el && !hero.paused) {
+              hero.pause();
+            }
+          } catch (e) { /* ignore hero pause errors */ }
+        } catch (e) { /* ignore */ }
+      };
       el.addEventListener('play', onPlay);
       try { this._listeners.set(el, onPlay); } catch (e) { /* ignore */ }
     },
@@ -169,6 +182,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Registrar los media ya presentes
   document.querySelectorAll('audio, video').forEach(el => MediaManager.registerHtmlMedia(el));
+
+  // Listener global en captura: si cualquier medio comienza a reproducirse, pausar el hero video.
+  try {
+    document.addEventListener('play', function (e) {
+      try {
+        const target = e && e.target;
+        if (!target) return;
+        const hero = document.querySelector('.hero-video');
+        if (hero && target !== hero && !hero.paused) {
+          try { hero.pause(); } catch (err) { /* ignore */ }
+        }
+      } catch (err) { /* ignore */ }
+    }, true);
+  } catch (e) { /* ignore */ }
 
   // Registrar dinámicamente los media que se añadan después
   try {
@@ -212,6 +239,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 try { MediaManager.pauseAllHtmlMedia(); } catch (e) { /* ignore */ }
                 // pausar otros YT players controlados
                 ytPlayers.forEach(p => { try { const pf = p && typeof p.getIframe === 'function' && p.getIframe(); if (p && pf && pf !== iframe) p.pauseVideo(); } catch (e) { /* ignore */ } });
+                // pausar el hero video si existe
+                try { const hero = document.querySelector('.hero-video'); if (hero && !hero.paused) hero.pause(); } catch (e) { /* ignore */ }
               }
             }
           }
@@ -334,6 +363,55 @@ document.addEventListener('DOMContentLoaded', () => {
      VII. Guardia runtime CSS para fijar navbar/pestañas (si algún script
      intenta modificarlo en runtime)
      ------------------------------------------------------------------*/
+  // ----------------- Global mute control -----------------
+  // Estado persistente de mute global
+  const GLOBAL_MUTE_KEY = 'siteGlobalMuted';
+  let globalMuted = !!JSON.parse(localStorage.getItem(GLOBAL_MUTE_KEY) || 'false');
+
+  function setGlobalMuted(mute) {
+    globalMuted = !!mute;
+    localStorage.setItem(GLOBAL_MUTE_KEY, JSON.stringify(globalMuted));
+    // mutear/desmutear todos los medios HTML registrados
+    try {
+      MediaManager.htmlMedias.forEach(m => {
+        try { m.muted = globalMuted; } catch (e) { /* ignore */ }
+      });
+    } catch (e) { /* ignore */ }
+    // mutear/desmutear players de YouTube si la API lo permite
+    try {
+      ytPlayers.forEach(p => { try { if (p && typeof p.mute === 'function') { if (globalMuted) p.mute(); else p.unMute && p.unMute(); } } catch (e) { /* ignore */ } });
+    } catch (e) { /* ignore */ }
+    // actualizar botón UI
+    try {
+      const btn = document.getElementById('global-mute-btn');
+      if (btn) {
+        btn.setAttribute('aria-pressed', String(!!globalMuted));
+        btn.title = globalMuted ? 'Desmutear todo' : 'Silenciar todo';
+        btn.textContent = globalMuted ? '🔇' : '🔈';
+      }
+    } catch (e) { /* ignore */ }
+  }
+
+  // Toggle desde el botón
+  function toggleGlobalMute() { setGlobalMuted(!globalMuted); }
+
+  // Aplicar estado inicial una vez DOM cargado
+  setGlobalMuted(globalMuted);
+
+  // Vincular el botón si existe (se inserta desde index.html)
+  try {
+    const muteBtn = document.getElementById('global-mute-btn');
+    if (muteBtn) {
+      muteBtn.addEventListener('click', function () { toggleGlobalMute(); try { this.blur(); } catch (e) { } });
+    }
+    // Asegurar que nuevos elementos media respeten el estado global al registrarse
+    const origRegister = MediaManager.registerHtmlMedia.bind(MediaManager);
+    MediaManager.registerHtmlMedia = function (el) {
+      origRegister(el);
+      try { if (el && typeof el.setAttribute === 'function') el.muted = globalMuted; } catch (e) { /* ignore */ }
+    };
+  } catch (e) { /* ignore */ }
+
   (function enforceFixedHeaderCSS() {
     try {
       const cssId = '__fixed_header_guard__';
