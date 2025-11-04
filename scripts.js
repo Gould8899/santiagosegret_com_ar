@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'hero.subtitle': 'musician, bandoneonist',
         'hero.videoFallback': 'Your browser does not support the video element. You can download the file from the server.',
         'tabs.bandoneon': 'Bandoneón',
+  'tabs.experimentos': 'Experiments',
         'tabs.bach': 'Bach',
         'tabs.patio': 'Patio',
         'tabs.dsq': 'DSQ',
