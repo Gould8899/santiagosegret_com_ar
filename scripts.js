@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeToggleButton(currentTheme);
   }
 
-  const initialTheme = manualTheme || (prefersDarkMedia.matches ? 'dark' : 'light');
+  const initialTheme = manualTheme || 'dark';
   setTheme(initialTheme, { persist: !!manualTheme });
 
   prefersDarkMedia.addEventListener('change', event => {
