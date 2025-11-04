@@ -6,11 +6,11 @@
   <!-- Ajuste para dispositivos móviles -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
-    content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más.">
-  <title>Santiago Segret - Músico</title>
+    content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más." data-i18n-key="meta.description" data-i18n-attr="content">
+  <title data-i18n-key="meta.title">Santiago Segret - Músico</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <!-- Metadatos sociales -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Santiago Segret - Músico">
@@ -21,22 +21,21 @@
   <meta name="twitter:title" content="Santiago Segret - Músico">
   <meta name="twitter:description" content="Santiago Segret, músico y bandoneonista. Biografía, videos y partituras.">
   <meta name="twitter:image" content="/santiagosegretFOTOS/01_Fotos/Federico-Cabarcos-Santiago.jpg">
-  <!-- API de YouTube (carga asíncrona) -->
-  <script async src="https://www.youtube.com/iframe_api"></script>
 </head>
 
 <body>
-  <a class="skip-link" href="#inicio">Saltar al contenido</a>
+  <a class="skip-link" href="#inicio" data-i18n-key="skip.toContent">Saltar al contenido</a>
 
   <nav class="navbar" role="navigation">
     <ul class="navbar-tabs tab-menu">
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#videos">Videos</a></li>
-      <li><a href="#premios">Premios</a></li>
-      <li><a href="#bio">Bio</a></li>
-      <li><a href="#fotos">Fotos</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-      <li><a href="#rupulo">Rúpulo</a></li>
+      <li><a href="#inicio" data-i18n-key="nav.home">Inicio</a></li>
+      <li><a href="#videos" data-i18n-key="nav.videos">Videos</a></li>
+      <li><a href="#premios" data-i18n-key="nav.awards">Premios</a></li>
+      <li><a href="#bio" data-i18n-key="nav.bio">Bio</a></li>
+      <li><a href="#fotos" data-i18n-key="nav.photos">Fotos</a></li>
+      <li><a href="#contacto" data-i18n-key="nav.contact">Contacto</a></li>
+      <li><a href="#rupulo" data-i18n-key="nav.rupulo">Rúpulo</a></li>
+  <li class="language-toggle"><button type="button" id="language-toggle" data-i18n-key="nav.languageToggle" aria-label="Cambiar idioma a inglés">English</button></li>
     </ul>
   </nav>
 
@@ -46,16 +45,16 @@
       <div class="hero-title-cool">
         <span class="hero-title-name">Santiago Segret</span>
         <br>
-        <span class="hero-title-sub">músico, bandoneonista</span>
+  <span class="hero-title-sub" data-i18n-key="hero.subtitle">músico, bandoneonista</span>
       </div>
 
       <div class="video-background">
         <div class="video-mask-container">
           <video class="hero-video" controls autoplay muted loop playsinline preload="metadata"
-            poster="santiagosegretFOTOS/01_Fotos/_MG_2076.jpg" disablepictureinpicture disableremoteplayback
+            poster="santiagosegretFOTOS/02_Fotos/_MG_2076.jpg" disablepictureinpicture disableremoteplayback
             controlsList="nodownload nofullscreen noremoteplayback">
             <source src="GOLONDRINAS_PUBLICAR.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video. Podés descargar el archivo desde el servidor.
+            <span data-i18n-key="hero.videoFallback">Tu navegador no soporta el elemento de video. Podés descargar el archivo desde el servidor.</span>
           </video>
         </div>
       </div>
@@ -67,11 +66,11 @@
     <section class="seccion" id="videos">
       <div class="video-tabs video-tabs-dynamic">
         <ul class="video-tabs tab-menu">
-          <li><a href="#" class="active" data-tab="bandoneon">Bandoneón</a></li>
-          <li><a href="#" data-tab="bach">Bach</a></li>
-          <li><a href="#" data-tab="patio">Patio</a></li>
-          <li><a href="#" data-tab="dsq">DSQ</a></li>
-          <li><a href="#" data-tab="piano">Obras/juegos/piano</a></li>
+          <li><a href="#" class="active" data-tab="bandoneon" data-i18n-key="tabs.bandoneon">Bandoneón</a></li>
+          <li><a href="#" data-tab="bach" data-i18n-key="tabs.bach">Bach</a></li>
+          <li><a href="#" data-tab="patio" data-i18n-key="tabs.patio">Patio</a></li>
+          <li><a href="#" data-tab="dsq" data-i18n-key="tabs.dsq">DSQ</a></li>
+          <li><a href="#" data-tab="piano" data-i18n-key="tabs.piano">Obras/juegos/piano</a></li>
         </ul>
       </div>
 
@@ -80,77 +79,77 @@
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/QoU6hMf7368" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Desgrabado de la versión de Roberto Di Filippo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.1">Desgrabado de la versión de Roberto Di Filippo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/6aaemoGeQl4" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Instantáneas del maestro Julio Pane.</h4>
+            <h4 data-i18n-key="videos.bandoneon.2">Instantáneas del maestro Julio Pane.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/nMwCvczszyI" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>El arreglo es de Máximo Mori y la referencia inevitable es Roberto Di Filippo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.3">El arreglo es de Máximo Mori y la referencia inevitable es Roberto Di Filippo.</h4>
           </div>
           <div class="video">
-            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/videoseries?list=PLNIPF_IC2hGjhqz4G6xC8xaQt79D5soG-"
+            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/nMwCvczszyI"
               frameborder="0" allowfullscreen loading="lazy"></iframe>
-            <h4>Uno de los tantos y grandes arreglos de Néstor Marconi.</h4>
+            <h4 data-i18n-key="videos.bandoneon.4">Uno de los tantos y grandes arreglos de Néstor Marconi.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Kz_uOJ-k0-I" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Un arreglo propio sobre una música de los Hermanos Ábalos.</h4>
+            <h4 data-i18n-key="videos.bandoneon.5">Un arreglo propio sobre una música de los Hermanos Ábalos.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/49N1vSN7yNE" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Un clásico arreglado por Bernardo Fingas.</h4>
+            <h4 data-i18n-key="videos.bandoneon.6">Un clásico arreglado por Bernardo Fingas.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/i0bUou53WtE" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Arreglo de Máximo Mori y la referencia de Di Filippo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.7">Arreglo de Máximo Mori y la referencia de Di Filippo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/TQ-4Pm9zZos" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Desgrabando a Pedro Laurenz.</h4>
+            <h4 data-i18n-key="videos.bandoneon.8">Desgrabando a Pedro Laurenz.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/l_-QvfO00Oo" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Selección de folklore en bandoneón solo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.9">Selección de folklore en bandoneón solo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/RkqJjs0q8u4" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Arreglo de Piazzolla grabado en Planta 16.</h4>
+            <h4 data-i18n-key="videos.bandoneon.10">Arreglo de Piazzolla grabado en Planta 16.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/J9glAw7_Cis" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Más Piazzolla en bandoneón solo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.11">Más Piazzolla en bandoneón solo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/EagP-G0zKyQ" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Arreglo de Máximo Mori, versión de referencia: Di Filippo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.12">Arreglo de Máximo Mori, versión de referencia: Di Filippo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/eHQptbfsayc" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Más Piazzolla en bandoneón solo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.13">Más Piazzolla en bandoneón solo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/N83SOLLKIzc" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Arreglos y más Piazzolla en bandoneón solo.</h4>
+            <h4 data-i18n-key="videos.bandoneon.14">Arreglos y más Piazzolla en bandoneón solo.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/GgJKm-4uLls" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Arreglo de Máximo Mori.</h4>
+            <h4 data-i18n-key="videos.bandoneon.15">Arreglo de Máximo Mori.</h4>
           </div>
         </div>
 
@@ -158,32 +157,32 @@
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Z65BS4V5QS0" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Invención 8 a dos voces de Bach</h4>
+            <h4 data-i18n-key="videos.bach.1">Invención 8 a dos voces de Bach</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/PIFw3yYBSiA" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Las 15 invenciones de Bach a dos voces. En bandoneón</h4>
+            <h4 data-i18n-key="videos.bach.2">Las 15 invenciones de Bach a dos voces. En bandoneón</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/DfEjFNj88Jg" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Varias piezas del libro de Ana Magdalena Bach</h4>
+            <h4 data-i18n-key="videos.bach.3">Varias piezas del libro de Ana Magdalena Bach</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/MalSKAOZvwg" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Tocando el piano</h4>
+            <h4 data-i18n-key="videos.bach.4">Tocando el piano</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/MfuFe6EvJe0" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Grabado en Panamá</h4>
+            <h4 data-i18n-key="videos.bach.5">Grabado en Panamá</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/5RfQyTuEEtU" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Uno de los 4 duettos del maestro Bach en piano.</h4>
+            <h4 data-i18n-key="videos.bach.6">Uno de los 4 duettos del maestro Bach en piano.</h4>
           </div>
         </div>
 
@@ -191,17 +190,17 @@
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/h7Vgod91y4w" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Con los Patio</h4>
+            <h4 data-i18n-key="videos.patio.1">Con los Patio</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/pMLhlzzbGvo" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Con Patio y Nadia Larsher</h4>
+            <h4 data-i18n-key="videos.patio.2">Con Patio y Nadia Larsher</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/aVH4zURsmiI" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Una zamba con el trío Patio</h4>
+            <h4 data-i18n-key="videos.patio.3">Una zamba con el trío Patio</h4>
           </div>
         </div>
 
@@ -209,27 +208,27 @@
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/U2nPGZz9pXU" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Líquido 2 en el ex Centro Cultural Kirchner</h4>
+            <h4 data-i18n-key="videos.dsq.1">Líquido 2 en el ex Centro Cultural Kirchner</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/IFGNrwcuD6M" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Concierto con música de Piazzolla</h4>
+            <h4 data-i18n-key="videos.dsq.2">Concierto con música de Piazzolla</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/d2APcpOvB80" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>"Tanguera" de Mariano Mores, en Virasoro</h4>
+            <h4 data-i18n-key="videos.dsq.3">"Tanguera" de Mariano Mores, en Virasoro</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/fX6-X44yUuI" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Canción 4 en el ex Centro Cultural Kirchner</h4>
+            <h4 data-i18n-key="videos.dsq.4">Canción 4 en el ex Centro Cultural Kirchner</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Ujy4xD53UyQ" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Con el Diego Schissi Quinteto y Aca Seca en Café Vinilo</h4>
+            <h4 data-i18n-key="videos.dsq.5">Con el Diego Schissi Quinteto y Aca Seca en Café Vinilo</h4>
           </div>
         </div>
 
@@ -237,62 +236,57 @@
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/NK-2FgAzlVs" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Composición vocal a 20 voces</h4>
+            <h4 data-i18n-key="videos.piano.1">Composición vocal a 20 voces</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/8o278V1rhOQ" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Cuarteto de cuerdas grabado por Santiago Segret</h4>
+            <h4 data-i18n-key="videos.piano.2">Cuarteto de cuerdas grabado por Santiago Segret</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/-oRJ49h56EY" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Libro de Bucles</h4>
+            <h4 data-i18n-key="videos.piano.3">Libro de Bucles</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/aadUatZ6gTQ" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Una obra musical casera</h4>
+            <h4 data-i18n-key="videos.piano.4">Una obra musical casera</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/3ALR8Dw1JH8" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Sonata para piano realizada para la carrera de composición en la UNA.</h4>
+            <h4 data-i18n-key="videos.piano.5">Sonata para piano realizada para la carrera de composición en la UNA.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/3iCsWEcug30" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Cuarteto de cuerdas con bandoneón</h4>
+            <h4 data-i18n-key="videos.piano.6">Cuarteto de cuerdas con bandoneón.</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/J6rFnzN9lxs" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Una canción mía para piano</h4>
-          </div>
-          <div class="video">
-            <iframe class="lazy-video" data-src="https://www.youtube.com/embed/8Ww1KHg1xdM" frameborder="0"
-              allowfullscreen loading="lazy"></iframe>
-            <h4>Oda a la bandera argentina</h4>
+            <h4 data-i18n-key="videos.piano.7">Una canción mía para piano</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/_L_2JOsCIt0" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Estudiando Thelonious Monk</h4>
+            <h4 data-i18n-key="videos.piano.9">Estudiando Thelonious Monk</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ImYLetudYfw" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>Preludio 16 de Chopin</h4>
+            <h4 data-i18n-key="videos.piano.10">Preludio 16 de Chopin</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/grZuM4Rws8E" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>El estudio 1 de Chopin</h4>
+            <h4 data-i18n-key="videos.piano.11">El estudio 1 de Chopin</h4>
           </div>
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/hn21pz3IN2g" frameborder="0"
               allowfullscreen loading="lazy"></iframe>
-            <h4>El preludio 3 de Chopin</h4>
+            <h4 data-i18n-key="videos.piano.12">El preludio 3 de Chopin</h4>
           </div>
         </div>
       </div>
@@ -302,43 +296,43 @@
     <section class="seccion" id="bio">
       <div class="bio-tabs bio-tabs-dynamic">
         <ul class="bio-tabs tab-menu">
-          <li><a href="#" class="active" data-tab="actual">Ahora</a></li>
-          <li><a href="#" data-tab="formacion">Formación</a></li>
-          <li><a href="#" data-tab="inicios">Inicios</a></li>
+          <li><a href="#" class="active" data-tab="actual" data-i18n-key="bio.tabs.now">Ahora</a></li>
+          <li><a href="#" data-tab="formacion" data-i18n-key="bio.tabs.training">Formación</a></li>
+          <li><a href="#" data-tab="inicios" data-i18n-key="bio.tabs.beginnings">Inicios</a></li>
         </ul>
       </div>
 
       <div class="bio-tabs-content tab-content">
         <div class="tab-pane active" id="actual">
-          <h3 class="seccion-titulo">Ahora</h3>
+          <h3 class="seccion-titulo" data-i18n-key="bio.now.title">Ahora</h3>
           <div class="logros-lista">
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item1">
                 Clases privadas de bandoneón, online y presencial. De aquí surgen materiales que se encuentran publicados en <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer"><strong>https://rupulo-ediciones.web.app</strong></a>. Se trata de un archivo digital online creado por Santiago Segret en 2012.
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item2">
                 Profesor de bandoneón en el <strong>Conservatorio “Astor Piazzolla”</strong> de la ciudad de Buenos Aires desde 2018
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item3">
                 Profesor de bandoneón en la <strong>Universidad Nacional de San Martín</strong> desde 2013
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item4">
                 Integra el trío <strong>Patio</strong>, junto a Andrés Pilar y Juan Quintero, desde 2013
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item5">
                 Profesor y asistente de dirección de la <strong>Orquesta de Tango de la UNA</strong>, dirigida por Ariel Pirotti desde 2010
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle">
+              <p class="logro-detalle" data-i18n-key="bio.now.item6">
                 Es parte del <strong>Quinteto de Diego Schissi</strong> desde 2009
               </p>
             </div>
@@ -346,87 +340,87 @@
         </div>
 
         <div class="tab-pane" id="formacion">
-          <h3 class="seccion-titulo">Formación</h3>
+          <h3 class="seccion-titulo" data-i18n-key="bio.training.title">Formación</h3>
           <div class="bio-section bio-margins">
             <div class="formacion-item">
-              <p>En 2005 realizó el programa de la Orquesta Escuela de Tango Emilio Balcarce, junto a grandes maestros como Victor Lavallén, Raúl Garello, Lidia Borda, José Colángelo y Néstor Marconi.</p>
+              <p data-i18n-key="bio.training.item1">En 2005 realizó el programa de la Orquesta Escuela de Tango Emilio Balcarce, junto a grandes maestros como Victor Lavallén, Raúl Garello, Lidia Borda, José Colángelo y Néstor Marconi.</p>
               <div class="bio-media">
                 <img src="santiagosegretFOTOS/01_Fotos/con emilio balcarce en el panteón de roma.jpg" alt="Foto con Emilio" loading="lazy">
-                <h4 class="epigrafe">Foto con Emilio Balcarce en el Panteón de Roma</h4>
+                <h4 class="epigrafe" data-i18n-key="bio.training.caption1">Foto con Emilio Balcarce en el Panteón de Roma</h4>
               </div>
             </div>
 
             <div class="formacion-item">
-              <p>También compartió grabaciones y escenarios con Leopoldo Federico, Raúl Garello, Victor Lavallén, Vitillo Ábalos, Hilda Herrera, Stefano Bollani, Susana Rinaldi, Nadia Larcher, Luna Monti, Naty Peluso, Pablo Estigarribia, Amelita Baltar, Jorge Fandermole, Mono Fontana, Marcelo Moguilevsky.</p>
+              <p data-i18n-key="bio.training.item2">También compartió grabaciones y escenarios con Leopoldo Federico, Raúl Garello, Victor Lavallén, Vitillo Ábalos, Hilda Herrera, Stefano Bollani, Susana Rinaldi, Nadia Larcher, Luna Monti, Naty Peluso, Pablo Estigarribia, Amelita Baltar, Jorge Fandermole, Mono Fontana, Marcelo Moguilevsky.</p>
             </div>
 
             <div class="formacion-item">
-              <p>En 2019 se gradúa con el título de <strong>Licenciado en Artes Musicales con Orientación en Composición en la UNA</strong>.</p>
+              <p data-i18n-key="bio.training.item3">En 2019 se gradúa con el título de <strong>Licenciado en Artes Musicales con Orientación en Composición en la UNA</strong>.</p>
               <div class="bio-media">
                 <iframe class="lazy-video" data-src="https://www.youtube.com/embed/Fjlj-Iq-C-0" frameborder="0" allowfullscreen></iframe>
-                <h4 class="epigrafe">"Fragmento de Libro de Bucles" – Trabajo final de la carrera</h4>
+                <h4 class="epigrafe" data-i18n-key="bio.training.caption2">"Fragmento de Libro de Bucles" – Trabajo final de la carrera</h4>
               </div>
             </div>
 
             <div class="formacion-item">
-              <p>De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces por Raúl Garello, Néstor Marconi y Carlos Cuacci.</p>
+              <p data-i18n-key="bio.training.item4">De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces por Raúl Garello, Néstor Marconi y Carlos Cuacci.</p>
               <div class="bio-media">
                 <iframe class="lazy-video" data-src="https://www.youtube.com/embed/ULfJkO40yQA" frameborder="0" allowfullscreen></iframe>
-                <h4 class="epigrafe">En la Usina del Arte con la Orquesta del Tango de la Ciudad</h4>
+                <h4 class="epigrafe" data-i18n-key="bio.training.caption3">En la Usina del Arte con la Orquesta del Tango de la Ciudad</h4>
               </div>
             </div>
 
             <div class="inicio-item">
-              <p>Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes de Música Argentina en Piano.</p>
-              <p>A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane, Mariano "Paya" Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.</p>
+              <p data-i18n-key="bio.training.item5">Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes de Música Argentina en Piano.</p>
+              <p data-i18n-key="bio.training.item6">A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane, Mariano "Paya" Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.</p>
             </div>
 
             <div class="formacion-item">
-              <p>En esos años conoció más de 20 países con la Orquesta Escuela de Tango, la Orquesta de Érica Di Salvo, Diego Schissi Quinteto, trío Patio y otros.</p>
+              <p data-i18n-key="bio.training.item7">En esos años conoció más de 20 países con la Orquesta Escuela de Tango, la Orquesta de Érica Di Salvo, Diego Schissi Quinteto, trío Patio y otros.</p>
             </div>
           </div>
         </div>
 
         <div class="tab-pane" id="inicios">
-          <h3 class="seccion-titulo">Inicios</h3>
+          <h3 class="seccion-titulo" data-i18n-key="bio.beginnings.title">Inicios</h3>
           <div class="bio-section bio-margins">
             <div class="inicio-item">
-              <p>Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.</p>
+              <p data-i18n-key="bio.beginnings.item1">Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.</p>
               <div class="bio-media inline-media">
                 <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0" allowfullscreen></iframe>
                 <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Foto con el Marinero" loading="lazy">
-                <h4 class="epigrafe">Tocando "Caminito" y foto con el Marinero Montes</h4>
+                <h4 class="epigrafe" data-i18n-key="bio.beginnings.caption1">Tocando "Caminito" y foto con el Marinero Montes</h4>
               </div>
             </div>
 
             <div class="inicio-item">
-              <p>Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier Malosetti en La Trastienda tocando solos de Piazzolla.</p>
+              <p data-i18n-key="bio.beginnings.item2">Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier Malosetti en La Trastienda tocando solos de Piazzolla.</p>
               <div class="audio-container">
-                <h4 class="epigrafe">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia", registro sonoro de Raul Monti</h4>
+                <h4 class="epigrafe" data-i18n-key="bio.beginnings.caption2">Grabaciones en La Trastienda: "Mi Refugio" y "La Familia", registro sonoro de Raul Monti</h4>
                 <div class="audio-item">
-                  <p><strong>Mi Refugio:</strong></p>
+                  <p data-i18n-key="bio.beginnings.audio1"><strong>Mi Refugio:</strong></p>
                   <audio id="audio-mi-refugio" preload="metadata">
                     <source src="audio/Versión-editada-separada-Mi-Refugio.mp3" type="audio/mpeg">
-                    Tu navegador no soporta el elemento de audio.
+                    <span data-i18n-key="audio.unsupported">Tu navegador no soporta el elemento de audio.</span>
                   </audio>
-                  <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio">
-                    <button class="compact-play" id="compact-play-mi-refugio" aria-label="Reproducir">▶</button>
-                    <input type="range" class="compact-progress" id="compact-progress-mi-refugio" min="0" max="100" step="0.1" value="0">
+                  <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio" data-i18n-key="audio.miRefugio.control" data-i18n-attr="aria-label">
+                    <button class="compact-play" id="compact-play-mi-refugio" aria-label="Reproducir" data-i18n-key="audio.miRefugio.play" data-i18n-attr="aria-label">▶</button>
+                    <input type="range" class="compact-progress" id="compact-progress-mi-refugio" name="compact-progress-mi-refugio" min="0" max="100" step="0.1" value="0">
                     <span class="compact-time" id="compact-time-mi-refugio">0:00</span>
-                    <input type="range" class="compact-volume" id="compact-volume-mi-refugio" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
+                    <input type="range" class="compact-volume" id="compact-volume-mi-refugio" name="compact-volume-mi-refugio" min="0" max="1" step="0.01" value="1" aria-label="Volumen" data-i18n-key="audio.miRefugio.volume" data-i18n-attr="aria-label">
                   </div>
                 </div>
                 <div class="audio-item">
-                  <p><strong>La Familia:</strong></p>
+                  <p data-i18n-key="bio.beginnings.audio2"><strong>La Familia:</strong></p>
                   <audio id="audio-la-familia" preload="metadata">
                     <source src="audio/Versión-editada-separada-La-Familia.mp3" type="audio/mpeg">
-                    Tu navegador no soporta el elemento de audio.
+                    <span data-i18n-key="audio.unsupported">Tu navegador no soporta el elemento de audio.</span>
                   </audio>
-                  <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia">
-                    <button class="compact-play" id="compact-play-la-familia" aria-label="Reproducir">▶</button>
-                    <input type="range" class="compact-progress" id="compact-progress-la-familia" min="0" max="100" step="0.1" value="0">
+                  <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia" data-i18n-key="audio.laFamilia.control" data-i18n-attr="aria-label">
+                    <button class="compact-play" id="compact-play-la-familia" aria-label="Reproducir" data-i18n-key="audio.laFamilia.play" data-i18n-attr="aria-label">▶</button>
+                    <input type="range" class="compact-progress" id="compact-progress-la-familia" name="compact-progress-la-familia" min="0" max="100" step="0.1" value="0">
                     <span class="compact-time" id="compact-time-la-familia">0:00</span>
-                    <input type="range" class="compact-volume" id="compact-volume-la-familia" min="0" max="1" step="0.01" value="1" aria-label="Volumen">
+                    <input type="range" class="compact-volume" id="compact-volume-la-familia" name="compact-volume-la-familia" min="0" max="1" step="0.01" value="1" aria-label="Volumen" data-i18n-key="audio.laFamilia.volume" data-i18n-attr="aria-label">
                   </div>
                 </div>
               </div>
@@ -438,11 +432,11 @@
 
     <!-- Sección Premios -->
     <section class="seccion" id="premios">
-      <h3 class="seccion-titulo">Premios</h3>
+      <h3 class="seccion-titulo" data-i18n-key="awards.title">Premios</h3>
       <div class="premios-lista">
         <div class="premio-item">
           <span class="premio-ano">2024</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2024">
             <strong>Grammy Latino</strong> al Mejor Álbum de Tango —
             <a href="https://open.spotify.com/album/2wabWzvHxIp7DoiYoW5waK?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Apiazolado</em></a>,
             con el Diego Schissi Quinteto.
@@ -450,7 +444,7 @@
         </div>
         <div class="premio-item">
           <span class="premio-ano">2023</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2023">
             <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
             <a href="https://open.spotify.com/album/64wnAObYHWcXusn5A8fXcl" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 2</em></a>,
             Juan Quintero, Andrés Pilar y Santiago Segret.
@@ -458,7 +452,7 @@
         </div>
         <div class="premio-item">
           <span class="premio-ano">2018</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2018a">
             <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
             <a href="https://open.spotify.com/album/5OePvXFX4ztMM9tTXud1uk?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 1</em></a>,
             Juan Quintero, Andrés Pilar y Santiago Segret.
@@ -466,7 +460,7 @@
         </div>
         <div class="premio-item">
           <span class="premio-ano">2016</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2016a">
             <strong>Premio Gardel</strong> en la categoría Orquesta de Tango Instrumental —
             <a href="https://open.spotify.com/album/474RxN2GuitD351hsAPNbn?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Timba</em></a>,
             con el Diego Schissi Quinteto.
@@ -474,7 +468,7 @@
         </div>
         <div class="premio-item">
           <span class="premio-ano">2016</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2016b">
             <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
             <a href="https://open.spotify.com/intl-es/album/2PTXTj8Vr7IEmr80c7e5rJ?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>El rejunte</em></a>,
             de la Orquesta de Tango de la UNA.
@@ -482,7 +476,7 @@
         </div>
         <div class="premio-item">
           <span class="premio-ano">2013</span>
-          <p class="premio-detalle">
+          <p class="premio-detalle" data-i18n-key="awards.2013">
             <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
             <a href="https://open.spotify.com/intl-es/album/4lkkdErHecpciBcNUEgLHh?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Tipas y Tipos (En Vivo en Café Vinilo)</em></a>,
             con el Diego Schissi Quinteto.
@@ -495,113 +489,113 @@
     <section class="seccion" id="fotos">
       <div class="galeria-fotos">
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Con el Marinero Montes" loading="lazy">
-          <p>Con el Marinero Montes.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Con el Marinero Montes" loading="lazy" data-i18n-key="photos.1.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.1.caption">Con el Marinero Montes.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/de chiquito en la casa de goyo barja.jpg" alt="De chiquito en la casa de Goyo Barja" loading="lazy">
-          <p>De chiquito en la casa de Goyo Barja.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/de chiquito en la casa de goyo barja.jpg" alt="De chiquito en la casa de Goyo Barja" loading="lazy" data-i18n-key="photos.2.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.2.caption">De chiquito en la casa de Goyo Barja.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con emilio balcarce en el panteón de roma.jpg" alt="Con Emilio Balcarce en el Panteón de Roma" loading="lazy">
-          <p>Con Emilio Balcarce en el Panteón de Roma.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con emilio balcarce en el panteón de roma.jpg" alt="Con Emilio Balcarce en el Panteón de Roma" loading="lazy" data-i18n-key="photos.3.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.3.caption">Con Emilio Balcarce en el Panteón de Roma.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/andres y vitillo.jpg" alt="Andrés y Vitillo" loading="lazy">
-          <p>Con Andrés Pilar y Vitillo Ábalos.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/andres y vitillo.jpg" alt="Andrés y Vitillo" loading="lazy" data-i18n-key="photos.4.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.4.caption">Con Andrés Pilar y Vitillo Ábalos.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/pablo estigarribia y marco antonio fernandez.jpg" alt="Pablo Estigarribia y Marco Antonio Fernández" loading="lazy">
-          <p>Con Pablo Estigarribia y Marco Antonio Fernández en Roma.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/pablo estigarribia y marco antonio fernandez.jpg" alt="Pablo Estigarribia y Marco Antonio Fernández" loading="lazy" data-i18n-key="photos.5.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.5.caption">Con Pablo Estigarribia y Marco Antonio Fernández en Roma.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con Leopoldo Federico.jpg" alt="Con Leopoldo Federico" loading="lazy">
-          <p>Con Leopoldo Federico.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con Leopoldo Federico.jpg" alt="Con Leopoldo Federico" loading="lazy" data-i18n-key="photos.6.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.6.caption">Con Leopoldo Federico.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con andres pilar.jpg" alt="Con Andrés Pilar" loading="lazy">
-          <p>Con Andrés Pilar.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con andres pilar.jpg" alt="Con Andrés Pilar" loading="lazy" data-i18n-key="photos.7.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.7.caption">Con Andrés Pilar.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/en virasoro.jpg" alt="En Virasoro" loading="lazy">
-          <p>En Virasoro con Rubino, Schissi, Grossman y Navarro.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/en virasoro.jpg" alt="En Virasoro" loading="lazy" data-i18n-key="photos.8.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.8.caption">En Virasoro con Rubino, Schissi, Grossman y Navarro.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con fandermole.jpg" alt="Con Fandermole" loading="lazy">
-          <p>Con Jorge Fandermole y Tiqui Cantero en La Rioja.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con fandermole.jpg" alt="Con Fandermole" loading="lazy" data-i18n-key="photos.9.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.9.caption">Con Jorge Fandermole y Tiqui Cantero en La Rioja.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con federico pereiro y marco antonio fernandez.jpg" alt="Con Federico Pereiro y Marco Antonio Fernández" loading="lazy">
-          <p>Con Federico Pereiro y Marco Antonio Fernández en la Orquesta Escuela.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con federico pereiro y marco antonio fernandez.jpg" alt="Con Federico Pereiro y Marco Antonio Fernández" loading="lazy" data-i18n-key="photos.10.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.10.caption">Con Federico Pereiro y Marco Antonio Fernández en la Orquesta Escuela.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/pane lautaro.jpg" alt="Pane Lautaro" loading="lazy">
-          <p>Con Julio Pane y Lautaro Greco.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/pane lautaro.jpg" alt="Pane Lautaro" loading="lazy" data-i18n-key="photos.11.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.11.caption">Con Julio Pane y Lautaro Greco.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/Con furman y quintanilla y amerise.jpg" alt="Con Furman, Quintanilla y Amerise" loading="lazy">
-          <p>Con Furman, Quintanilla y Amerise, acompañábamos a Morena Albert.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/Con furman y quintanilla y amerise.jpg" alt="Con Furman, Quintanilla y Amerise" loading="lazy" data-i18n-key="photos.12.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.12.caption">Con Furman, Quintanilla y Amerise, acompañábamos a Morena Albert.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con la madre de evgeny kisisn.jpg" alt="Con la madre de Evgeny Kissin" loading="lazy">
-          <p>Con la madre de Evgeny Kissin en la puerta del Teatro Colón.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con la madre de evgeny kisisn.jpg" alt="Con la madre de Evgeny Kissin" loading="lazy" data-i18n-key="photos.13.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.13.caption">Con la madre de Evgeny Kissin en la puerta del Teatro Colón.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con los patio.jpg" alt="Con los Patio" loading="lazy">
-          <p>Con Patio en Rosario.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con los patio.jpg" alt="Con los Patio" loading="lazy" data-i18n-key="photos.14.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.14.caption">Con Patio en Rosario.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con louise cole.jpg" alt="Con Louise Cole" loading="lazy">
-          <p>Con Louise Cole.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con louise cole.jpg" alt="Con Louise Cole" loading="lazy" data-i18n-key="photos.15.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.15.caption">Con Louise Cole.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con mariana rewersky y compania.jpg" alt="Con Mariana Rewersky y Compañía" loading="lazy">
-          <p>Con Mariana Rewersky, Victor Villadangos, David Akerman, Paula Castro.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con mariana rewersky y compania.jpg" alt="Con Mariana Rewersky y Compañía" loading="lazy" data-i18n-key="photos.16.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.16.caption">Con Mariana Rewersky, Victor Villadangos, David Akerman, Paula Castro.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/en lo de rafa villazón.jpg" alt="En lo de Rafa Villazón" loading="lazy">
-          <p>En lo de Rafael Villazón.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/en lo de rafa villazón.jpg" alt="En lo de Rafa Villazón" loading="lazy" data-i18n-key="photos.17.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.17.caption">En lo de Rafael Villazón.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/juan y luna.jpg" alt="Juan y Luna" loading="lazy">
-          <p>Con Juan Quintero y Luna Monti.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/juan y luna.jpg" alt="Juan y Luna" loading="lazy" data-i18n-key="photos.18.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.18.caption">Con Juan Quintero y Luna Monti.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con los aca seca.jpg" alt="Con los Aca Seca" loading="lazy">
-          <p>Con Aca Seca.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con los aca seca.jpg" alt="Con los Aca Seca" loading="lazy" data-i18n-key="photos.19.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.19.caption">Con Aca Seca.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/con el mono fontana.jpg" alt="Con el Mono Fontana" loading="lazy">
-          <p>Con el Mono Fontana.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/con el mono fontana.jpg" alt="Con el Mono Fontana" loading="lazy" data-i18n-key="photos.20.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.20.caption">Con el Mono Fontana.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/palestrini y balta estol.jpg" alt="Palestrini y Balta Estol" loading="lazy">
-          <p>Con Sergio Palestrini y Baltazar Estol.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/palestrini y balta estol.jpg" alt="Palestrini y Balta Estol" loading="lazy" data-i18n-key="photos.21.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.21.caption">Con Sergio Palestrini y Baltazar Estol.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/quinteto de schissi más bolani.jpg" alt="Quinteto de Schissi y Bolani" loading="lazy">
-          <p>Quinteto de Schissi con Bolani.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/quinteto de schissi más bolani.jpg" alt="Quinteto de Schissi y Bolani" loading="lazy" data-i18n-key="photos.22.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.22.caption">Quinteto de Schissi con Bolani.</p>
         </div>
       </div>
     </section>
 
     <!-- Sección Contacto -->
     <section class="seccion" id="contacto">
-      <h3 class="seccion-titulo">Contacto</h3>
+      <h3 class="seccion-titulo" data-i18n-key="contact.title">Contacto</h3>
       <div class="contacto-lista">
         <div class="contacto-item">
           <span class="contacto-icon">📧</span>
-          <p><strong>Email:</strong> <a href="mailto:ssegret@gmail.com" class="contacto-link">ssegret@gmail.com</a>
+          <p data-i18n-key="contact.email"><strong>Email:</strong> <a href="mailto:ssegret@gmail.com" class="contacto-link">ssegret@gmail.com</a>
           </p>
         </div>
         <div class="contacto-item">
           <span class="contacto-icon">📱</span>
-          <p><strong>Celular:</strong> <a href="tel:+541149890559" class="contacto-link">+54 11 4989-0559</a>
+          <p data-i18n-key="contact.phone"><strong>Celular:</strong> <a href="tel:+541149890559" class="contacto-link">+54 11 4989-0559</a>
           </p>
         </div>
         <div class="contacto-item">
           <span class="contacto-icon">▶️</span>
-          <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank"
+          <p data-i18n-key="contact.youtube"><strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank"
               rel="noopener noreferrer" class="contacto-link">Visitar canal</a></p>
         </div>
       </div>
@@ -609,14 +603,14 @@
 
     <!-- Sección Rúpulo -->
     <section class="seccion" id="rupulo">
-      <h3 class="seccion-titulo">Rúpulo Ediciones</h3>
+      <h3 class="seccion-titulo" data-i18n-key="rupulo.title">Rúpulo Ediciones</h3>
       <div class="rupulo-lista">
         <div class="rupulo-item rupulo-content">
-          <p class="rupulo-detalle">
+          <p class="rupulo-detalle" data-i18n-key="rupulo.description">
             <strong>Rúpulo Ediciones</strong> es el catálogo de partituras de Santiago Segret, principalmente dedicadas
             al bandoneón y al tango.
           </p>
-          <p class="rupulo-detalle">
+          <p class="rupulo-detalle" data-i18n-key="rupulo.visit">
             <strong>Visitar catálogo:</strong>
             <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">
               rupulo-ediciones.web.app

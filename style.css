@@ -71,7 +71,6 @@ body.theme-dark {
   --color-chip: rgba(22, 28, 46, 0.86);
   --color-backdrop-strong: rgba(236, 240, 251, 0.88);
   --shadow-sm: 0 22px 44px rgba(2, 6, 18, 0.6);
-  --shadow-xs: 0 12px 26px rgba(2, 6, 18, 0.5);
   --shadow-outline: 0 0 0 3px rgba(240, 90, 57, 0.32);
   color-scheme: dark;
 }
@@ -89,11 +88,12 @@ a {
   text-decoration: none;
   transition: color var(--transition);
 }
-  #back-to-top {
-    transition: none;
-  }
+
 a:hover,
 a:focus {
+  color: #d8472a;
+}
+
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -104,8 +104,6 @@ a:focus {
     opacity: 1;
     transform: translateY(0);
   }
-}
-  color: #d8472a;
 }
 
 p {
@@ -178,7 +176,8 @@ button {
   padding: 0;
 }
 
-.tab-menu li a {
+.tab-menu li a,
+.tab-menu li button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -192,12 +191,15 @@ button {
   transition: background var(--transition), color var(--transition), border var(--transition), box-shadow var(--transition);
 }
 
-.tab-menu li a:hover {
+.tab-menu li a:hover,
+.tab-menu li button:hover,
+.tab-menu li button:focus-visible {
   background: var(--color-accent-soft);
   color: var(--color-heading);
 }
 
-.tab-menu li a.active {
+.tab-menu li a.active,
+.tab-menu li button.active {
   background: var(--color-accent);
   color: #fff;
   border-color: var(--color-accent);
@@ -239,19 +241,23 @@ body.navbar-scrolled .navbar-tabs.tab-menu {
   padding-block: 0.55rem;
 }
 
-.navbar-tabs.tab-menu li a {
+.navbar-tabs.tab-menu li a,
+.navbar-tabs.tab-menu li button {
   border: 1px solid transparent;
   background: transparent;
   color: var(--color-muted);
 }
 
-.navbar-tabs.tab-menu li a:hover {
+.navbar-tabs.tab-menu li a:hover,
+.navbar-tabs.tab-menu li button:hover,
+.navbar-tabs.tab-menu li button:focus-visible {
   background: var(--color-accent-soft);
   color: var(--color-heading);
   border-color: var(--color-border);
 }
 
-.navbar-tabs.tab-menu li a.active {
+.navbar-tabs.tab-menu li a.active,
+.navbar-tabs.tab-menu li button.active {
   background: var(--color-accent);
   color: #fff;
   border-color: transparent;
@@ -418,6 +424,40 @@ body.theme-dark .video iframe {
   font-size: 1rem;
   font-weight: 500;
   color: var(--color-muted);
+}
+
+.video .premio-detalle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.video.video-missing {
+  align-items: stretch;
+}
+
+.video-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border);
+  background: repeating-linear-gradient(135deg, rgba(15, 23, 42, 0.08) 0, rgba(15, 23, 42, 0.08) 14px,
+      transparent 14px, transparent 28px);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+body.theme-dark .video-placeholder {
+  border-color: rgba(148, 163, 184, 0.4);
+  background: repeating-linear-gradient(135deg, rgba(148, 163, 184, 0.18) 0, rgba(148, 163, 184, 0.18) 14px,
+      transparent 14px, transparent 28px);
+  color: rgba(236, 240, 251, 0.78);
 }
 
 .bio-tabs-content .tab-pane.active {
