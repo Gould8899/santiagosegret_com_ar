@@ -51,7 +51,7 @@
       <div class="video-background">
         <div class="video-mask-container">
           <video class="hero-video" controls autoplay muted loop playsinline preload="metadata"
-            poster="santiagosegretFOTOS/02_Fotos/_MG_2076.jpg" disablepictureinpicture disableremoteplayback
+            data-fallback-poster="santiagosegretFOTOS/02_Fotos/_MG_2076.jpg" disablepictureinpicture disableremoteplayback
             controlsList="nodownload nofullscreen noremoteplayback">
             <source src="GOLONDRINAS_PUBLICAR.mp4" type="video/mp4">
             <span data-i18n-key="hero.videoFallback">Tu navegador no soporta el elemento de video. Podés descargar el archivo desde el servidor.</span>
@@ -655,7 +655,7 @@
         var canPlayMp4 = video.canPlayType && video.canPlayType('video/mp4') !== '';
         if (!canPlayMp4) {
           var container = video.parentElement;
-          var poster = video.getAttribute('poster') || '';
+          var poster = video.dataset.fallbackPoster || '';
           var link = document.createElement('a');
           link.href = '003-balcon-3.mp4';
           link.textContent = 'Descargar / reproducir 003-balcon-3.mp4';

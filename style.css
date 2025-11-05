@@ -48,6 +48,7 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background: linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg) 100%);
+  overflow-y: scroll;
   scrollbar-gutter: stable both-edges;
 }
 
