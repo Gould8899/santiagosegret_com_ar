@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       es: {
         'nav.main': 'Navegación principal',
         'language.toggle.toEnglish': 'Cambiar idioma a inglés',
-        'language.toggle.toSpanish': 'Cambiar idioma a español',
+  'language.toggle.toSpanish': 'Cambiar idioma a castellano',
         'ui.backToTop.aria': 'Volver al inicio de la página',
         'ui.backToTop.title': 'Volver arriba',
         'theme.toggle.toDark': 'Cambiar a modo oscuro',

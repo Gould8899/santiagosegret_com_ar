@@ -49,7 +49,6 @@ body {
   color: var(--color-text);
   background: linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg) 100%);
   scrollbar-gutter: stable both-edges;
-  overflow-x: hidden;
 }
 
 body.lightbox-open {
@@ -93,18 +92,6 @@ a {
 a:hover,
 a:focus {
   color: #d8472a;
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 p {
@@ -292,7 +279,7 @@ body.navbar-scrolled .navbar-tabs.tab-menu {
 body.theme-dark .navbar-tabs.tab-menu .language-toggle button {
   background: var(--color-layer-strong);
   color: var(--color-text);
-  border-color: rgba(202, 17, 17, 0.4);
+  border-color: rgba(148, 163, 184, 0.4);
 }
 
 body.theme-dark .navbar-tabs.tab-menu .language-toggle button:hover,
