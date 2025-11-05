@@ -49,6 +49,7 @@ body {
   color: var(--color-text);
   background: linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg) 100%);
   scrollbar-gutter: stable both-edges;
+  overflow-x: hidden;
 }
 
 body.lightbox-open {
@@ -262,6 +263,41 @@ body.navbar-scrolled .navbar-tabs.tab-menu {
   color: #fff;
   border-color: transparent;
   box-shadow: var(--shadow-xs);
+}
+
+.navbar-tabs.tab-menu .language-toggle button {
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-layer);
+  color: var(--color-heading);
+  font-weight: 600;
+  box-shadow: none;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.navbar-tabs.tab-menu .language-toggle button:hover,
+.navbar-tabs.tab-menu .language-toggle button:focus-visible {
+  background: var(--color-accent);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
+}
+
+.navbar-tabs.tab-menu .language-toggle button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+body.theme-dark .navbar-tabs.tab-menu .language-toggle button {
+  background: var(--color-layer-strong);
+  color: var(--color-text);
+  border-color: rgba(202, 17, 17, 0.4);
+}
+
+body.theme-dark .navbar-tabs.tab-menu .language-toggle button:hover,
+body.theme-dark .navbar-tabs.tab-menu .language-toggle button:focus-visible {
+  border-color: transparent;
 }
 
 main.content {

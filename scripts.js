@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'nav.photos': 'Photos',
         'nav.contact': 'Contact',
         'nav.rupulo': 'Rúpulo',
-        'nav.languageToggle': 'Spanish',
+  'nav.languageToggle': 'Castellano',
         'nav.main': 'Main navigation',
         'language.toggle.toEnglish': 'Switch site to English',
-        'language.toggle.toSpanish': 'Switch site to Spanish',
+  'language.toggle.toSpanish': 'Switch site to Castellano',
         'hero.subtitle': 'musician, bandoneonist',
         'hero.videoFallback': 'Your browser does not support the video element. You can download the file from the server.',
         'tabs.bandoneon': 'Bandoneón',
@@ -398,7 +398,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLanguageToggleButton(lang) {
     if (!languageToggleBtn) return;
     const labelKey = lang === 'es' ? 'language.toggle.toEnglish' : 'language.toggle.toSpanish';
-    const label = LanguageManager.t(labelKey, null, lang) || (lang === 'es' ? 'Cambiar idioma a inglés' : 'Switch site to Spanish');
+  const label = LanguageManager.t(labelKey, null, lang) || (lang === 'es' ? 'Cambiar idioma a inglés' : 'Switch site to Castellano');
+  languageToggleBtn.textContent = lang === 'es' ? 'English' : 'Castellano';
     languageToggleBtn.setAttribute('aria-label', label);
     languageToggleBtn.title = label;
     languageToggleBtn.setAttribute('aria-pressed', String(lang === 'en'));
