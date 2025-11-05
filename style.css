@@ -465,7 +465,7 @@ body.theme-dark .video-placeholder {
 .bio-tabs-content .tab-pane.active {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: clamp(0.85rem, 2.2vw, 1.35rem);
 }
 
 .logros-lista,
@@ -473,7 +473,7 @@ body.theme-dark .video-placeholder {
 .audio-container,
 .rupulo-lista {
   display: grid;
-  gap: 1.5rem;
+  gap: clamp(0.8rem, 2.1vw, 1.1rem);
 }
 
 .logro-item,
@@ -483,7 +483,7 @@ body.theme-dark .video-placeholder {
   background: var(--color-layer);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: clamp(0.85rem, 2.2vw, 1.15rem);
   box-shadow: none;
 }
 
@@ -501,8 +501,8 @@ body.theme-dark .bio-media {
 
 .bio-media {
   display: grid;
-  gap: 1rem;
-  padding: clamp(1rem, 2vw, 1.5rem);
+  gap: clamp(0.6rem, 1.8vw, 0.9rem);
+  padding: clamp(0.7rem, 1.8vw, 1.05rem);
   background: var(--color-layer);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
@@ -528,6 +528,7 @@ body.theme-dark .bio-media {
 .bio-media.inline-media {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   align-items: stretch;
+  gap: clamp(0.6rem, 2vw, 0.9rem);
 }
 
 .bio-media .epigrafe {
@@ -539,13 +540,21 @@ body.theme-dark .bio-media {
 
 #formacion .formacion-item {
   display: grid;
-  gap: 1rem;
+  gap: clamp(0.65rem, 1.8vw, 0.85rem);
 }
 
 #formacion .bio-media {
   max-width: min(100%, 400px);
   margin-inline: auto;
-  padding: clamp(0.75rem, 2vw, 1.1rem);
+  padding: clamp(0.6rem, 1.8vw, 0.9rem);
+}
+
+#bio {
+  padding-block: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+#bio .seccion-titulo {
+  margin-bottom: clamp(1rem, 2.5vw, 1.4rem);
 }
 
 #formacion .bio-media > img,
