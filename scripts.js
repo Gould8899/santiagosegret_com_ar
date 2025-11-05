@@ -354,6 +354,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainContent = document.querySelector('main.content');
   const languageToggleBtn = document.getElementById('language-toggle');
 
+  document.body.classList.add('theme-dark');
+  document.body.setAttribute('data-theme', 'dark');
+
   let currentLanguage = LanguageManager.init();
 
   if (navbar) {
@@ -374,19 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(btn);
     LanguageManager.register(btn, 'ui.backToTop.aria', 'aria-label', { original: defaultAria });
     LanguageManager.register(btn, 'ui.backToTop.title', 'title', { original: defaultTitle });
-    return btn;
-  })();
-
-  const THEME_STORAGE_KEY = 'siteTheme';
-  const themeToggleBtn = document.getElementById('theme-toggle') || (() => {
-    const btn = document.createElement('button');
-    btn.id = 'theme-toggle';
-    btn.type = 'button';
-    const defaultLabel = LanguageManager.t('theme.toggle.toDark', null, 'es') || 'Cambiar a modo oscuro';
-    btn.setAttribute('aria-label', defaultLabel);
-    btn.title = LanguageManager.t('theme.toggle.hint', null, 'es') || 'Cambiar modo de color';
-    btn.textContent = '🌙';
-    document.body.appendChild(btn);
     return btn;
   })();
 
@@ -412,75 +402,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  let currentTheme = 'light';
-
   updateLanguageToggleButton(currentLanguage);
 
   LanguageManager.onChange(lang => {
     currentLanguage = lang;
     updateLanguageToggleButton(lang);
-    updateThemeToggleButton(currentTheme);
     updateVisitCounterDisplay();
     updateGalleryAccessibility();
     updateGlobalMuteButtonUI();
   });
-
-  const prefersDarkMedia = window.matchMedia('(prefers-color-scheme: dark)');
-  const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-  let manualTheme = storedTheme === 'dark' || storedTheme === 'light' ? storedTheme : null;
-
-  function updateThemeToggleButton(theme) {
-    if (!themeToggleBtn) return;
-    const isDark = theme === 'dark';
-    const labelKey = isDark ? 'theme.toggle.toLight' : 'theme.toggle.toDark';
-    const label = LanguageManager.t(labelKey) || (isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
-    const hint = LanguageManager.t('theme.toggle.hint');
-    themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
-    themeToggleBtn.setAttribute('aria-label', label);
-    themeToggleBtn.setAttribute('aria-pressed', String(isDark));
-    themeToggleBtn.title = hint ? `${label}. ${hint}` : label;
-  }
-
-  function setTheme(theme, options = {}) {
-    const { persist = false, resetManual = false } = options;
-    currentTheme = theme === 'dark' ? 'dark' : 'light';
-    document.body.classList.toggle('theme-dark', currentTheme === 'dark');
-    document.body.setAttribute('data-theme', currentTheme);
-    if (persist) {
-      localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
-      manualTheme = currentTheme;
-    }
-    if (resetManual) {
-      manualTheme = null;
-      localStorage.removeItem(THEME_STORAGE_KEY);
-    }
-    updateThemeToggleButton(currentTheme);
-  }
-
-  const initialTheme = manualTheme || 'dark';
-  setTheme(initialTheme, { persist: !!manualTheme });
-
-  prefersDarkMedia.addEventListener('change', event => {
-    if (manualTheme) return;
-    setTheme(event.matches ? 'dark' : 'light');
-  });
-
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', event => {
-      const wantsSystem = event.shiftKey;
-      if (wantsSystem) {
-        setTheme(prefersDarkMedia.matches ? 'dark' : 'light', { resetManual: true });
-        return;
-      }
-      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(nextTheme, { persist: true });
-    });
-
-    themeToggleBtn.addEventListener('contextmenu', event => {
-      event.preventDefault();
-      setTheme(prefersDarkMedia.matches ? 'dark' : 'light', { resetManual: true });
-    });
-  }
 
   backToTopBtn.addEventListener('click', () => {
     const scrollOptions = { top: 0, behavior: 'smooth' };
