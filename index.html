@@ -50,7 +50,7 @@
 
       <div class="video-background">
         <div class="video-mask-container">
-          <video class="hero-video" controls autoplay muted loop playsinline preload="metadata"
+          <video class="hero-video" controls autoplay loop playsinline preload="metadata"
             data-fallback-poster="santiagosegretFOTOS/02_Fotos/_MG_2076.jpg" disablepictureinpicture disableremoteplayback
             controlsList="nodownload nofullscreen noremoteplayback">
             <source src="GOLONDRINAS_PUBLICAR.mp4" type="video/mp4">
@@ -646,42 +646,8 @@
   <!-- Botón global para silenciar o activar todo el audio -->
   <button id="global-mute-btn" aria-pressed="false" aria-label="Silenciar todo" title="Silenciar todo">🔈</button>
 
+  <script src="scriptsaudio.js"></script>
   <script src="scripts.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      try {
-        var video = document.querySelector('.hero-video');
-        if (!video) return;
-        var canPlayMp4 = video.canPlayType && video.canPlayType('video/mp4') !== '';
-        if (!canPlayMp4) {
-          var container = video.parentElement;
-          var poster = video.dataset.fallbackPoster || '';
-          var link = document.createElement('a');
-          link.href = '003-balcon-3.mp4';
-          link.textContent = 'Descargar / reproducir 003-balcon-3.mp4';
-          link.style.display = 'inline-block';
-          link.style.color = '#fff';
-          link.style.marginTop = '8px';
-          link.style.textDecoration = 'underline';
-          if (poster) {
-            var img = document.createElement('img');
-            img.src = poster;
-            img.alt = 'Imagen del video';
-            img.style.maxWidth = '100%';
-            img.style.borderRadius = '8px';
-            container.innerHTML = '';
-            container.appendChild(img);
-            container.appendChild(link);
-          } else {
-            container.innerHTML = '';
-            container.appendChild(link);
-          }
-        }
-      } catch (error) {
-        console.error('Fallback video check error', error);
-      }
-    });
-  </script>
 </body>
 
 </html>

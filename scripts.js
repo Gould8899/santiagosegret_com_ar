@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const navTabs = document.querySelectorAll('.navbar-tabs.tab-menu a');
   const secciones = document.querySelectorAll('section.seccion');
   const navbar = document.querySelector('.navbar');
-  const heroVideo = document.querySelector('.hero-video');
+  // Nota: la lógica del hero-video está centralizada en scriptsaudio.js
   const mainContent = document.querySelector('main.content');
   const languageToggleBtn = document.getElementById('language-toggle');
 
@@ -443,18 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
   updateScrollState();
 
-  if (heroVideo) {
-    try {
-      const heroObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (!entry.isIntersecting) {
-            try { heroVideo.pause(); } catch (e) { /* ignore */ }
-          }
-        });
-      }, { threshold: 0.3 });
-      heroObserver.observe(heroVideo);
-    } catch (e) { /* ignore observer errors */ }
-  }
+  // (observer del hero-video movido a scriptsaudio.js)
 
   function showSectionFromHash(hash) {
     const hashToShow = hash && hash.startsWith('#') ? hash : '#inicio';
@@ -471,9 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       secciones.forEach(sec => sec.id === 'inicio' ? sec.classList.add('active') : sec.classList.remove('active'));
     }
     navTabs.forEach(l => l.getAttribute('href') === hashToShow ? l.classList.add('active') : l.classList.remove('active'));
-    if (heroVideo && hashToShow !== '#inicio') {
-      try { heroVideo.pause(); } catch (e) { /* ignore */ }
-    }
+    try { if (window.AudioCore && typeof window.AudioCore.notifySectionChange === 'function') window.AudioCore.notifySectionChange(hashToShow); } catch (e) { /* ignore */ }
   }
 
   // Inicial: mostrar sección indicada por URL (o inicio)
@@ -516,6 +503,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => tab.addEventListener('click', function (e) {
       e.preventDefault();
+      // Al cambiar de pestaña interna, pausar cualquier medio en reproducción
+      try { if (window.AudioCore && typeof window.AudioCore.pauseAllMedia === 'function') window.AudioCore.pauseAllMedia(); } catch (_) { }
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
@@ -545,185 +534,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs('.bio-tabs.tab-menu', '.bio-tabs-content');
 
   /* ------------------------------------------------------------------
-     III. MediaManager central (HTML audio/video)
-     - registra audio/video, evita listeners duplicados,
-     - cuando un elemento entra en 'play' pausa los demás.
+     III. (migrado) Lógica de medios está en scriptsaudio.js
      ------------------------------------------------------------------*/
-  /**
-   * MediaManager
-   * - htmlMedias: Set de elementos audio/video gestionados
-   * - registerHtmlMedia(el): registra el elemento y evita listeners duplicados
-   * - pauseAllExcept(except): pausa todos los demás medios HTML
-   */
-  const MediaManager = {
-    htmlMedias: new Set(),
-    _listeners: new WeakMap(),
-    registerHtmlMedia(el) {
-      if (!el || typeof el.addEventListener !== 'function') return;
-      if (this.htmlMedias.has(el)) return; // idempotente
-      this.htmlMedias.add(el);
-      const onPlay = () => {
-        try {
-          this.pauseAllExcept(el);
-          try {
-            if (YouTubeManager && typeof YouTubeManager.notifyHtmlMediaPlay === 'function') {
-              YouTubeManager.notifyHtmlMediaPlay();
-            }
-          } catch (e) { /* ignore YouTube sync errors */ }
-          /* además pausar el hero video si existe y no es el que acaba de iniciar */
-          try {
-            const hero = document.querySelector('.hero-video');
-            if (hero && hero !== el && !hero.paused) {
-              hero.pause();
-            }
-          } catch (e) { /* ignore hero pause errors */ }
-        } catch (e) { /* ignore */ }
-      };
-      el.addEventListener('play', onPlay);
-      try { this._listeners.set(el, onPlay); } catch (e) { /* ignore */ }
-    },
-    pauseAllExcept(except) {
-      this.htmlMedias.forEach(m => { if (m !== except) try { if (!m.paused) m.pause(); } catch (e) { /* ignore */ } });
-    },
-    pauseAllHtmlMedia() { this.htmlMedias.forEach(m => { try { if (!m.paused) m.pause(); } catch (e) { /* ignore */ } }); }
-  };
-
-  const YouTubeManager = (() => {
-    const players = new Map(); // iframe -> player
-    const pending = new Set();
-    let apiRequested = false;
-    let apiReady = false;
-    let globalMuted = false;
-
-    function ensureApi() {
-      if (window.YT && typeof window.YT.Player === 'function') {
-        apiReady = true;
-        return;
-      }
-      if (apiRequested) return;
-      apiRequested = true;
-      if (!document.getElementById('youtube-iframe-api')) {
-        const tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        tag.id = 'youtube-iframe-api';
-        const container = document.head || document.body || document.documentElement;
-        if (container) container.appendChild(tag);
-      }
-    }
-
-    const previousReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
-      apiReady = true;
-      pending.forEach(iframe => {
-        try { createPlayer(iframe); } catch (e) { /* ignore */ }
-      });
-      pending.clear();
-      if (typeof previousReady === 'function') {
-        try { previousReady(); } catch (e) { /* ignore */ }
-      }
-    };
-
-    function applyMuteState(player) {
-      if (!player || typeof player.mute !== 'function' || typeof player.unMute !== 'function') return;
-      try {
-        if (globalMuted) player.mute();
-        else player.unMute();
-      } catch (e) { /* ignore mute errors */ }
-    }
-
-    function handleStateChange(event) {
-      if (!event || typeof event.data === 'undefined' || !event.target || typeof YT === 'undefined') return;
-      const player = event.target;
-      if (event.data === YT.PlayerState.PLAYING) {
-        pauseAllExcept(player);
-        try { MediaManager.pauseAllHtmlMedia(); } catch (e) { /* ignore */ }
-      }
-    }
-
-    function createPlayer(iframe) {
-      if (!iframe || players.has(iframe)) return;
-      if (!window.YT || typeof window.YT.Player !== 'function') {
-        pending.add(iframe);
-        ensureApi();
-        return;
-      }
-      const player = new YT.Player(iframe, {
-        events: {
-          onReady: () => applyMuteState(player),
-          onStateChange: handleStateChange
-        }
-      });
-      players.set(iframe, player);
-      pending.delete(iframe);
-      applyMuteState(player);
-    }
-
-    function pauseAllExcept(activePlayer) {
-      players.forEach(player => {
-        if (activePlayer && player === activePlayer) return;
-        try { player.pauseVideo(); } catch (e) { /* ignore pause errors */ }
-      });
-    }
-
-    function pauseAll() { pauseAllExcept(null); }
-
-    return {
-      registerIframe(iframe) {
-        if (!iframe) return;
-        if (players.has(iframe) || pending.has(iframe)) return;
-        if (window.YT && typeof window.YT.Player === 'function') {
-          createPlayer(iframe);
-        } else {
-          pending.add(iframe);
-          ensureApi();
-        }
-      },
-      notifyHtmlMediaPlay() {
-        pauseAll();
-      },
-      pauseAllExcept,
-      pauseAll,
-      setGlobalMuted(muted) {
-        globalMuted = !!muted;
-        players.forEach(player => applyMuteState(player));
-      }
-    };
-  })();
-
-  // Registrar los media ya presentes
-  document.querySelectorAll('audio, video').forEach(el => MediaManager.registerHtmlMedia(el));
-
-  // Listener global en captura: si cualquier medio comienza a reproducirse, pausar el hero video.
-  try {
-    document.addEventListener('play', function (e) {
-      try {
-        const target = e && e.target;
-        if (!target) return;
-        const hero = document.querySelector('.hero-video');
-        if (hero && target !== hero && !hero.paused) {
-          try { hero.pause(); } catch (err) { /* ignore */ }
-        }
-      } catch (err) { /* ignore */ }
-    }, true);
-  } catch (e) { /* ignore */ }
-
-  // Registrar dinámicamente los media que se añadan después
-  try {
-    const mediaObserver = new MutationObserver(muts => {
-      muts.forEach(m => {
-        (m.addedNodes || []).forEach(node => {
-          try {
-            if (!node || node.nodeType !== 1) return;
-            const el = node;
-            if (el.matches && (el.matches('audio') || el.matches('video'))) MediaManager.registerHtmlMedia(el);
-            const nested = el.querySelectorAll && el.querySelectorAll('audio, video');
-            if (nested && nested.length) nested.forEach(x => MediaManager.registerHtmlMedia(x));
-          } catch (e) { /* ignore node errors */ }
-        });
-      });
-    });
-    mediaObserver.observe(document.documentElement || document.body, { childList: true, subtree: true });
-  } catch (e) { /* non-critical */ }
 
   /* ------------------------------------------------------------------
     IV. Lazy-load sencillo de iframes YouTube (si los hay)
@@ -760,9 +572,8 @@ document.addEventListener('DOMContentLoaded', () => {
     iframe.src = finalSrc || iframe.dataset.src;
     iframe.removeAttribute('data-src');
     try {
-      if (YouTubeManager && typeof YouTubeManager.registerIframe === 'function') {
-        YouTubeManager.registerIframe(iframe);
-      }
+      const yt = (window.AudioCore && window.AudioCore.YouTube);
+      if (yt && typeof yt.registerIframe === 'function') { yt.registerIframe(iframe); }
     } catch (e) { /* ignore YouTube registration errors */ }
   }
 
@@ -780,66 +591,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ------------------------------------------------------------------
-     V. Controles compactos de audio (UI personalizado)
-     - play/pause, progreso, tiempo, volumen
-     - se registran con MediaManager para respetar "un solo medio"
+     V. (migrado) Controles de audio ahora en scriptsaudio.js
      ------------------------------------------------------------------*/
-  /**
-   * setupCompactAudioControls(audioId, rootId)
-   * - Conecta la UI compacta de audio con el elemento <audio> real.
-   * - Mantiene el texto del botón en sincronía y registra el audio en MediaManager.
-   */
-  function setupCompactAudioControls(audioId, rootId) {
-    const audio = document.getElementById(audioId);
-    const root = document.getElementById(rootId);
-    if (!audio || !root) return;
-
-    const playBtn = root.querySelector('.compact-play');
-    const progress = root.querySelector('.compact-progress');
-    const timeLabel = root.querySelector('.compact-time');
-    const volume = root.querySelector('.compact-volume');
-
-    // Registrar en MediaManager
-    try { MediaManager.registerHtmlMedia(audio); } catch (e) { /* ignore */ }
-
-    // Metadata: duración
-    audio.addEventListener('loadedmetadata', () => { if (progress) progress.max = audio.duration; });
-
-    // Play/pause desde UI
-    if (playBtn) playBtn.addEventListener('click', () => {
-      if (audio.paused) { try { MediaManager.pauseAllExcept(audio); } catch (e) { /* ignore */ } audio.play(); playBtn.textContent = '⏸'; }
-      else { audio.pause(); playBtn.textContent = '▶'; }
-    });
-
-    // Actualización de progreso y tiempo
-    audio.addEventListener('timeupdate', () => {
-      if (progress && !progress.dragging) progress.value = audio.currentTime;
-      if (timeLabel) timeLabel.textContent = utils.formatTime(audio.currentTime);
-    });
-
-    audio.addEventListener('ended', () => { if (playBtn) playBtn.textContent = '▶'; if (progress) progress.value = 0; if (timeLabel) timeLabel.textContent = utils.formatTime(0); });
-
-    // Sincronizar botón con cambios de reproducción hechos fuera del UI
-    audio.addEventListener('play', () => { if (playBtn) playBtn.textContent = '⏸'; });
-    audio.addEventListener('pause', () => { if (playBtn && !audio.ended) playBtn.textContent = '▶'; });
-
-    // Barra de progreso (input + change)
-    if (progress) {
-      progress.addEventListener('input', () => { progress.dragging = true; if (timeLabel) timeLabel.textContent = utils.formatTime(progress.value); });
-      progress.addEventListener('change', () => { audio.currentTime = parseFloat(progress.value); progress.dragging = false; });
-    }
-
-    // Volumen
-    if (volume) { volume.addEventListener('input', () => { audio.volume = parseFloat(volume.value); }); audio.volume = parseFloat(volume.value || 1); }
-
-    // Inicializar etiquetas/estado
-    if (timeLabel) timeLabel.textContent = utils.formatTime(0);
-    if (playBtn) playBtn.textContent = audio.paused ? '▶' : '⏸';
-  }
-
-  // Enlazar controles compactos existentes
-  setupCompactAudioControls('audio-mi-refugio', 'compact-mi-refugio');
-  setupCompactAudioControls('audio-la-familia', 'compact-la-familia');
 
   /* ------------------------------------------------------------------
      VI. Galería de fotos (lightbox interactivo)
@@ -1038,86 +791,32 @@ document.addEventListener('DOMContentLoaded', () => {
   updateVisitCounterDisplay();
 
   /* ------------------------------------------------------------------
-     VIII. Guardia runtime CSS para fijar navbar/pestañas (si algún script
-     intenta modificarlo en runtime)
+     VIII. Mute global (UI) — núcleo en scriptsaudio.js
      ------------------------------------------------------------------*/
-  // ----------------- Global mute control -----------------
-  // Estado persistente de mute global
-  const GLOBAL_MUTE_KEY = 'siteGlobalMuted';
-  let globalMuted = !!JSON.parse(localStorage.getItem(GLOBAL_MUTE_KEY) || 'false');
-
   updateGlobalMuteButtonUI = () => {
     try {
       const btn = document.getElementById('global-mute-btn');
       if (!btn) return;
-      const label = globalMuted ? (LanguageManager.t('globalMute.unmute') || 'Activar todo el audio') : (LanguageManager.t('globalMute.mute') || 'Silenciar todo');
-      btn.setAttribute('aria-pressed', String(globalMuted));
+      const muted = !!(window.AudioCore && window.AudioCore.isMuted && window.AudioCore.isMuted());
+      const label = muted ? (LanguageManager.t('globalMute.unmute') || 'Activar todo el audio') : (LanguageManager.t('globalMute.mute') || 'Silenciar todo');
+      btn.setAttribute('aria-pressed', String(muted));
       btn.setAttribute('aria-label', label);
       btn.title = label;
-      btn.textContent = globalMuted ? '🔇' : '🔈';
+      btn.textContent = muted ? '🔇' : '🔈';
     } catch (e) { /* ignore */ }
   };
 
-  function setGlobalMuted(mute, options) {
-    const initial = options && options.initial;
-    globalMuted = !!mute;
-    localStorage.setItem(GLOBAL_MUTE_KEY, JSON.stringify(globalMuted));
-    // mutear/desmutear todos los medios HTML registrados
-    try {
-      MediaManager.htmlMedias.forEach(m => {
-        try {
-          // Si es la inicialización, mantener muted en elementos autoplay
-          // para evitar conflictos con políticas del navegador.
-          if (!globalMuted && initial && m.hasAttribute && m.hasAttribute('autoplay')) {
-            m.muted = true;
-          } else {
-            m.muted = globalMuted;
-          }
-        } catch (e) { /* ignore */ }
-      });
-    } catch (e) { /* ignore */ }
-    updateGlobalMuteButtonUI();
-    try {
-      if (typeof YouTubeManager !== 'undefined' && YouTubeManager && typeof YouTubeManager.setGlobalMuted === 'function') {
-        YouTubeManager.setGlobalMuted(globalMuted);
-        if (globalMuted && typeof YouTubeManager.pauseAll === 'function') {
-          YouTubeManager.pauseAll();
-        }
-      }
-    } catch (e) { /* ignore youtube mute sync */ }
-  }
-
-  // Toggle desde el botón
-  function toggleGlobalMute() { setGlobalMuted(!globalMuted, { initial: false }); }
-
-  // Aplicar estado inicial una vez DOM cargado (marcar initial=true para respetar autoplay)
-  setGlobalMuted(globalMuted, { initial: true });
-
-  // Vincular el botón si existe (se inserta desde index.html)
   try {
     const muteBtn = document.getElementById('global-mute-btn');
-    if (muteBtn) {
-      muteBtn.addEventListener('click', function () { toggleGlobalMute(); try { this.blur(); } catch (e) { } });
+    if (muteBtn && window.AudioCore && typeof window.AudioCore.toggleGlobalMute === 'function') {
+      muteBtn.addEventListener('click', function(){ window.AudioCore.toggleGlobalMute(); try{ this.blur(); }catch(e){} });
     }
-    // Asegurar que nuevos elementos media respeten el estado global al registrarse
-    const origRegister = MediaManager.registerHtmlMedia.bind(MediaManager);
-    MediaManager.registerHtmlMedia = function (el) {
-      origRegister(el);
-      try { if (el && typeof el.setAttribute === 'function') el.muted = globalMuted; } catch (e) { /* ignore */ }
-    };
+    if (window.AudioCore && typeof window.AudioCore.onMutedChange === 'function') {
+      window.AudioCore.onMutedChange(() => updateGlobalMuteButtonUI());
+    }
+    updateGlobalMuteButtonUI();
   } catch (e) { /* ignore */ }
 
-  // Intento mejor esfuerzo: reproducir el hero video al cargar la página.
-  try {
-    const hero = document.querySelector('.hero-video');
-    if (hero) {
-      // asegurar que el hero arranque muted
-      try { hero.muted = true; } catch (e) { /* ignore */ }
-      const p = hero.play();
-      if (p && typeof p.then === 'function') {
-        p.catch(() => { /* reproducción bloqueada por política, no forzamos */ });
-      }
-    }
-  } catch (e) { /* ignore hero play errors */ }
+  // Reproducción/autoplay del hero se maneja desde scriptsaudio.js
 
 });
