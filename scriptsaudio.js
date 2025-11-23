@@ -238,6 +238,17 @@
     var hero = document.querySelector('.hero-video');
     var overlay = document.getElementById('unmute-overlay');
     
+    // Diccionario local para estados dinámicos
+    var overlayTexts = {
+      es: { unmute: 'Activar sonido', play: 'Reproducir', pause: 'Pausar' },
+      en: { unmute: 'Unmute', play: 'Play', pause: 'Pause' }
+    };
+
+    function getOverlayText(key) {
+      var lang = document.documentElement.lang === 'en' ? 'en' : 'es';
+      return overlayTexts[lang][key];
+    }
+
     // Función para actualizar el estado visual del botón
     function updateOverlayState() {
       if (!hero || !overlay) return;
@@ -249,17 +260,17 @@
       if (hero.muted && !hero.paused) {
         // Estado: Reproduciendo pero Muteado (Inicial)
         if(icon) icon.textContent = '🔇';
-        if(text) text.textContent = 'Activar sonido';
+        if(text) text.textContent = getOverlayText('unmute');
         overlay.classList.add('visible');
       } else if (hero.paused) {
         // Estado: Pausado
         if(icon) icon.textContent = '▶'; // Flechita de Play
-        if(text) text.textContent = 'Reproducir';
+        if(text) text.textContent = getOverlayText('play');
         overlay.classList.add('visible');
       } else {
         // Estado: Reproduciendo con sonido
         if(icon) icon.textContent = 'II'; // Pausa
-        if(text) text.textContent = 'Pausar';
+        if(text) text.textContent = getOverlayText('pause');
         // Opcional: Ocultar mientras reproduce para no molestar, o dejarlo visible
         // El usuario pidió "indefinidamente", así que lo dejamos accesible
         // Podemos hacerlo sutil (opacity baja) en CSS
@@ -267,6 +278,16 @@
         overlay.classList.remove('visible'); // Se oculta visualmente pero queda accesible por hover (ver CSS)
       }
     }
+
+    // Observar cambios de idioma para actualizar el texto en tiempo real
+    var langObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
+          updateOverlayState();
+        }
+      });
+    });
+    langObserver.observe(document.documentElement, { attributes: true });
 
     // Click en el overlay o en el video para alternar estado
     function handleHeroInteraction(e) {
