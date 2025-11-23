@@ -236,8 +236,96 @@
 
     // -------------------- Hero video (centralizado) ------------------
     var hero = document.querySelector('.hero-video');
-    var userGestureDone = false;
-    // Overlay eliminado: no mostramos botón "Activar sonido"
+    var overlay = document.getElementById('unmute-overlay');
+    
+    // Función para actualizar el estado visual del botón
+    function updateOverlayState() {
+      if (!hero || !overlay) return;
+      
+      var icon = overlay.querySelector('.unmute-icon');
+      var text = overlay.querySelector('.unmute-text');
+      
+      // Lógica de visualización
+      if (hero.muted && !hero.paused) {
+        // Estado: Reproduciendo pero Muteado (Inicial)
+        if(icon) icon.textContent = '🔇';
+        if(text) text.textContent = 'Activar sonido';
+        overlay.classList.add('visible');
+      } else if (hero.paused) {
+        // Estado: Pausado
+        if(icon) icon.textContent = '▶'; // Flechita de Play
+        if(text) text.textContent = 'Reproducir';
+        overlay.classList.add('visible');
+      } else {
+        // Estado: Reproduciendo con sonido
+        if(icon) icon.textContent = 'II'; // Pausa
+        if(text) text.textContent = 'Pausar';
+        // Opcional: Ocultar mientras reproduce para no molestar, o dejarlo visible
+        // El usuario pidió "indefinidamente", así que lo dejamos accesible
+        // Podemos hacerlo sutil (opacity baja) en CSS
+        overlay.classList.add('playing'); 
+        overlay.classList.remove('visible'); // Se oculta visualmente pero queda accesible por hover (ver CSS)
+      }
+    }
+
+    // Click en el overlay o en el video para alternar estado
+    function handleHeroInteraction(e) {
+      if (!hero) return;
+
+      // Detectar si el click fue en los controles nativos (zona inferior)
+      // Si el video tiene controles, asumimos que los últimos 50px son de la barra de control
+      if (hero.hasAttribute('controls')) {
+        var rect = hero.getBoundingClientRect();
+        var isBottomControlArea = (e.clientY - rect.top) > (rect.height - 50);
+        // Si el click es en el video (target === hero) y está en la zona de controles, NO hacemos nada
+        // Dejamos que el navegador maneje el volumen/seek
+        if (e.target === hero && isBottomControlArea) return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // 1. Si está muteado, desmutear primero
+      if (hero.muted) {
+        hero.muted = false;
+        hero.volume = 1;
+        setGlobalMuted(false);
+        // Si estaba pausado, darle play
+        if (hero.paused) {
+          var p = hero.play();
+          if (p && p.catch) p.catch(function(){});
+        }
+      } 
+      // 2. Si ya tiene sonido, alternar Play/Pause
+      else {
+        if (hero.paused) {
+          var p = hero.play();
+          if (p && p.catch) p.catch(function(){});
+        } else {
+          hero.pause();
+        }
+      }
+      
+      updateOverlayState();
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', handleHeroInteraction);
+    }
+    
+    // Permitir click en el contenedor también
+    var maskContainer = document.querySelector('.video-mask-container');
+    if (maskContainer) {
+      maskContainer.addEventListener('click', handleHeroInteraction);
+    }
+
+    if (hero) {
+      hero.addEventListener('volumechange', updateOverlayState);
+      hero.addEventListener('play', updateOverlayState);
+      hero.addEventListener('pause', updateOverlayState);
+      // Inicializar estado
+      updateOverlayState();
+    }
 
     // Pausar hero cuando sale de vista
     if (hero) {
@@ -266,6 +354,7 @@
         try { hero.muted = false; } catch(_){ }
         try { if (typeof hero.volume === 'number') hero.volume = Math.max(0.7, hero.volume || 0.7); } catch(_){ }
         try { setGlobalMuted(false); } catch(_){ }
+        updateOverlayState();
       }
       // Intento directo desmuteado
       attemptUnmute();
@@ -277,22 +366,26 @@
             // Reintentar unmute poco después de empezar a reproducir
             setTimeout(attemptUnmute, 150);
           }
+          updateOverlayState();
         }).catch(function(){
           // Fallback: autoplay bloqueado, reproducir muteado
           try { hero.muted = true; } catch(_){ }
           var p2 = hero.play();
           if (p2 && typeof p2.then === 'function') {
-            p2.then(function(){ setTimeout(attemptUnmute, 250); }).catch(function(){});
+            p2.then(function(){ setTimeout(attemptUnmute, 250); updateOverlayState(); }).catch(function(){ updateOverlayState(); });
           }
+          updateOverlayState();
         });
       } else {
         // Si no hay promesa (navegador viejo), intentar unmute luego
         setTimeout(attemptUnmute, 150);
+        updateOverlayState();
       }
       // Listener one-shot al entrar en "playing" para asegurar unmute
       var onPlaying = function(){
         try { hero.removeEventListener('playing', onPlaying, true); } catch(_){ }
         setTimeout(attemptUnmute, 100);
+        updateOverlayState();
       };
       try { hero.addEventListener('playing', onPlaying, true); } catch(_){ }
 
@@ -306,6 +399,7 @@
           if (!inInicio) return;
           try { attemptUnmute(); } catch(_){ }
           try { if (hero.paused) { var _p = hero.play(); if (_p && _p.catch) _p.catch(function(){}); } } catch(_){ }
+          updateOverlayState();
           if (tries < 4 && hero.paused) setTimeout(tick, tries === 1 ? 180 : tries === 2 ? 400 : 900);
         }
         setTimeout(tick, 160);

@@ -46,9 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
   'language.toggle.toSpanish': 'Cambiar idioma a castellano',
         'ui.backToTop.aria': 'Volver al inicio de la página',
         'ui.backToTop.title': 'Volver arriba',
-        'theme.toggle.toDark': 'Cambiar a modo oscuro',
-        'theme.toggle.toLight': 'Cambiar a modo claro',
-        'theme.toggle.hint': 'Clic para cambiar el modo de color. Mantener Shift para volver al modo del sistema.',
         'gallery.dialogLabel': 'Visor de fotografías',
         'gallery.close': 'Cerrar galería',
         'gallery.prev': 'Ver foto anterior',
@@ -223,9 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'rupulo.visit': '<strong>Visit catalog:</strong> <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">rupulo-ediciones.web.app</a>',
         'ui.backToTop.aria': 'Scroll back to the top',
         'ui.backToTop.title': 'Back to top',
-        'theme.toggle.toDark': 'Switch to dark mode',
-        'theme.toggle.toLight': 'Switch to light mode',
-        'theme.toggle.hint': 'Click to change color mode. Hold Shift to return to the system mode.',
         'gallery.dialogLabel': 'Photo viewer',
         'gallery.close': 'Close gallery',
         'gallery.prev': 'View previous photo',
@@ -353,9 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Nota: la lógica del hero-video está centralizada en scriptsaudio.js
   const mainContent = document.querySelector('main.content');
   const languageToggleBtn = document.getElementById('language-toggle');
-
-  document.body.classList.add('theme-dark');
-  document.body.setAttribute('data-theme', 'dark');
 
   let currentLanguage = LanguageManager.init();
 
@@ -538,8 +529,11 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------*/
 
   /* ------------------------------------------------------------------
-    IV. Lazy-load sencillo de iframes YouTube (si los hay)
-    - carga el src cuando el iframe entra en viewport para mejorar tiempos
+    IV. Lazy-load optimizado de iframes YouTube
+    - Estrategia híbrida:
+      1. Carga inmediata de miniaturas (thumbnails) para evitar "huecos".
+      2. Carga diferida (lazy) de los iframes reales para no bloquear el inicio.
+      3. Pre-carga agresiva en segundo plano (background) una vez que la página está lista.
     ------------------------------------------------------------------*/
   const lazyVideos = document.querySelectorAll('iframe.lazy-video');
 
@@ -565,18 +559,51 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Extraer ID de video de YouTube desde URL
+  function getYouTubeId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  }
+
+  // Cargar iframe real
   function loadIframe(iframe) {
     if (!iframe || !iframe.dataset || !iframe.dataset.src) return;
+    // Si ya tiene src, es que ya se cargó o se está cargando
+    if (iframe.getAttribute('src')) return;
+
     const finalSrc = buildEmbedUrl(iframe.dataset.src);
     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     iframe.src = finalSrc || iframe.dataset.src;
-    iframe.removeAttribute('data-src');
+    // No removemos data-src para permitir re-verificaciones si fuera necesario, pero marcamos como cargado
+    iframe.dataset.loaded = 'true';
+    
+    // Limpiar imagen de fondo si existía (la miniatura)
+    iframe.style.backgroundImage = '';
+
     try {
       const yt = (window.AudioCore && window.AudioCore.YouTube);
       if (yt && typeof yt.registerIframe === 'function') { yt.registerIframe(iframe); }
     } catch (e) { /* ignore YouTube registration errors */ }
   }
 
+  // 1. Pre-cargar miniaturas inmediatamente
+  lazyVideos.forEach(iframe => {
+    const src = iframe.dataset.src;
+    if (src) {
+      const videoId = getYouTubeId(src);
+      if (videoId) {
+        // Usar imagen de alta calidad de YouTube como placeholder
+        const thumbUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+        iframe.style.backgroundImage = `url('${thumbUrl}')`;
+        iframe.style.backgroundSize = 'cover';
+        iframe.style.backgroundPosition = 'center';
+        iframe.style.backgroundColor = '#000'; // Fondo negro mientras carga
+      }
+    }
+  });
+
+  // 2. Observer para carga prioritaria (cuando entra en pantalla)
   if ('IntersectionObserver' in window) {
     const iframeObserver = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -584,11 +611,29 @@ document.addEventListener('DOMContentLoaded', () => {
         loadIframe(entry.target);
         obs.unobserve(entry.target);
       });
-    }, { rootMargin: '120px 0px' });
+    }, { rootMargin: '200px 0px' }); // Aumentamos margen para cargar antes de que llegue el usuario
     lazyVideos.forEach(iframe => iframeObserver.observe(iframe));
   } else {
     lazyVideos.forEach(iframe => loadIframe(iframe));
   }
+
+  // 3. Carga en segundo plano (Background Loading)
+  // Esperamos a que todo lo crítico haya cargado, y luego empezamos a cargar los iframes ocultos
+  window.addEventListener('load', () => {
+    // Damos un respiro al navegador (3 segundos) para asegurar que el video del hero y scripts principales estén listos
+    setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+          lazyVideos.forEach(iframe => loadIframe(iframe));
+        }, { timeout: 5000 });
+      } else {
+        // Fallback para navegadores sin requestIdleCallback
+        setTimeout(() => {
+          lazyVideos.forEach(iframe => loadIframe(iframe));
+        }, 1000);
+      }
+    }, 3000);
+  });
 
   /* ------------------------------------------------------------------
      V. (migrado) Controles de audio ahora en scriptsaudio.js

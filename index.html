@@ -21,9 +21,23 @@
   <meta name="twitter:title" content="Santiago Segret - Músico">
   <meta name="twitter:description" content="Santiago Segret, músico y bandoneonista. Biografía, videos y partituras.">
   <meta name="twitter:image" content="/santiagosegretFOTOS/01_Fotos/Federico-Cabarcos-Santiago.jpg">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Santiago Segret",
+      "url": "https://santiagosegret.com.ar",
+      "image": "https://santiagosegret.com.ar/santiagosegretFOTOS/01_Fotos/Federico-Cabarcos-Santiago.jpg",
+      "jobTitle": "Músico, Bandoneonista",
+      "description": "Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más.",
+      "sameAs": [
+        "https://www.youtube.com/@SantiagoSegret"
+      ]
+    }
+  </script>
 </head>
 
-<body class="theme-dark" data-theme="dark">
+<body>
   <a class="skip-link" href="#inicio" data-i18n-key="skip.toContent">Saltar al contenido</a>
 
   <nav class="navbar" role="navigation">
@@ -56,6 +70,10 @@
             <source src="GOLONDRINAS_PUBLICAR.mp4" type="video/mp4">
             <span data-i18n-key="hero.videoFallback">Tu navegador no soporta el elemento de video. Podés descargar el archivo desde el servidor.</span>
           </video>
+          <button id="unmute-overlay" class="unmute-overlay" aria-label="Activar sonido">
+            <span class="unmute-icon">🔇</span>
+            <span class="unmute-text" data-i18n-key="hero.unmute">Activar sonido</span>
+          </button>
         </div>
       </div>
 
@@ -428,7 +446,7 @@
                   </audio>
                   <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio" data-i18n-key="audio.miRefugio.control" data-i18n-attr="aria-label">
                     <button class="compact-play" id="compact-play-mi-refugio" aria-label="Reproducir" data-i18n-key="audio.miRefugio.play" data-i18n-attr="aria-label">▶</button>
-                    <input type="range" class="compact-progress" id="compact-progress-mi-refugio" name="compact-progress-mi-refugio" min="0" max="100" step="0.1" value="0">
+                    <input type="range" class="compact-progress" id="compact-progress-mi-refugio" name="compact-progress-mi-refugio" min="0" max="100" step="0.1" value="0" aria-label="Progreso de reproducción">
                     <span class="compact-time" id="compact-time-mi-refugio">0:00</span>
                     <input type="range" class="compact-volume" id="compact-volume-mi-refugio" name="compact-volume-mi-refugio" min="0" max="1" step="0.01" value="1" aria-label="Volumen" data-i18n-key="audio.miRefugio.volume" data-i18n-attr="aria-label">
                   </div>
@@ -441,7 +459,7 @@
                   </audio>
                   <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia" data-i18n-key="audio.laFamilia.control" data-i18n-attr="aria-label">
                     <button class="compact-play" id="compact-play-la-familia" aria-label="Reproducir" data-i18n-key="audio.laFamilia.play" data-i18n-attr="aria-label">▶</button>
-                    <input type="range" class="compact-progress" id="compact-progress-la-familia" name="compact-progress-la-familia" min="0" max="100" step="0.1" value="0">
+                    <input type="range" class="compact-progress" id="compact-progress-la-familia" name="compact-progress-la-familia" min="0" max="100" step="0.1" value="0" aria-label="Progreso de reproducción">
                     <span class="compact-time" id="compact-time-la-familia">0:00</span>
                     <input type="range" class="compact-volume" id="compact-volume-la-familia" name="compact-volume-la-familia" min="0" max="1" step="0.01" value="1" aria-label="Volumen" data-i18n-key="audio.laFamilia.volume" data-i18n-attr="aria-label">
                   </div>
