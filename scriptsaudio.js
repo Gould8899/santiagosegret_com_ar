@@ -227,137 +227,14 @@
     window.AudioCore.toggleGlobalMute = function(){ toggleGlobalMute(); };
     window.AudioCore.isMuted = function(){ return !!globalMuted; };
     window.AudioCore.onMutedChange = function(fn){ if(typeof fn === 'function') muteSubscribers.add(fn); };
-    // API para pausar todo el audio/video (HTML5 + YouTube + hero)
+    // API para pausar todo el audio/video (HTML5 + YouTube)
     window.AudioCore.pauseAllMedia = function(){
       try { MediaManager.pauseAllHtmlMedia(); } catch(_){ }
       try { if (YouTubeManager && typeof YouTubeManager.pauseAll === 'function') YouTubeManager.pauseAll(); } catch(_){ }
-      try { var h = document.querySelector('.hero-video'); if (h && !h.paused) h.pause(); } catch(_){ }
     };
 
-    // -------------------- Hero video (centralizado) ------------------
-    var hero = document.querySelector('.hero-video');
-    var overlay = document.getElementById('unmute-overlay');
-    
-    // Diccionario local para estados dinámicos
-    var overlayTexts = {
-      es: { unmute: 'Activar sonido', play: 'Reproducir', pause: 'Pausar' },
-      en: { unmute: 'Unmute', play: 'Play', pause: 'Pause' }
-    };
-
-    function getOverlayText(key) {
-      var lang = document.documentElement.lang === 'en' ? 'en' : 'es';
-      return overlayTexts[lang][key];
-    }
-
-    // Función para actualizar el estado visual del botón
-    function updateOverlayState() {
-      if (!hero || !overlay) return;
-      
-      var icon = overlay.querySelector('.unmute-icon');
-      var text = overlay.querySelector('.unmute-text');
-      
-      // Lógica de visualización
-      if (hero.muted && !hero.paused) {
-        // Estado: Reproduciendo pero Muteado (Inicial)
-        if(icon) icon.textContent = '🔇';
-        if(text) text.textContent = getOverlayText('unmute');
-        overlay.classList.add('visible');
-      } else if (hero.paused) {
-        // Estado: Pausado
-        if(icon) icon.textContent = '▶'; // Flechita de Play
-        if(text) text.textContent = getOverlayText('play');
-        overlay.classList.add('visible');
-      } else {
-        // Estado: Reproduciendo con sonido
-        if(icon) icon.textContent = 'II'; // Pausa
-        if(text) text.textContent = getOverlayText('pause');
-        // Opcional: Ocultar mientras reproduce para no molestar, o dejarlo visible
-        // El usuario pidió "indefinidamente", así que lo dejamos accesible
-        // Podemos hacerlo sutil (opacity baja) en CSS
-        overlay.classList.add('playing'); 
-        overlay.classList.remove('visible'); // Se oculta visualmente pero queda accesible por hover (ver CSS)
-      }
-    }
-
-    // Observar cambios de idioma para actualizar el texto en tiempo real
-    var langObserver = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
-          updateOverlayState();
-        }
-      });
-    });
-    langObserver.observe(document.documentElement, { attributes: true });
-
-    // Click en el overlay o en el video para alternar estado
-    function handleHeroInteraction(e) {
-      if (!hero) return;
-
-      // Detectar si el click fue en los controles nativos (zona inferior)
-      // Si el video tiene controles, asumimos que los últimos 50px son de la barra de control
-      if (hero.hasAttribute('controls')) {
-        var rect = hero.getBoundingClientRect();
-        var isBottomControlArea = (e.clientY - rect.top) > (rect.height - 50);
-        // Si el click es en el video (target === hero) y está en la zona de controles, NO hacemos nada
-        // Dejamos que el navegador maneje el volumen/seek
-        if (e.target === hero && isBottomControlArea) return;
-      }
-
-      e.preventDefault();
-      e.stopPropagation();
-      
-      // 1. Si está muteado, desmutear primero
-      if (hero.muted) {
-        hero.muted = false;
-        hero.volume = 1;
-        setGlobalMuted(false);
-        // Si estaba pausado, darle play
-        if (hero.paused) {
-          var p = hero.play();
-          if (p && p.catch) p.catch(function(){});
-        }
-      } 
-      // 2. Si ya tiene sonido, alternar Play/Pause
-      else {
-        if (hero.paused) {
-          var p = hero.play();
-          if (p && p.catch) p.catch(function(){});
-        } else {
-          hero.pause();
-        }
-      }
-      
-      updateOverlayState();
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', handleHeroInteraction);
-    }
-    
-    // Permitir click en el contenedor también
-    var maskContainer = document.querySelector('.video-mask-container');
-    if (maskContainer) {
-      maskContainer.addEventListener('click', handleHeroInteraction);
-    }
-
-    if (hero) {
-      hero.addEventListener('volumechange', updateOverlayState);
-      hero.addEventListener('play', updateOverlayState);
-      hero.addEventListener('pause', updateOverlayState);
-      // Inicializar estado
-      updateOverlayState();
-    }
-
-    // Pausar hero cuando sale de vista
-    if (hero) {
-      try {
-        var heroObserver = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){ if(!entry.isIntersecting){ try{ hero.pause(); }catch(_){ } } });
-        }, { threshold: 0.3 });
-        heroObserver.observe(hero);
-      } catch(_){ }
-    }
-
+    // -------------------- Hero (Imagen estática) ------------------
+    // Ya no hay video de hero, pero mantenemos la función para compatibilidad
     function pauseOthers(except){
       try {
         if (except && typeof MediaManager.pauseAllExcept === 'function') MediaManager.pauseAllExcept(except);
@@ -366,127 +243,14 @@
       try { if (YouTubeManager && typeof YouTubeManager.pauseAll === 'function') YouTubeManager.pauseAll(); } catch(_){ }
     }
 
-    function tryPlayHeroUnmutedWithFallback(){
-      if (!hero) return;
-      var triedUnmuteOnPlay = false;
-      function attemptUnmute(){
-        try { hero.removeAttribute('muted'); } catch(_){ }
-        try { hero.defaultMuted = false; } catch(_){ }
-        try { hero.muted = false; } catch(_){ }
-        try { if (typeof hero.volume === 'number') hero.volume = Math.max(0.7, hero.volume || 0.7); } catch(_){ }
-        try { setGlobalMuted(false); } catch(_){ }
-        updateOverlayState();
-      }
-      // Intento directo desmuteado
-      attemptUnmute();
-      var p = hero.play();
-      if (p && typeof p.then === 'function') {
-        p.then(function(){
-          if (!triedUnmuteOnPlay) {
-            triedUnmuteOnPlay = true;
-            // Reintentar unmute poco después de empezar a reproducir
-            setTimeout(attemptUnmute, 150);
-          }
-          updateOverlayState();
-        }).catch(function(){
-          // Fallback: autoplay bloqueado, reproducir muteado
-          try { hero.muted = true; } catch(_){ }
-          var p2 = hero.play();
-          if (p2 && typeof p2.then === 'function') {
-            p2.then(function(){ setTimeout(attemptUnmute, 250); updateOverlayState(); }).catch(function(){ updateOverlayState(); });
-          }
-          updateOverlayState();
-        });
-      } else {
-        // Si no hay promesa (navegador viejo), intentar unmute luego
-        setTimeout(attemptUnmute, 150);
-        updateOverlayState();
-      }
-      // Listener one-shot al entrar en "playing" para asegurar unmute
-      var onPlaying = function(){
-        try { hero.removeEventListener('playing', onPlaying, true); } catch(_){ }
-        setTimeout(attemptUnmute, 100);
-        updateOverlayState();
-      };
-      try { hero.addEventListener('playing', onPlaying, true); } catch(_){ }
-
-      // Asegurar reproducción: si sigue en pausa por condiciones de carga,
-      // reintentar play() unas pocas veces mientras estemos en #inicio.
-      (function ensurePlayingRetries(){
-        var tries = 0;
-        function tick(){
-          tries++;
-          var inInicio = ((window.location && window.location.hash) || '#inicio') === '#inicio';
-          if (!inInicio) return;
-          try { attemptUnmute(); } catch(_){ }
-          try { if (hero.paused) { var _p = hero.play(); if (_p && _p.catch) _p.catch(function(){}); } } catch(_){ }
-          updateOverlayState();
-          if (tries < 4 && hero.paused) setTimeout(tick, tries === 1 ? 180 : tries === 2 ? 400 : 900);
-        }
-        setTimeout(tick, 160);
-      })();
-    }
-
     function syncHeroForSection(hash){
       var target = (hash && hash.charAt(0)==='#') ? hash : '#inicio';
-      if (!hero) { pauseOthers(); return; }
-      if (target !== '#inicio') { pauseOthers(); try{ hero.pause(); }catch(_){ } return; }
-      // En Inicio: pausar todo excepto el héroe y reproducirlo con sonido
-      pauseOthers(hero);
-      tryPlayHeroUnmutedWithFallback();
+      if (target === '#inicio') {
+         pauseOthers();
+      }
     }
 
     // Exponer para navegación
     window.AudioCore.notifySectionChange = syncHeroForSection;
-
-    // Gesto del usuario: permitir desmuteo si estaba bloqueado
-    (function setupFirstGesture(){
-      if (!hero) return;
-      var done = false;
-      var handler = function(){
-        if (done) return; done = true; userGestureDone = true;
-        var isInicio = (window.location.hash || '#inicio') === '#inicio';
-        if (isInicio) { tryPlayHeroUnmutedWithFallback(); }
-        window.removeEventListener('click', handler, true);
-        window.removeEventListener('keydown', handler, true);
-        window.removeEventListener('touchstart', handler, true);
-        window.removeEventListener('wheel', handler, true);
-        window.removeEventListener('scroll', handler, true);
-      };
-      window.addEventListener('click', handler, true);
-      window.addEventListener('keydown', handler, true);
-      window.addEventListener('touchstart', handler, true);
-      window.addEventListener('wheel', handler, { capture: true, passive: true });
-      window.addEventListener('scroll', handler, { capture: true, passive: true });
-    })();
-
-    // La sincronización inicial de sección la realiza scripts.js
-
-    // Fallback de formato MP4: si no puede reproducir, ofrecer link + poster
-    (function videoFormatFallback(){
-      try {
-        if (!hero) return;
-        var canPlayMp4 = hero.canPlayType && hero.canPlayType('video/mp4') !== '';
-        if (canPlayMp4) return;
-        var container = hero.parentElement;
-        var poster = hero.dataset && hero.dataset.fallbackPoster ? hero.dataset.fallbackPoster : '';
-        var link = document.createElement('a');
-        link.href = hero.querySelector('source') ? hero.querySelector('source').getAttribute('src') : '';
-        if (!link.href) link.href = '003-balcon-3.mp4';
-        link.textContent = 'Descargar / reproducir video';
-        link.style.display = 'inline-block';
-        link.style.color = '#fff';
-        link.style.marginTop = '8px';
-        link.style.textDecoration = 'underline';
-        if (poster) {
-          var img = document.createElement('img');
-          img.src = poster; img.alt = 'Imagen del video';
-          img.style.maxWidth = '100%'; img.style.borderRadius = '8px';
-          container.innerHTML = ''; container.appendChild(img); container.appendChild(link);
-        } else {
-          container.innerHTML = ''; container.appendChild(link);
-        }
-      } catch(_){ }
-    })();
   });
 })();

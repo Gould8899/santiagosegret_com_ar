@@ -378,6 +378,7 @@ section.seccion.active {
 .unmute-overlay.playing {
   opacity: 0;
   visibility: hidden; /* Oculto por defecto para no molestar */
+  pointer-events: none; /* Evitar clicks fantasmas */
   /* Pero si el usuario pasa el mouse por el contenedor del video, queremos que aparezca? 
      Mejor dejemos que aparezca solo si hacen hover sobre la zona del botón o el video */
 }
@@ -400,6 +401,18 @@ section.seccion.active {
     right: 20px;
     padding: 8px 16px;
     font-size: 0.85rem;
+  }
+  
+  /* En móviles, ocultar el overlay cuando ya se está reproduciendo para no molestar */
+  .unmute-overlay.playing {
+    display: none !important;
+    pointer-events: none;
+  }
+  
+  /* Evitar que el hover active la visibilidad en táctil */
+  .video-mask-container:hover .unmute-overlay.playing {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -435,13 +448,9 @@ section.seccion.active {
 
 .video-mask-container {
   position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  background: #000;
-  aspect-ratio: 16 / 9;
   z-index: 1;
-  cursor: pointer; /* Indicar interactividad */
+  display: flex;
+  justify-content: center;
 }
 
 .hero-video {
@@ -1266,5 +1275,17 @@ section.seccion.active {
   .lightbox-close {
     transition: none;
   }
+}
+
+.hero-image {
+  width: auto;
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
