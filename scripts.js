@@ -39,202 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const STORAGE_KEY = 'siteLanguage';
     const DEFAULT_LANG = 'es';
 
-    const translations = {
-      es: {
-        'nav.main': 'Navegación principal',
-        'language.toggle.toEnglish': 'Cambiar idioma a inglés',
-  'language.toggle.toSpanish': 'Cambiar idioma a castellano',
-        'ui.backToTop.aria': 'Volver al inicio de la página',
-        'ui.backToTop.title': 'Volver arriba',
-        'gallery.dialogLabel': 'Visor de fotografías',
-        'gallery.close': 'Cerrar galería',
-        'gallery.prev': 'Ver foto anterior',
-        'gallery.next': 'Ver foto siguiente',
-        'gallery.triggerPrefix': 'Abrir fotografía:',
-        'gallery.triggerFallback': 'Abrir fotografía en tamaño completo',
-  'gallery.defaultAlt': 'Fotografía',
-  'counter.label': 'Visitas: {count}',
-  'globalMute.mute': 'Silenciar todo',
-  'globalMute.unmute': 'Activar todo el audio'
-      },
-      en: {
-        'meta.title': 'Santiago Segret - Musician',
-        'meta.description': 'Santiago Segret, musician and bandoneon player. Discover his biography, videos, sheet music, and more.',
-        'skip.toContent': 'Skip to content',
-        'nav.home': 'Home',
-        'nav.videos': 'Videos',
-        'nav.awards': 'Awards',
-        'nav.bio': 'Bio',
-        'nav.photos': 'Photos',
-        'nav.contact': 'Contact',
-        'nav.rupulo': 'Rúpulo',
-  'nav.languageToggle': 'Castellano',
-        'nav.main': 'Main navigation',
-        'language.toggle.toEnglish': 'Switch site to English',
-  'language.toggle.toSpanish': 'Switch site to Castellano',
-        'hero.subtitle': 'musician, bandoneonist',
-        'hero.videoFallback': 'Your browser does not support the video element. You can download the file from the server.',
-        'tabs.bandoneon': 'Bandoneón',
-  'tabs.experimentos': 'Experiments',
-        'tabs.bach': 'Bach',
-        'tabs.patio': 'Patio',
-        'tabs.dsq': 'DSQ',
-        'tabs.piano': 'Works / games / piano',
-  'videos.missing': 'Video coming soon.',
-        'videos.bandoneon.1': 'Transcribed from Roberto Di Filippo\'s version.',
-        'videos.bandoneon.2': 'Snapshots of maestro Julio Pane.',
-        'videos.bandoneon.3': 'Arrangement by Máximo Mori with Roberto Di Filippo as the inevitable reference.',
-        'videos.bandoneon.4': 'One of the many great arrangements by Néstor Marconi.',
-        'videos.bandoneon.5': 'An original arrangement on music by the Ábalos Brothers.',
-        'videos.bandoneon.6': 'A classic arranged by Bernardo Fingas.',
-        'videos.bandoneon.7': 'Arrangement by Máximo Mori with Di Filippo as reference.',
-        'videos.bandoneon.8': 'Transcribing Pedro Laurenz.',
-        'videos.bandoneon.9': 'Selection of folk music for solo bandoneon.',
-        'videos.bandoneon.10': 'Piazzolla arrangement recorded at Planta 16.',
-        'videos.bandoneon.11': 'More Piazzolla for solo bandoneon.',
-        'videos.bandoneon.12': 'Arrangement by Máximo Mori, Di Filippo as the reference version.',
-        'videos.bandoneon.13': 'More Piazzolla for solo bandoneon.',
-    'videos.bandoneon.14': 'Arrangements and more Piazzolla for solo bandoneon.',
-    'videos.bandoneon.15': 'Arrangement by Máximo Mori.',
-        'videos.bach.1': 'Bach\'s Invention No. 8 for two voices.',
-        'videos.bach.2': 'The 15 two-voice inventions by Bach on bandoneon.',
-        'videos.bach.3': 'Several pieces from the Anna Magdalena Bach Notebook.',
-        'videos.bach.4': 'Playing the piano.',
-        'videos.bach.5': 'Recorded in Panama.',
-        'videos.bach.6': 'One of Bach\'s four duets on piano.',
-        'videos.patio.1': 'With Patio.',
-        'videos.patio.2': 'With Patio and Nadia Larsher.',
-        'videos.patio.3': 'A zamba with the trio Patio.',
-        'videos.dsq.1': '“Líquido 2” at the former Kirchner Cultural Center.',
-        'videos.dsq.2': 'Concert featuring the music of Piazzolla.',
-        'videos.dsq.3': '“Tanguera” by Mariano Mores, at Virasoro.',
-        'videos.dsq.4': '“Canción 4” at the former Kirchner Cultural Center.',
-  'videos.dsq.5': 'With the Diego Schissi Quinteto and Aca Seca at Café Vinilo.',
-  'videos.experimentos.1': 'Vocal composition for 20 voices.',
-  'videos.experimentos.2': 'String quartet recorded by Santiago Segret.',
-  'videos.experimentos.3': '"Libro de Bucles".',
-  'videos.experimentos.4': 'A homemade musical piece.',
-  'videos.experimentos.5': 'Piano sonata created for the composition degree at UNA.',
-  'videos.experimentos.6': 'String quartet with bandoneon.',
-  'videos.experimentos.7': 'A song of mine for piano.',
-  'videos.experimentos.8': 'Studying Thelonious Monk.',
-  'videos.experimentos.9': 'Chopin\'s Prelude No. 16.',
-  'videos.experimentos.10': 'Chopin\'s Étude No. 1.',
-  'videos.experimentos.11': 'Chopin\'s Prelude No. 3.',
-  'videos.experimentos.12': 'Playing the piano.',
-  'videos.experimentos.13': 'Recorded in Panama.',
-  'videos.experimentos.14': 'One of maestro Bach\'s four duets on piano.',
-        'bio.tabs.now': 'Now',
-        'bio.tabs.training': 'Training',
-        'bio.tabs.beginnings': 'Beginnings',
-        'bio.now.title': 'Now',
-        'bio.now.item2': '<span class="logro-ano">Since 2018:</span> Bandoneon professor at the <strong>“Astor Piazzolla” Conservatory</strong> (CABA).',
-        'bio.now.item1': '<span class="logro-ano">Since 2008:</span> Private bandoneon lessons, online and in person.',
-        'bio.now.item7': '<span class="logro-ano">Since 2008:</span> Developer and creator of the sheet music catalog <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a>.',
-        'bio.now.item5': '<span class="logro-ano">Since 2010:</span> Professor and assistant conductor of the <strong>UNA Tango Orchestra</strong>.',
-        'bio.now.item4': '<span class="logro-ano">Since 2013:</span> Member of the trio <strong>Patio</strong>, with Andrés Pilar and Juan Quintero.',
-        'bio.now.item6': '<span class="logro-ano">Since 2009:</span> Member of the <strong>Diego Schissi Quinteto</strong>.',
-        'bio.now.item3': '<span class="logro-ano">Since 2013:</span> Bandoneon professor at the <strong>National University of San Martín</strong>.',
-        'hero.unmute': 'Unmute',
-        'hero.play': 'Play',
-        'hero.pause': 'Pause',
-        'bio.training.title': 'Training',
-        'bio.training.item1': 'In 2005 he completed the program of the Emilio Balcarce Tango Orchestra School alongside masters such as Victor Lavallén, Raúl Garello, Lidia Borda, José Colángelo, and Néstor Marconi.',
-        'bio.training.caption1': 'Photo with Emilio Balcarce at the Pantheon in Rome.',
-  'bio.training.item2': 'He has also shared recordings and stages with Leopoldo Federico, Raúl Garello, Victor Lavallén, Vitillo Ábalos, Hilda Herrera, Stefano Bollani, Susana Rinaldi, Nadia Larcher, Luna Monti, Naty Peluso, Pablo Estigarribia, Amelita Baltar, Jorge Fandermole, Rafael Villazón, Nacho Vidal, Marcelo Moguilevsky, Hernán Segret, Victor Villadangos, Mariana Rewersky, Guillermo Rubino, Ismael Grossman, Juan Pablo Navarro, Mono Fontana.',
-        'bio.training.item3': 'In 2019 he graduated with a degree in <strong>Music Arts with a concentration in Composition at UNA</strong>.',
-        'bio.training.caption2': '“Fragmento de Libro de Bucles” – Final project of the degree.',
-        'bio.training.item4': 'From 2013 to 2015 he was part of the Buenos Aires City Tango Orchestra, then conducted by Raúl Garello, Néstor Marconi, and Carlos Cuacci.',
-        'bio.training.caption3': 'At the Usina del Arte with the Buenos Aires City Tango Orchestra.',
-        'bio.training.item5': 'He completed the educational program led by Hilda Herrera called CIMAP: Creators and Performers of Argentine Music on Piano.',
-        'bio.training.item6': 'Throughout his adolescence and youth he studied bandoneon with Pablo Mainetti, Julio Pane, Mariano “Paya” Cigna, Federico Pereiro, and with Carlos Lazzari at age 18.',
-        'bio.training.item7': 'In those years he visited more than 20 countries with the Tango Orchestra School, Érica Di Salvo\'s Orchestra, the Diego Schissi Quinteto, the trio Patio, and others.',
-        'bio.beginnings.title': 'Beginnings',
-        'bio.beginnings.item1': 'Santiago Segret was born on May 5, 1988 in Illinois and has lived in Buenos Aires since he was four. As a child he played on his grandfather Horacio\'s upright piano in Almagro, sang with his mother, and kept rhythm on the bombo with his father. He began playing bandoneon at seven with Osvaldo “El Marinero” Montes.',
-        'bio.beginnings.caption1': 'Playing “Caminito” and photo with Marinero Montes.',
-        'bio.beginnings.item2': 'Around age ten he took piano lessons with Liliana Campos. At fifteen he opened for Javier Malosetti at La Trastienda performing Piazzolla solos.',
-        'bio.beginnings.caption2': 'Recordings from La Trastienda: “Mi Refugio” and “La Familia”, audio by Raúl Monti.',
-        'bio.beginnings.audio1': '<strong>Mi Refugio:</strong>',
-        'bio.beginnings.audio2': '<strong>La Familia:</strong>',
-        'audio.unsupported': 'Your browser does not support the audio element.',
-        'audio.miRefugio.control': 'Audio controls for “Mi Refugio”.',
-        'audio.miRefugio.play': 'Play',
-        'audio.miRefugio.volume': 'Volume',
-        'audio.laFamilia.control': 'Audio controls for “La Familia”.',
-        'audio.laFamilia.play': 'Play',
-        'audio.laFamilia.volume': 'Volume',
-        'awards.title': 'Awards',
-        'awards.2024': '<strong>Latin Grammy</strong> for Best Tango Album — <a href="https://open.spotify.com/album/2wabWzvHxIp7DoiYoW5waK?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Apiazolado</em></a>, with the Diego Schissi Quinteto.',
-        'awards.2023': '<strong>Premio Gardel</strong> for Best Folklore Album — <a href="https://open.spotify.com/album/64wnAObYHWcXusn5A8fXcl" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 2</em></a>, by Juan Quintero, Andrés Pilar, and Santiago Segret.',
-        'awards.2018a': '<strong>Premio Gardel</strong> for Best Folklore Album — <a href="https://open.spotify.com/album/5OePvXFX4ztMM9tTXud1uk?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 1</em></a>, by Juan Quintero, Andrés Pilar, and Santiago Segret.',
-        'awards.2016a': '<strong>Premio Gardel</strong> in the Tango Instrumental Orchestra category — <a href="https://open.spotify.com/album/474RxN2GuitD351hsAPNbn?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Timba</em></a>, with the Diego Schissi Quinteto.',
-        'awards.2016b': '<strong>Premio Gardel</strong> for Best Tango Album — <a href="https://open.spotify.com/intl-es/album/2PTXTj8Vr7IEmr80c7e5rJ?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>El rejunte</em></a>, by the UNA Tango Orchestra.',
-        'awards.2013': '<strong>Premio Gardel</strong> for Best Tango Album — <a href="https://open.spotify.com/intl-es/album/4lkkdErHecpciBcNUEgLHh?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Tipas y Tipos (En Vivo en Café Vinilo)</em></a>, with the Diego Schissi Quinteto.',
-        'photos.1.alt': 'With Marinero Montes',
-        'photos.1.caption': 'With Marinero Montes.',
-        'photos.2.alt': 'As a child at Goyo Barja\'s house',
-        'photos.2.caption': 'As a child at Goyo Barja\'s house.',
-        'photos.3.alt': 'With Emilio Balcarce at the Pantheon in Rome',
-        'photos.3.caption': 'With Emilio Balcarce at the Pantheon in Rome.',
-        'photos.4.alt': 'Andrés and Vitillo',
-        'photos.4.caption': 'With Andrés Pilar and Vitillo Ábalos.',
-        'photos.5.alt': 'Pablo Estigarribia and Marco Antonio Fernández',
-        'photos.5.caption': 'With Pablo Estigarribia and Marco Antonio Fernández in Rome.',
-        'photos.6.alt': 'With Leopoldo Federico',
-        'photos.6.caption': 'With Leopoldo Federico.',
-        'photos.7.alt': 'With Andrés Pilar',
-        'photos.7.caption': 'With Andrés Pilar.',
-        'photos.8.alt': 'At Virasoro',
-        'photos.8.caption': 'At Virasoro with Rubino, Schissi, Grossman, and Navarro.',
-        'photos.9.alt': 'With Fandermole',
-        'photos.9.caption': 'With Jorge Fandermole and Tiqui Cantero in La Rioja.',
-        'photos.10.alt': 'With Federico Pereiro and Marco Antonio Fernández',
-        'photos.10.caption': 'With Federico Pereiro and Marco Antonio Fernández at the Orchestra School.',
-        'photos.11.alt': 'Pane Lautaro',
-        'photos.11.caption': 'With Julio Pane and Lautaro Greco.',
-        'photos.12.alt': 'With Furman, Quintanilla, and Amerise',
-        'photos.12.caption': 'With Furman, Quintanilla, and Amerise, accompanying Morena Albert.',
-        'photos.13.alt': 'With Evgeny Kissin\'s mother',
-        'photos.13.caption': 'With Evgeny Kissin\'s mother at the doors of Teatro Colón.',
-        'photos.14.alt': 'With Patio',
-        'photos.14.caption': 'With Patio in Rosario.',
-        'photos.15.alt': 'With Louise Cole',
-        'photos.15.caption': 'With Louise Cole.',
-        'photos.16.alt': 'With Mariana Rewersky and company',
-        'photos.16.caption': 'With Mariana Rewersky, Victor Villadangos, David Akerman, and Paula Castro.',
-        'photos.17.alt': 'At Rafael Villazón\'s place',
-        'photos.17.caption': 'At Rafael Villazón\'s place.',
-        'photos.18.alt': 'Juan and Luna',
-        'photos.18.caption': 'With Juan Quintero and Luna Monti.',
-        'photos.19.alt': 'With Aca Seca',
-        'photos.19.caption': 'With Aca Seca.',
-        'photos.20.alt': 'With Mono Fontana',
-        'photos.20.caption': 'With Mono Fontana.',
-        'photos.21.alt': 'Palestrini and Baltazar Estol',
-        'photos.21.caption': 'With Sergio Palestrini and Baltazar Estol.',
-        'photos.22.alt': 'Diego Schissi Quinteto with Bollani',
-        'photos.22.caption': 'Diego Schissi Quinteto with Bollani.',
-        'contact.title': 'Contact',
-        'contact.email': '<strong>Email:</strong> <a href="mailto:ssegret@gmail.com" class="contacto-link">ssegret@gmail.com</a>',
-        'contact.phone': '<strong>Phone:</strong> <a href="tel:+541149890559" class="contacto-link">+54 11 4989-0559</a>',
-        'contact.youtube': '<strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank" rel="noopener noreferrer" class="contacto-link">Visit channel</a>',
-        'rupulo.title': 'Rúpulo Editions',
-  'rupulo.description': '<strong>Rúpulo Ediciones</strong> is Santiago Segret\'s sheet music catalog. Transcriptions, arrangements, compositions, copies, inventions, exercises, primarily oriented toward the bandoneon and tango, while also reaching other areas of music and pedagogy.',
-        'rupulo.visit': '<strong>Visit catalog:</strong> <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">rupulo-ediciones.web.app</a>',
-        'ui.backToTop.aria': 'Scroll back to the top',
-        'ui.backToTop.title': 'Back to top',
-        'gallery.dialogLabel': 'Photo viewer',
-        'gallery.close': 'Close gallery',
-        'gallery.prev': 'View previous photo',
-        'gallery.next': 'View next photo',
-        'gallery.triggerPrefix': 'Open photo:',
-        'gallery.triggerFallback': 'Open photo in full size',
-        'gallery.defaultAlt': 'Photograph',
-        'counter.label': 'Visits: {count}',
-        'globalMute.mute': 'Mute all audio',
-        'globalMute.unmute': 'Unmute all audio'
-      }
-    };
+    const translations = window.SiteTranslations || {};
 
     const boundElements = new Map();
     const subscribers = new Set();
@@ -286,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
       boundElements.forEach((entries, key) => {
         entries.forEach(entry => applyToEntry(entry, key, targetLang));
       });
-      document.documentElement.setAttribute('lang', targetLang === 'en' ? 'en' : 'es');
+      document.documentElement.setAttribute('lang', targetLang);
       if (options.persist !== false) {
         try { localStorage.setItem(STORAGE_KEY, targetLang); } catch (e) { /* ignore */ }
       }
@@ -304,7 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setLanguage(lang) { applyLanguage(lang, { persist: true }); }
 
-    function toggleLanguage() { setLanguage(currentLang === 'es' ? 'en' : 'es'); }
+    function toggleLanguage() {
+      const order = ['es', 'en', 'ja'];
+      const nextIndex = (order.indexOf(currentLang) + 1) % order.length;
+      setLanguage(order[nextIndex]);
+    }
 
     function register(el, key, attr, options = {}) {
       if (!el || !key) return;
@@ -381,12 +190,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateLanguageToggleButton(lang) {
     if (!languageToggleBtn) return;
-    const labelKey = lang === 'es' ? 'language.toggle.toEnglish' : 'language.toggle.toSpanish';
-  const label = LanguageManager.t(labelKey, null, lang) || (lang === 'es' ? 'Cambiar idioma a inglés' : 'Switch site to Castellano');
-  languageToggleBtn.textContent = lang === 'es' ? 'English' : 'Castellano';
+    
+    const order = ['es', 'en', 'ja'];
+    const nextIndex = (order.indexOf(lang) + 1) % order.length;
+    const nextLang = order[nextIndex];
+
+    let labelKey = '';
+    let defaultLabel = '';
+    let buttonText = '';
+
+    if (nextLang === 'en') {
+      labelKey = 'language.toggle.toEnglish';
+      defaultLabel = 'Cambiar idioma a inglés';
+      buttonText = 'English';
+    } else if (nextLang === 'ja') {
+      labelKey = 'language.toggle.toJapanese';
+      defaultLabel = 'Switch site to Japanese';
+      buttonText = '日本語';
+    } else {
+      labelKey = 'language.toggle.toSpanish';
+      defaultLabel = 'Cambiar idioma a castellano';
+      buttonText = 'Castellano';
+    }
+
+    const label = LanguageManager.t(labelKey, null, lang) || defaultLabel;
+    languageToggleBtn.textContent = buttonText;
     languageToggleBtn.setAttribute('aria-label', label);
     languageToggleBtn.title = label;
-    languageToggleBtn.setAttribute('aria-pressed', String(lang === 'en'));
+    languageToggleBtn.removeAttribute('aria-pressed');
   }
 
   if (languageToggleBtn) {
@@ -645,12 +476,25 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ------------------------------------------------------------------
      VI. Galería de fotos (lightbox interactivo)
      ------------------------------------------------------------------*/
-  const galleryTriggers = Array.from(document.querySelectorAll('.galeria-fotos .foto img'));
+  // Seleccionamos tanto las fotos de la galería principal como las fotos expandibles en bio
+  const galleryTriggers = Array.from(document.querySelectorAll('.galeria-fotos .foto img, .expandable-photo'));
   const galleryItems = galleryTriggers.map(trigger => {
-    const container = trigger.closest('.foto');
-    const captionEl = container ? container.querySelector('p') : null;
+    // Intentar encontrar el contenedor y el caption de varias formas
+    const container = trigger.closest('.foto') || trigger.closest('.logro-media-container');
+    
     const getCaption = () => {
-      const text = captionEl ? captionEl.textContent.trim() : '';
+      let text = '';
+      if (container) {
+        // Prioridad 1: .logro-media-caption (usado en bio)
+        const captionDiv = container.querySelector('.logro-media-caption');
+        if (captionDiv) text = captionDiv.textContent.trim();
+        
+        // Prioridad 2: p (usado en galería fotos)
+        if (!text) {
+          const p = container.querySelector('p');
+          if (p && container.classList.contains('foto')) text = p.textContent.trim();
+        }
+      }
       return text || trigger.getAttribute('alt') || '';
     };
     const getAlt = () => trigger.getAttribute('alt') || LanguageManager.t('gallery.defaultAlt') || 'Fotografía';
