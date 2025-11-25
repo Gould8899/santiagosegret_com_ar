@@ -244,13 +244,113 @@
     }
 
     function syncHeroForSection(hash){
-      var target = (hash && hash.charAt(0)==='#') ? hash : '#inicio';
-      if (target === '#inicio') {
-         pauseOthers();
-      }
+      // Al cambiar de sección principal, pausamos todo el audio/video activo
+      pauseOthers();
     }
 
     // Exponer para navegación
     window.AudioCore.notifySectionChange = syncHeroForSection;
+
+    /* ------------------------------------------------------------------
+       Lazy-load optimizado de iframes YouTube (Movido desde scripts.js)
+       ------------------------------------------------------------------*/
+    function initYouTubeLazyLoading() {
+      var lazyVideos = document.querySelectorAll('iframe.lazy-video');
+
+      function buildEmbedUrl(rawSrc) {
+        if (!rawSrc) return null;
+        try {
+          var url = new URL(rawSrc);
+          var isFileProtocol = window.location && window.location.protocol === 'file:';
+          if (!isFileProtocol) {
+            var origin = window.location && window.location.origin;
+            if (origin && origin !== 'null' && !url.searchParams.has('origin')) {
+              url.searchParams.set('origin', origin);
+            }
+          }
+          if (!url.searchParams.has('rel')) url.searchParams.set('rel', '0');
+          if (!url.searchParams.has('modestbranding')) url.searchParams.set('modestbranding', '1');
+          if (!url.searchParams.has('playsinline')) url.searchParams.set('playsinline', '1');
+          if (!url.searchParams.has('enablejsapi')) url.searchParams.set('enablejsapi', '1');
+          // Asegurar autoplay al hacer click
+          if (!url.searchParams.has('autoplay')) url.searchParams.set('autoplay', '1');
+          return url.toString();
+        } catch (error) {
+          console.warn('buildEmbedUrl error', error);
+          return rawSrc;
+        }
+      }
+
+      // Extraer ID de video de YouTube desde URL
+      function getYouTubeId(url) {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        var match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+      }
+
+      // Cargar iframe real
+      function loadIframe(iframe) {
+        if (!iframe || !iframe.dataset || !iframe.dataset.src) return;
+        // Si ya tiene src, es que ya se cargó o se está cargando
+        if (iframe.getAttribute('src')) return;
+
+        var finalSrc = buildEmbedUrl(iframe.dataset.src);
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.src = finalSrc || iframe.dataset.src;
+        // No removemos data-src para permitir re-verificaciones si fuera necesario, pero marcamos como cargado
+        iframe.dataset.loaded = 'true';
+        
+        // Limpiar imagen de fondo si existía (la miniatura)
+        iframe.style.backgroundImage = '';
+
+        // Registrar en el sistema de audio (con un pequeño delay para asegurar que el iframe ha iniciado carga)
+        setTimeout(function() {
+          try {
+            if (YouTubeManager && typeof YouTubeManager.registerIframe === 'function') { YouTubeManager.registerIframe(iframe); }
+          } catch (e) { /* ignore YouTube registration errors */ }
+        }, 500);
+      }
+
+      // 1. Pre-cargar miniaturas inmediatamente y configurar "Click to Load"
+      lazyVideos.forEach(function(iframe) {
+        var src = iframe.dataset.src;
+        if (src) {
+          var videoId = getYouTubeId(src);
+          if (videoId) {
+            // Crear elemento poster (div) que reemplaza visualmente al iframe
+            var poster = document.createElement('div');
+            poster.className = 'video-poster';
+            var thumbUrl = 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
+            poster.style.backgroundImage = 'url(\'' + thumbUrl + '\')';
+            
+            // Ocultar el iframe real inicialmente
+            iframe.style.display = 'none';
+            
+            // Insertar el poster justo antes del iframe
+            if(iframe.parentNode) {
+              iframe.parentNode.insertBefore(poster, iframe);
+            }
+            
+            // Al hacer click en el poster, cargar y mostrar el iframe
+            poster.addEventListener('click', function() {
+              loadIframe(iframe);
+              iframe.style.display = 'block'; // Mostrar iframe
+              poster.style.display = 'none';  // Ocultar poster
+              
+              // Añadir clase al contenedor por si se necesita estilo extra
+              var container = iframe.closest('.video');
+              if (container) {
+                container.classList.add('video-active');
+                container.style.cursor = 'auto';
+              }
+            });
+          }
+        }
+      });
+    }
+
+    // Inicializar lazy loading
+    initYouTubeLazyLoading();
+
   });
 })();

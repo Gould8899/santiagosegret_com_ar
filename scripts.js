@@ -364,110 +364,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ------------------------------------------------------------------
     IV. Lazy-load optimizado de iframes YouTube
-    - Estrategia híbrida:
-      1. Carga inmediata de miniaturas (thumbnails) para evitar "huecos".
-      2. Carga diferida (lazy) de los iframes reales para no bloquear el inicio.
-      3. Pre-carga agresiva en segundo plano (background) una vez que la página está lista.
-    ------------------------------------------------------------------*/
-  const lazyVideos = document.querySelectorAll('iframe.lazy-video');
-
-  function buildEmbedUrl(rawSrc) {
-    if (!rawSrc) return null;
-    try {
-      const url = new URL(rawSrc);
-      const isFileProtocol = window.location && window.location.protocol === 'file:';
-      if (!isFileProtocol) {
-        const origin = window.location && window.location.origin;
-        if (origin && origin !== 'null' && !url.searchParams.has('origin')) {
-          url.searchParams.set('origin', origin);
-        }
-      }
-      if (!url.searchParams.has('rel')) url.searchParams.set('rel', '0');
-      if (!url.searchParams.has('modestbranding')) url.searchParams.set('modestbranding', '1');
-      if (!url.searchParams.has('playsinline')) url.searchParams.set('playsinline', '1');
-      if (!url.searchParams.has('enablejsapi')) url.searchParams.set('enablejsapi', '1');
-      return url.toString();
-    } catch (error) {
-      console.warn('buildEmbedUrl error', error);
-      return rawSrc;
-    }
-  }
-
-  // Extraer ID de video de YouTube desde URL
-  function getYouTubeId(url) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  }
-
-  // Cargar iframe real
-  function loadIframe(iframe) {
-    if (!iframe || !iframe.dataset || !iframe.dataset.src) return;
-    // Si ya tiene src, es que ya se cargó o se está cargando
-    if (iframe.getAttribute('src')) return;
-
-    const finalSrc = buildEmbedUrl(iframe.dataset.src);
-    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-    iframe.src = finalSrc || iframe.dataset.src;
-    // No removemos data-src para permitir re-verificaciones si fuera necesario, pero marcamos como cargado
-    iframe.dataset.loaded = 'true';
     
-    // Limpiar imagen de fondo si existía (la miniatura)
-    iframe.style.backgroundImage = '';
-
-    try {
-      const yt = (window.AudioCore && window.AudioCore.YouTube);
-      if (yt && typeof yt.registerIframe === 'function') { yt.registerIframe(iframe); }
-    } catch (e) { /* ignore YouTube registration errors */ }
-  }
-
-  // 1. Pre-cargar miniaturas inmediatamente
-  lazyVideos.forEach(iframe => {
-    const src = iframe.dataset.src;
-    if (src) {
-      const videoId = getYouTubeId(src);
-      if (videoId) {
-        // Usar imagen de alta calidad de YouTube como placeholder
-        const thumbUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-        iframe.style.backgroundImage = `url('${thumbUrl}')`;
-        iframe.style.backgroundSize = 'cover';
-        iframe.style.backgroundPosition = 'center';
-        iframe.style.backgroundColor = '#000'; // Fondo negro mientras carga
-      }
-    }
-  });
-
-  // 2. Observer para carga prioritaria (cuando entra en pantalla)
-  if ('IntersectionObserver' in window) {
-    const iframeObserver = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        loadIframe(entry.target);
-        obs.unobserve(entry.target);
-      });
-    }, { rootMargin: '200px 0px' }); // Aumentamos margen para cargar antes de que llegue el usuario
-    lazyVideos.forEach(iframe => iframeObserver.observe(iframe));
-  } else {
-    lazyVideos.forEach(iframe => loadIframe(iframe));
-  }
-
-  // 3. Carga en segundo plano (Background Loading)
-  // Esperamos a que todo lo crítico haya cargado, y luego empezamos a cargar los iframes ocultos
-  window.addEventListener('load', () => {
-    // Damos un respiro al navegador (3 segundos) para asegurar que el video del hero y scripts principales estén listos
-    setTimeout(() => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => {
-          lazyVideos.forEach(iframe => loadIframe(iframe));
-        }, { timeout: 5000 });
-      } else {
-        // Fallback para navegadores sin requestIdleCallback
-        setTimeout(() => {
-          lazyVideos.forEach(iframe => loadIframe(iframe));
-        }, 1000);
-      }
-    }, 3000);
-  });
+    [MOVIDO A scriptsaudio.js]
+    Toda la lógica de carga diferida, miniaturas y reproducción de video
+    se encuentra ahora centralizada en scriptsaudio.js para mantener
+    el orden y proteger la funcionalidad de medios.
+    ------------------------------------------------------------------*/
 
   /* ------------------------------------------------------------------
      V. (migrado) Controles de audio ahora en scriptsaudio.js

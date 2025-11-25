@@ -517,6 +517,61 @@ section.seccion.active {
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-sm);
   background: #0f111a;
+  border: none;
+}
+
+/* Poster que reemplaza al iframe antes de cargar */
+.video-poster {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.video-poster:hover {
+  transform: scale(1.01);
+}
+
+/* Botón de play dentro del poster */
+.video-poster::after {
+  content: '▶';
+  width: 60px;
+  height: 60px;
+  background: rgba(240, 90, 57, 0.9);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  padding-left: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.video-poster:hover::after {
+  transform: scale(1.1);
+  background: #f05a39;
+}
+
+/* Limpieza de estilos antiguos */
+.video iframe.video-ready,
+.video iframe.video-playing {
+  pointer-events: auto;
+}
+
+.video::after,
+.video:hover::after,
+.video:has(iframe.video-ready)::after {
+  display: none !important;
 }
 
 .video h4 {
@@ -1222,11 +1277,38 @@ section.seccion.active {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 0.75rem;
+    padding-right: 3.5rem; /* Espacio para que el último ítem no quede tapado por el gradiente */
     scrollbar-width: none;
   }
 
   .navbar-tabs.tab-menu::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Indicador visual de scroll horizontal (gradiente + flecha) */
+  .navbar::after {
+    content: '›';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to left, var(--color-nav) 30%, transparent);
+    color: var(--color-accent);
+    font-size: 2.5rem;
+    line-height: 1;
+    padding-bottom: 4px; /* Ajuste óptico vertical */
+    pointer-events: none;
+    z-index: 1001;
+    animation: scrollHintPulse 2s infinite;
+  }
+
+  @keyframes scrollHintPulse {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(3px); }
   }
 
   #inicio {
