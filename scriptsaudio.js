@@ -303,12 +303,10 @@
         // Limpiar imagen de fondo si existía (la miniatura)
         iframe.style.backgroundImage = '';
 
-        // Registrar en el sistema de audio (con un pequeño delay para asegurar que el iframe ha iniciado carga)
-        setTimeout(function() {
-          try {
-            if (YouTubeManager && typeof YouTubeManager.registerIframe === 'function') { YouTubeManager.registerIframe(iframe); }
-          } catch (e) { /* ignore YouTube registration errors */ }
-        }, 500);
+        // Registrar en el sistema de audio inmediatamente
+        try {
+          if (YouTubeManager && typeof YouTubeManager.registerIframe === 'function') { YouTubeManager.registerIframe(iframe); }
+        } catch (e) { /* ignore YouTube registration errors */ }
       }
 
       // 1. Pre-cargar miniaturas inmediatamente y configurar "Click to Load"
