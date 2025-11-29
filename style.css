@@ -757,9 +757,8 @@ section.seccion {
 
   /* Fix Video Gallery on Mobile */
   .tab-content .tab-pane.active {
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    gap: 1rem;
-    padding: 0 0.5rem;
+    grid-template-columns: 1fr; /* Single column */
+    padding: 0 1rem; /* Add padding */
   }
 
   .video-poster {
