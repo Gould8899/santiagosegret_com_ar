@@ -869,6 +869,9 @@ section.seccion {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   color: var(--text-muted);
+  text-align: left; /* Align text to left */
+  text-indent: 2rem; /* Standard indentation */
+  line-height: 1.8; /* Improve readability */
 }
 
 .rupulo-detalle a {
