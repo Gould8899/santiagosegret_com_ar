@@ -8,7 +8,9 @@
   <meta name="description"
     content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más." data-i18n-key="meta.description" data-i18n-attr="content">
   <title data-i18n-key="meta.title">Santiago Segret - Músico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <!-- Metadatos sociales -->
@@ -38,10 +40,12 @@
 </head>
 
 <body>
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
   <a class="skip-link" href="#inicio" data-i18n-key="skip.toContent">Saltar al contenido</a>
 
   <nav class="navbar" role="navigation">
-    <ul class="navbar-tabs tab-menu">
+    <ul class="navbar-tabs">
       <li><a href="#inicio" data-i18n-key="nav.home">Inicio</a></li>
       <li><a href="#videos" data-i18n-key="nav.videos">Videos</a></li>
       <li><a href="#premios" data-i18n-key="nav.awards">Premios</a></li>
@@ -317,6 +321,61 @@
       </div>
     </section>
 
+    <!-- Sección Premios -->
+    <section class="seccion" id="premios">
+      <h3 class="seccion-titulo" data-i18n-key="awards.title">Premios</h3>
+      <div class="premios-lista">
+        <div class="premio-item">
+          <span class="premio-ano">2024</span>
+          <p class="premio-detalle" data-i18n-key="awards.2024">
+            <strong>Grammy Latino</strong> al Mejor Álbum de Tango —
+            <a href="https://open.spotify.com/album/2wabWzvHxIp7DoiYoW5waK?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Apiazolado</em></a>,
+            con el Diego Schissi Quinteto.
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2023</span>
+          <p class="premio-detalle" data-i18n-key="awards.2023">
+            <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
+            <a href="https://open.spotify.com/album/64wnAObYHWcXusn5A8fXcl" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 2</em></a>,
+            Juan Quintero, Andrés Pilar y Santiago Segret.
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2018</span>
+          <p class="premio-detalle" data-i18n-key="awards.2018a">
+            <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
+            <a href="https://open.spotify.com/album/5OePvXFX4ztMM9tTXud1uk?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 1</em></a>,
+            Juan Quintero, Andrés Pilar y Santiago Segret.
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2016</span>
+          <p class="premio-detalle" data-i18n-key="awards.2016a">
+            <strong>Premio Gardel</strong> en la categoría Orquesta de Tango Instrumental —
+            <a href="https://open.spotify.com/album/474RxN2GuitD351hsAPNbn?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Timba</em></a>,
+            con el Diego Schissi Quinteto.
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2016</span>
+          <p class="premio-detalle" data-i18n-key="awards.2016b">
+            <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
+            <a href="https://open.spotify.com/intl-es/album/2PTXTj8Vr7IEmr80c7e5rJ?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>El rejunte</em></a>,
+            de la Orquesta de Tango de la UNA.
+          </p>
+        </div>
+        <div class="premio-item">
+          <span class="premio-ano">2013</span>
+          <p class="premio-detalle" data-i18n-key="awards.2013">
+            <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
+            <a href="https://open.spotify.com/intl-es/album/4lkkdErHecpciBcNUEgLHh?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Tipas y Tipos (En Vivo en Café Vinilo)</em></a>,
+            con el Diego Schissi Quinteto.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <!-- Sección Bio -->
     <section class="seccion" id="bio">
       <div class="bio-tabs bio-tabs-dynamic">
@@ -397,12 +456,12 @@
             <div class="logro-item with-media">
               <div class="logro-content">
                 <p class="logro-detalle" data-i18n-key="bio.beginnings.item1">Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.</p>
-              </div>
+              <!-- </div>
               <div class="logro-media-container" style="display: grid; gap: 0.5rem;">
                 <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0" allowfullscreen></iframe>
                 <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Foto con el Marinero" class="expandable-photo" loading="lazy" style="cursor: pointer;">
                 <div class="logro-media-caption" data-i18n-key="bio.beginnings.caption1">Tocando "Caminito" y con el Marinero</div>
-              </div>
+              </div> -->
             </div>
 
             <div class="logro-item audio-block">
@@ -433,61 +492,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección Premios -->
-    <section class="seccion" id="premios">
-      <h3 class="seccion-titulo" data-i18n-key="awards.title">Premios</h3>
-      <div class="premios-lista">
-        <div class="premio-item">
-          <span class="premio-ano">2024</span>
-          <p class="premio-detalle" data-i18n-key="awards.2024">
-            <strong>Grammy Latino</strong> al Mejor Álbum de Tango —
-            <a href="https://open.spotify.com/album/2wabWzvHxIp7DoiYoW5waK?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Apiazolado</em></a>,
-            con el Diego Schissi Quinteto.
-          </p>
-        </div>
-        <div class="premio-item">
-          <span class="premio-ano">2023</span>
-          <p class="premio-detalle" data-i18n-key="awards.2023">
-            <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
-            <a href="https://open.spotify.com/album/64wnAObYHWcXusn5A8fXcl" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 2</em></a>,
-            Juan Quintero, Andrés Pilar y Santiago Segret.
-          </p>
-        </div>
-        <div class="premio-item">
-          <span class="premio-ano">2018</span>
-          <p class="premio-detalle" data-i18n-key="awards.2018a">
-            <strong>Premio Gardel</strong> al Mejor Álbum de Folklore —
-            <a href="https://open.spotify.com/album/5OePvXFX4ztMM9tTXud1uk?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Patio Vol. 1</em></a>,
-            Juan Quintero, Andrés Pilar y Santiago Segret.
-          </p>
-        </div>
-        <div class="premio-item">
-          <span class="premio-ano">2016</span>
-          <p class="premio-detalle" data-i18n-key="awards.2016a">
-            <strong>Premio Gardel</strong> en la categoría Orquesta de Tango Instrumental —
-            <a href="https://open.spotify.com/album/474RxN2GuitD351hsAPNbn?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Timba</em></a>,
-            con el Diego Schissi Quinteto.
-          </p>
-        </div>
-        <div class="premio-item">
-          <span class="premio-ano">2016</span>
-          <p class="premio-detalle" data-i18n-key="awards.2016b">
-            <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
-            <a href="https://open.spotify.com/intl-es/album/2PTXTj8Vr7IEmr80c7e5rJ?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>El rejunte</em></a>,
-            de la Orquesta de Tango de la UNA.
-          </p>
-        </div>
-        <div class="premio-item">
-          <span class="premio-ano">2013</span>
-          <p class="premio-detalle" data-i18n-key="awards.2013">
-            <strong>Premio Gardel</strong> al Mejor Álbum de Tango —
-            <a href="https://open.spotify.com/intl-es/album/4lkkdErHecpciBcNUEgLHh?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer"><em>Tipas y Tipos (En Vivo en Café Vinilo)</em></a>,
-            con el Diego Schissi Quinteto.
-          </p>
         </div>
       </div>
     </section>
@@ -628,6 +632,10 @@
       </div>
     </section>
   </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 Santiago Segret. <span data-i18n-key="footer.rights">Todos los derechos reservados.</span></p>
+  </footer>
 
   <!-- Botón global para silenciar o activar todo el audio -->
   <button id="global-mute-btn" aria-pressed="false" aria-label="Silenciar todo" title="Silenciar todo">🔈</button>

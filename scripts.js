@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
      - showSectionFromHash: muestra la sección correspondiente al hash
      - initTabs / activateDefaultTab: comportamiento accesible y simple
      ------------------------------------------------------------------*/
-  const navTabs = document.querySelectorAll('.navbar-tabs.tab-menu a');
+  const navTabs = document.querySelectorAll('.navbar-tabs a');
   const secciones = document.querySelectorAll('section.seccion');
   const navbar = document.querySelector('.navbar');
   // Nota: la lógica del hero-video está centralizada en scriptsaudio.js
@@ -266,35 +266,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // (observer del hero-video movido a scriptsaudio.js)
 
-  function showSectionFromHash(hash) {
-    const hashToShow = hash && hash.startsWith('#') ? hash : '#inicio';
-    let found = false;
-    secciones.forEach(sec => {
-      if ('#' + sec.id === hashToShow) {
-        sec.classList.add('active');
-        found = true;
-      } else {
-        sec.classList.remove('active');
+  // Scroll Spy & Navigation Logic
+  function updateActiveSection() {
+    let current = '';
+    secciones.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.scrollY >= (sectionTop - 300)) {
+        current = '#' + section.getAttribute('id');
       }
     });
-    if (!found) {
-      secciones.forEach(sec => sec.id === 'inicio' ? sec.classList.add('active') : sec.classList.remove('active'));
-    }
-    navTabs.forEach(l => l.getAttribute('href') === hashToShow ? l.classList.add('active') : l.classList.remove('active'));
-    try { if (window.AudioCore && typeof window.AudioCore.notifySectionChange === 'function') window.AudioCore.notifySectionChange(hashToShow); } catch (e) { /* ignore */ }
+
+    navTabs.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === current) {
+        link.classList.add('active');
+      }
+    });
   }
 
-  // Inicial: mostrar sección indicada por URL (o inicio)
-  showSectionFromHash(window.location.hash);
-
-  // Enlaces del menú: actualizar URL sin scroll y mostrar sección
+  window.addEventListener('scroll', updateActiveSection);
+  
+  // Smooth Scroll for Nav Links
   navTabs.forEach(link => link.addEventListener('click', function (e) {
     e.preventDefault();
     const hash = this.getAttribute('href');
-    if (history && history.pushState) history.pushState(null, '', hash);
-    else window.location.hash = hash;
-    showSectionFromHash(hash);
-    try { this.blur(); } catch (e) { /* ignore */ }
+    const target = document.querySelector(hash);
+    if (target) {
+      const headerOffset = 80;
+      const elementPosition = target.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      
+      // Update URL without jumping
+      if (history.pushState) history.pushState(null, null, hash);
+    }
   }));
 
   // Mantener comportamiento al cambiar hash o usar back/forward
@@ -302,8 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.location.hash === '#videos') activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
     if (window.location.hash === '#bio') activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
   }
-  window.addEventListener('hashchange', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
-  window.addEventListener('popstate', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
+  // window.addEventListener('hashchange', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
+  // window.addEventListener('popstate', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
 
   // Sistema de pestañas accesible y simple
   function initTabs(tabMenuSelector, tabContentSelector) {
@@ -420,6 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
     media.className = 'photo-lightbox__media';
 
     const mediaImg = document.createElement('img');
+    mediaImg.className = 'lightbox-img';
     mediaImg.alt = '';
     media.appendChild(mediaImg);
 
@@ -608,5 +619,14 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) { /* ignore */ }
 
   // Reproducción/autoplay del hero se maneja desde scriptsaudio.js
+
+  // Scroll Progress Bar
+  window.addEventListener('scroll', () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const bar = document.getElementById('scroll-progress');
+    if (bar) bar.style.width = scrolled + '%';
+  });
 
 });
