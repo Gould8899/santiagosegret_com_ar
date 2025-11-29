@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setLanguage(lang) { applyLanguage(lang, { persist: true }); }
 
     function toggleLanguage() {
-      const order = ['es', 'en', 'ja'];
+      const order = ['es', 'en'];
       const nextIndex = (order.indexOf(currentLang) + 1) % order.length;
       setLanguage(order[nextIndex]);
     }
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateLanguageToggleButton(lang) {
     if (!languageToggleBtn) return;
     
-    const order = ['es', 'en', 'ja'];
+    const order = ['es', 'en'];
     const nextIndex = (order.indexOf(lang) + 1) % order.length;
     const nextLang = order[nextIndex];
 
@@ -203,10 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
       labelKey = 'language.toggle.toEnglish';
       defaultLabel = 'Cambiar idioma a inglés';
       buttonText = 'English';
-    } else if (nextLang === 'ja') {
-      labelKey = 'language.toggle.toJapanese';
-      defaultLabel = 'Switch site to Japanese';
-      buttonText = '日本語';
     } else {
       labelKey = 'language.toggle.toSpanish';
       defaultLabel = 'Cambiar idioma a castellano';
