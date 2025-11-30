@@ -869,9 +869,11 @@ section.seccion {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   color: var(--text-muted);
-  text-align: left; /* Align text to left */
+  text-align: justify; /* Justify text */
   text-indent: 2rem; /* Standard indentation */
   line-height: 1.8; /* Improve readability */
+  -webkit-hyphens: auto;
+  hyphens: auto; /* Enable hyphenation */
 }
 
 .rupulo-detalle a {
@@ -927,6 +929,27 @@ section.seccion {
 @media (max-width: 768px) {
   .site-footer {
     padding-bottom: 90px; /* Ensure copyright is visible above nav */
+  }
+
+  /* Mobile adjustments for Rúpulo to improve text density */
+  .rupulo-content {
+    padding: 1.5rem;
+  }
+
+  .rupulo-detalle {
+    text-indent: 0; /* Remove indent on mobile */
+    font-size: 1rem;
+    text-align: left; /* Left align is often better for readability on narrow screens */
+  }
+
+  .rupulo-detalle:last-child {
+    text-align: center; /* Keep the button and label centered */
+    margin-top: 2rem;
+  }
+
+  section.seccion {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 

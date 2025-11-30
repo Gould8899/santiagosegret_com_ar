@@ -381,7 +381,7 @@ window.SiteTranslations = {
     'contact.youtube': '<strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank" rel="noopener noreferrer" class="contacto-link">Visit channel</a>',
 
     'rupulo.title': 'Rúpulo Editions',
-    'rupulo.description': '<strong>Rúpulo Ediciones</strong> is Santiago Segret\'s sheet music catalog. Transcriptions, arrangements, compositions, copies, inventions, exercises, primarily oriented toward the bandoneon and tango, while also reaching other areas of music and pedagogy.',
+    'rupulo.description': '<strong>Rúpulo Ediciones</strong> is Santiago Segret\'s sheet music catalog. Transcriptions, arrangements, compositions, copies, inventions, exercises, experiments, primarily oriented toward the bandoneon and tango, while also reaching other areas of music and pedagogy.',
     'rupulo.visit': '<strong>Visit catalog:</strong> <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">rupulo-ediciones.web.app</a>',
 
     'ui.backToTop.aria': 'Scroll back to the top',
