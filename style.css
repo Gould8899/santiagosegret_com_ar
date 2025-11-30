@@ -389,22 +389,6 @@ section.seccion {
   display: block; 
 }
 
-.bio-content {
-  max-width: 800px;
-  margin: 0 auto;
-  background: var(--surface-color);
-  padding: 3rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border-color);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.bio-content:hover {
-  border-color: var(--accent-color);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
 .bio-item {
   margin-bottom: 2rem;
   padding-bottom: 2rem;
@@ -516,6 +500,38 @@ section.seccion {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contacto-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 50%;
+  color: var(--accent-color);
+  flex-shrink: 0;
+  transition: var(--transition);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.contacto-item:hover .contacto-icon {
+  background: var(--accent-color);
+  color: #0f172a;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+.contacto-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
 .contacto-link {
   color: var(--accent-color);
   font-size: 1.2rem;
@@ -559,7 +575,7 @@ section.seccion {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.95);
-  z-index: 2000;
+  z-index: 3000; /* Higher than mobile menu */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -736,7 +752,7 @@ section.seccion {
     margin-right: auto;
   }
 
-  .bio-content, .contacto-lista {
+  .contacto-lista {
     padding: 1.5rem;
   }
 
@@ -876,9 +892,22 @@ section.seccion {
   hyphens: auto; /* Enable hyphenation */
 }
 
-.rupulo-detalle a {
+.rupulo-action {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rupulo-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.rupulo-btn {
   display: inline-block;
-  margin-top: 1rem;
   padding: 0.8rem 2rem;
   background: transparent;
   border: 1px solid var(--accent-color);
@@ -887,9 +916,12 @@ section.seccion {
   font-weight: 600;
   transition: var(--transition);
   text-decoration: none;
+  word-break: break-all; /* Ensure long URL breaks if needed */
+  text-align: center;
+  max-width: 100%;
 }
 
-.rupulo-detalle a:hover {
+.rupulo-btn:hover {
   background: var(--accent-color);
   color: #0f172a;
   box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
@@ -942,9 +974,8 @@ section.seccion {
     text-align: left; /* Left align is often better for readability on narrow screens */
   }
 
-  .rupulo-detalle:last-child {
-    text-align: center; /* Keep the button and label centered */
-    margin-top: 2rem;
+  .rupulo-action {
+    margin-top: 1.5rem;
   }
 
   section.seccion {

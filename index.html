@@ -72,9 +72,7 @@
       </div>
 
       <div class="video-background">
-        <div class="video-mask-container">
-          <img src="santiagosegretFOTOS/01_Fotos/DSC_6923.Carboni-2024-foto Carlos Furman.jpg" alt="Santiago Segret" class="hero-image" data-i18n-key="hero.imageAlt">
-        </div>
+        <img src="santiagosegretFOTOS/01_Fotos/DSC_6923.Carboni-2024-foto Carlos Furman.jpg" alt="Santiago Segret" class="hero-image" data-i18n-key="hero.imageAlt">
       </div>
 
       <div class="inicio-content"></div>
@@ -300,7 +298,6 @@
               allowfullscreen loading="lazy"></iframe>
             <h4 data-i18n-key="videos.dsq.2">Concierto con música de Piazzolla</h4>
           </div>
-                    https://www.youtube.com/embed/ L6onQVOcmng
           
           <div class="video">
             <iframe class="lazy-video" data-src="https://www.youtube.com/embed/d2APcpOvB80" frameborder="0"
@@ -464,12 +461,7 @@
             <div class="logro-item with-media">
               <div class="logro-content">
                 <p class="logro-detalle" data-i18n-key="bio.beginnings.item1">Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.</p>
-              <!-- </div>
-              <div class="logro-media-container" style="display: grid; gap: 0.5rem;">
-                <iframe class="lazy-video" data-src="https://www.youtube.com/embed/KruYi0FP8so" frameborder="0" allowfullscreen></iframe>
-                <img src="santiagosegretFOTOS/01_Fotos/con el marinero montes.jpg" alt="Foto con el Marinero" class="expandable-photo" loading="lazy" style="cursor: pointer;">
-                <div class="logro-media-caption" data-i18n-key="bio.beginnings.caption1">Tocando "Caminito" y con el Marinero</div>
-              </div> -->
+              </div>
             </div>
 
             <div class="logro-item audio-block">
@@ -608,17 +600,23 @@
       <h3 class="seccion-titulo" data-i18n-key="contact.title">Contacto</h3>
       <div class="contacto-lista">
         <div class="contacto-item">
-          <span class="contacto-icon">📧</span>
+          <span class="contacto-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </span>
           <p data-i18n-key="contact.email"><strong>Email:</strong> <a href="mailto:ssegret@gmail.com" class="contacto-link">ssegret@gmail.com</a>
           </p>
         </div>
         <div class="contacto-item">
-          <span class="contacto-icon">📱</span>
+          <span class="contacto-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          </span>
           <p data-i18n-key="contact.phone"><strong>Celular:</strong> <a href="tel:+541149890559" class="contacto-link">+54 11 4989-0559</a>
           </p>
         </div>
         <div class="contacto-item">
-          <span class="contacto-icon">▶️</span>
+          <span class="contacto-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+          </span>
           <p data-i18n-key="contact.youtube"><strong>YouTube:</strong> <a href="https://www.youtube.com/@SantiagoSegret" target="_blank"
               rel="noopener noreferrer" class="contacto-link">Visitar canal</a></p>
         </div>
@@ -633,12 +631,13 @@
           <p class="rupulo-detalle" data-i18n-key="rupulo.description">
             <strong>Rúpulo Ediciones</strong> es el catálogo de partituras de Santiago Segret. Desgrabaciones, arreglos, composiciones, copias, inventos, ejercicios, pruebas, fundamentalmente orientadas al bandoneón y al tango así como también a otras áreas de la música y la pedagogía.
           </p>
-          <p class="rupulo-detalle" data-i18n-key="rupulo.visit">
-            <strong>Visitar catálogo:</strong>
-            <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">
-              rupulo-ediciones.web.app
+          
+          <div class="rupulo-action">
+            <span class="rupulo-label" data-i18n-key="rupulo.visitLabel">Visitar catálogo:</span>
+            <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer" class="rupulo-btn">
+              https://rupulo-ediciones.web.app
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </section>

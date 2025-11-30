@@ -188,7 +188,7 @@ window.SiteTranslations = {
 
     'rupulo.title': 'Rúpulo Ediciones',
     'rupulo.description': '<strong>Rúpulo Ediciones</strong> es el catálogo de partituras de Santiago Segret. Desgrabaciones, arreglos, composiciones, copias, inventos, ejercicios, pruebas, fundamentalmente orientadas al bandoneón y al tango así como también a otras áreas de la música y la pedagogía.',
-    'rupulo.visit': '<strong>Visitar catálogo:</strong> <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">rupulo-ediciones.web.app</a>',
+    'rupulo.visitLabel': 'Visitar catálogo:',
 
     'ui.backToTop.aria': 'Volver al inicio de la página',
     'ui.backToTop.title': 'Volver arriba',
@@ -382,7 +382,7 @@ window.SiteTranslations = {
 
     'rupulo.title': 'Rúpulo Editions',
     'rupulo.description': '<strong>Rúpulo Ediciones</strong> is Santiago Segret\'s sheet music catalog. Transcriptions, arrangements, compositions, copies, inventions, exercises, experiments, primarily oriented toward the bandoneon and tango, while also reaching other areas of music and pedagogy.',
-    'rupulo.visit': '<strong>Visit catalog:</strong> <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer">rupulo-ediciones.web.app</a>',
+    'rupulo.visitLabel': 'Visit catalog:',
 
     'ui.backToTop.aria': 'Scroll back to the top',
     'ui.backToTop.title': 'Back to top',
