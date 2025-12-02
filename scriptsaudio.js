@@ -272,6 +272,7 @@
           if (!url.searchParams.has('modestbranding')) url.searchParams.set('modestbranding', '1');
           if (!url.searchParams.has('playsinline')) url.searchParams.set('playsinline', '1');
           if (!url.searchParams.has('enablejsapi')) url.searchParams.set('enablejsapi', '1');
+          if (!url.searchParams.has('fs')) url.searchParams.set('fs', '1'); // Permitir pantalla completa
           // Asegurar autoplay al hacer click
           if (!url.searchParams.has('autoplay')) url.searchParams.set('autoplay', '1');
           return url.toString();
@@ -327,6 +328,26 @@
             // Insertar el poster justo antes del iframe
             if(iframe.parentNode) {
               iframe.parentNode.insertBefore(poster, iframe);
+            }
+
+            // MEJORA: Hacer que el título sea un enlace a YouTube
+            var container = iframe.closest('.video');
+            if (container) {
+              var title = container.querySelector('h4');
+              if (title && !title.querySelector('a')) { // Evitar doble enlace
+                var link = document.createElement('a');
+                link.href = 'https://www.youtube.com/watch?v=' + videoId;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.className = 'video-title-link';
+                link.title = 'Ver en YouTube';
+                
+                // Mover el contenido del h4 al enlace
+                while (title.firstChild) {
+                  link.appendChild(title.firstChild);
+                }
+                title.appendChild(link);
+              }
             }
             
             // Al hacer click en el poster, cargar y mostrar el iframe

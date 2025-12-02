@@ -316,9 +316,21 @@ section.seccion {
 }
 
 .video:hover {
-  transform: translateY(-5px);
+  /* transform: translateY(-5px);  Removed to prevent layout shifts while interacting with controls */
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--border-color);
+}
+
+.video-title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+  display: block; /* Make the whole title area clickable */
+}
+
+.video-title-link:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
 }
 
 .video iframe {
