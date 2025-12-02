@@ -1,26 +1,32 @@
 /* --------------------------------------------------------------------
-   scripts.js — versión limpia y reordenada
+   scripts.js — Lógica Principal del Sitio
 
-   Objetivo:
-   - Mantener la funcionalidad existente (pestañas, lazy YouTube, un solo
-     medio a la vez, controles compactos de audio, contador simple, y un
-     guardia CSS runtime para fijar la cabecera) pero con código claro,
-     sin duplicados y con comentarios precisos en castellano.
+   Este archivo es el "cerebro" general de la página web.
+   Aquí se controlan las funciones que no tienen que ver directamente
+   con el audio o video (esas están en scriptsaudio.js).
 
-   Regla principal: no cambiar la lógica observable salvo limpiar y
-   robustecer pequeñas fragilidades (listeners duplicados, elementos
-   muteados, registro dinámico).
+   Funciones principales que encontrarás aquí:
+   1. El "Traductor" (LanguageManager): Cambia los textos entre Español e Inglés.
+   2. La Navegación: Controla el menú, el desplazamiento suave (scroll) y el botón "Volver arriba".
+   3. Las Pestañas (Tabs): Permite cambiar entre secciones (como en la biografía o videos).
+   4. La Galería de Fotos: Abre las imágenes en tamaño grande (Lightbox).
+   5. El Menú Móvil: Controla el botón de "hamburguesa" en celulares.
 -------------------------------------------------------------------- */
 
-// Ejecutar cuando el DOM esté listo
+// Esperamos a que toda la estructura de la página (DOM) esté lista antes de empezar.
 document.addEventListener('DOMContentLoaded', () => {
+  
+  // Verificación de seguridad para YouTube: avisa si abres el archivo directamente sin un servidor.
   if (window.location && window.location.protocol === 'file:') {
-    console.warn('YouTube requiere origen http/https para validar la reproducción. Serví esta página desde un servidor local o el dominio final para evitar el Error 153.');
+    console.warn('Aviso: YouTube puede dar errores si abres el archivo directamente. Es mejor usar un servidor local.');
   }
+
   /* ------------------------------------------------------------------
-     I.  Helpers / Utilities
+     I. Herramientas de Ayuda (Helpers)
+     Pequeñas funciones que nos sirven para tareas repetitivas.
      ------------------------------------------------------------------*/
-  // Formatear segundos a M:SS
+  
+  // Convierte segundos (ej: 65) a formato de reloj (1:05)
   function formatTime(s) {
     if (!s || isNaN(s)) return '0:00';
     const m = Math.floor(s / 60);
@@ -28,34 +34,50 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${m}:${sec}`;
   }
 
-  // Utilidades agrupadas para facilitar reuso y testeo
+  // Agrupamos estas herramientas para usarlas fácilmente en cualquier parte
   const utils = {
-    formatTime, // reexporta la función principal
-    isElement(el) { return el && el.nodeType === 1; },
-    safeCall(fn, ...args) { try { if (typeof fn === 'function') return fn(...args); } catch (e) { console.warn('utils.safeCall error', e); } }
+    formatTime, // La función de arriba
+    isElement(el) { return el && el.nodeType === 1; }, // Verifica si algo es un elemento HTML válido
+    safeCall(fn, ...args) { // Ejecuta una función de forma segura (si falla, no rompe la página)
+      try { 
+        if (typeof fn === 'function') return fn(...args); 
+      } catch (e) { 
+        console.warn('Error en utils.safeCall', e); 
+      } 
+    }
   };
 
+  /* ------------------------------------------------------------------
+     II. Gestor de Idiomas (LanguageManager)
+     Este módulo se encarga de traducir la página.
+     Funciona buscando textos en un "diccionario" (translations.js) y
+     reemplazándolos en la pantalla.
+     ------------------------------------------------------------------*/
   const LanguageManager = (() => {
-    const STORAGE_KEY = 'siteLanguage';
-    const DEFAULT_LANG = 'es';
+    const STORAGE_KEY = 'siteLanguage'; // Nombre con el que guardamos la preferencia en el navegador
+    const DEFAULT_LANG = 'es'; // Idioma por defecto: Español
 
+    // Cargamos las traducciones desde el archivo translations.js
     const translations = window.SiteTranslations || {};
 
-    const boundElements = new Map();
-    const subscribers = new Set();
-    let currentLang = DEFAULT_LANG;
+    const boundElements = new Map(); // Lista de elementos que tienen texto traducible
+    const subscribers = new Set();   // Lista de funciones que quieren saber cuándo cambia el idioma
+    let currentLang = DEFAULT_LANG;  // Idioma actual
 
+    // Busca una traducción en el diccionario
     function getTranslation(key, lang) {
       const table = translations[lang] || {};
       if (Object.prototype.hasOwnProperty.call(table, key)) return table[key];
       return undefined;
     }
 
+    // Reemplaza marcadores como {nombre} por valores reales en el texto
     function format(template, replacements) {
       if (!template || !replacements) return template;
       return Object.keys(replacements).reduce((acc, token) => acc.replaceAll(`{${token}}`, replacements[token]), template);
     }
 
+    // Recuerda qué elementos de la página necesitan traducción
     function storeBinding(key, entry) {
       if (!key || !entry || !entry.el) return;
       const list = boundElements.get(key) || [];
@@ -65,39 +87,53 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Busca automáticamente todos los elementos con el atributo 'data-i18n-key'
     function bindInitialElements() {
       document.querySelectorAll('[data-i18n-key]').forEach(el => {
         const key = el.dataset.i18nKey;
         if (!key) return;
-        const attr = el.dataset.i18nAttr || null;
+        const attr = el.dataset.i18nAttr || null; // ¿Traducimos el contenido o un atributo (como el título)?
         const original = attr ? (el.getAttribute(attr) ?? '') : el.innerHTML;
         if (el.dataset && !el.dataset.i18nOriginal) el.dataset.i18nOriginal = original;
         storeBinding(key, { el, attr, original });
       });
     }
 
+    // Aplica la traducción a un elemento específico
     function applyToEntry(entry, key, lang) {
       const { el, attr, original } = entry;
       if (!el) return;
       const translation = lang === DEFAULT_LANG ? undefined : getTranslation(key, lang);
+      // Si es el idioma original, usamos el texto original. Si no, buscamos la traducción.
       const value = lang === DEFAULT_LANG ? original : (translation !== undefined ? translation : original);
+      
       if (attr) el.setAttribute(attr, value);
       else el.innerHTML = value;
     }
 
+    // Cambia el idioma de toda la página
     function applyLanguage(lang, options = {}) {
       const targetLang = translations[lang] ? lang : DEFAULT_LANG;
       currentLang = targetLang;
+      
+      // Actualiza todos los textos registrados
       boundElements.forEach((entries, key) => {
         entries.forEach(entry => applyToEntry(entry, key, targetLang));
       });
+      
+      // Avisa al navegador del cambio (útil para accesibilidad/lectores de pantalla)
       document.documentElement.setAttribute('lang', targetLang);
+      
+      // Guarda la preferencia del usuario si se solicita
       if (options.persist !== false) {
-        try { localStorage.setItem(STORAGE_KEY, targetLang); } catch (e) { /* ignore */ }
+        try { localStorage.setItem(STORAGE_KEY, targetLang); } catch (e) { /* ignorar error si cookies bloqueadas */ }
       }
+      
+      // Avisa a otras partes del código que el idioma cambió
       subscribers.forEach(fn => utils.safeCall(fn, targetLang));
     }
 
+    // Inicialización del gestor de idiomas
     function init() {
       bindInitialElements();
       let stored = null;
@@ -107,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return currentLang;
     }
 
+    // Funciones públicas para usar desde fuera
     function setLanguage(lang) { applyLanguage(lang, { persist: true }); }
 
     function toggleLanguage() {
@@ -115,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setLanguage(order[nextIndex]);
     }
 
+    // Permite registrar manualmente un elemento para traducir
     function register(el, key, attr, options = {}) {
       if (!el || !key) return;
       const attribute = attr || null;
@@ -123,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
       applyToEntry({ el, attr: attribute, original }, key, currentLang);
     }
 
+    // Función rápida para obtener un texto traducido (sin vincularlo a un elemento)
     function t(key, replacements, langOverride) {
       const lang = langOverride || currentLang;
       let template = getTranslation(key, lang);
@@ -133,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return format(template, replacements);
     }
 
+    // Permite suscribirse a cambios de idioma
     function onChange(fn) {
       if (typeof fn === 'function') subscribers.add(fn);
     }
@@ -142,33 +182,29 @@ document.addEventListener('DOMContentLoaded', () => {
     return { init, setLanguage, toggleLanguage, register, t, onChange, getLanguage };
   })();
 
-  /**
-   * initTabs(tabMenuSelector, tabContentSelector)
-   * Inicializa un grupo de pestañas accesibles.
-   * - tabMenuSelector: selector del contenedor de tabs (role=tablist)
-   * - tabContentSelector: selector del contenedor de panes (.tab-pane con id)
-   */
   /* ------------------------------------------------------------------
-     II. Navegación entre secciones y sistema de pestañas (tabs)
-     - showSectionFromHash: muestra la sección correspondiente al hash
-     - initTabs / activateDefaultTab: comportamiento accesible y simple
+     III. Navegación y Pestañas (Tabs)
+     Controla cómo nos movemos por la página y cambiamos entre vistas.
      ------------------------------------------------------------------*/
+  
   const navTabs = document.querySelectorAll('.navbar-tabs a');
   const secciones = document.querySelectorAll('section.seccion');
   const navbar = document.querySelector('.navbar');
-  // Nota: la lógica del hero-video está centralizada en scriptsaudio.js
-  const mainContent = document.querySelector('main.content');
   const languageToggleBtn = document.getElementById('language-toggle');
 
+  // Iniciamos el idioma
   let currentLanguage = LanguageManager.init();
 
+  // Configuramos la accesibilidad de la barra de navegación
   if (navbar) {
     const navLabel = navbar.getAttribute('aria-label') || LanguageManager.t('nav.main', null, 'es') || 'Navegación principal';
     navbar.setAttribute('aria-label', navLabel);
     LanguageManager.register(navbar, 'nav.main', 'aria-label', { original: navLabel });
   }
 
+  // Botón "Volver Arriba" (la flechita que aparece al bajar)
   const backToTopBtn = document.getElementById('back-to-top') || (() => {
+    // Si no existe en el HTML, lo creamos aquí
     const btn = document.createElement('button');
     btn.id = 'back-to-top';
     btn.type = 'button';
@@ -183,11 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return btn;
   })();
 
+  // Funciones vacías que se llenarán más adelante
   let updateGalleryAccessibility = () => { };
   let updateGlobalMuteButtonUI = () => { };
   let updateVisitCounterDisplay = () => { };
   let visitCount = null;
 
+  // Actualiza el texto del botón de idioma (ES/EN)
   function updateLanguageToggleButton(lang) {
     if (!languageToggleBtn) return;
     
@@ -199,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let defaultLabel = '';
     let buttonText = '';
 
+    // Si el siguiente es inglés, mostramos "English"
     if (nextLang === 'en') {
       labelKey = 'language.toggle.toEnglish';
       defaultLabel = 'Cambiar idioma a inglés';
@@ -216,15 +255,17 @@ document.addEventListener('DOMContentLoaded', () => {
     languageToggleBtn.removeAttribute('aria-pressed');
   }
 
+  // Evento click para cambiar idioma
   if (languageToggleBtn) {
     languageToggleBtn.addEventListener('click', () => {
       LanguageManager.toggleLanguage();
-      try { languageToggleBtn.blur(); } catch (e) { /* ignore */ }
+      try { languageToggleBtn.blur(); } catch (e) { /* quitar foco tras click */ }
     });
   }
 
   updateLanguageToggleButton(currentLanguage);
 
+  // Cuando cambia el idioma, actualizamos todas las partes de la interfaz
   LanguageManager.onChange(lang => {
     currentLanguage = lang;
     updateLanguageToggleButton(lang);
@@ -233,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateGlobalMuteButtonUI();
   });
 
+  // Comportamiento del botón "Volver Arriba"
   backToTopBtn.addEventListener('click', () => {
     const scrollOptions = { top: 0, behavior: 'smooth' };
     try {
@@ -243,16 +285,22 @@ document.addEventListener('DOMContentLoaded', () => {
     try { backToTopBtn.blur(); } catch (e) { /* ignore */ }
   });
 
+  // Detectar scroll para mostrar/ocultar la barra de navegación y el botón volver arriba
   function updateScrollState() {
     const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    
+    // Si bajamos un poco, la barra de navegación cambia de estilo
     if (scrollY > 36) document.body.classList.add('navbar-scrolled');
     else document.body.classList.remove('navbar-scrolled');
+    
+    // Si bajamos mucho, aparece el botón de volver arriba
     if (backToTopBtn) {
       if (scrollY > 420) backToTopBtn.classList.add('visible');
       else backToTopBtn.classList.remove('visible');
     }
   }
 
+  // Optimizamos el evento scroll para que no sature el navegador
   let scrollTick = false;
   window.addEventListener('scroll', () => {
     if (scrollTick) return;
@@ -264,14 +312,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
   updateScrollState();
 
-  // (observer del hero-video movido a scriptsaudio.js)
-
-  // Scroll Spy & Navigation Logic
+  // Scroll Spy: Resalta en el menú la sección que estamos viendo
   function updateActiveSection() {
     let current = '';
     secciones.forEach(section => {
       const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
+      // Si hemos bajado hasta esta sección (menos un margen)
       if (window.scrollY >= (sectionTop - 300)) {
         current = '#' + section.getAttribute('id');
       }
@@ -287,13 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', updateActiveSection);
   
-  // Smooth Scroll for Nav Links
+  // Desplazamiento suave al hacer clic en el menú
   navTabs.forEach(link => link.addEventListener('click', function (e) {
     e.preventDefault();
     const hash = this.getAttribute('href');
     const target = document.querySelector(hash);
     if (target) {
-      const headerOffset = 80;
+      const headerOffset = 80; // Compensamos la altura del menú fijo
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
   
@@ -302,20 +348,19 @@ document.addEventListener('DOMContentLoaded', () => {
         behavior: "smooth"
       });
       
-      // Update URL without jumping
+      // Actualizamos la URL sin saltos bruscos
       if (history.pushState) history.pushState(null, null, hash);
     }
   }));
 
-  // Mantener comportamiento al cambiar hash o usar back/forward
+  // Asegura que se abra la pestaña correcta si entramos con un enlace directo (ej: #videos)
   function ensureSectionTabsForHash() {
     if (window.location.hash === '#videos') activateDefaultTab('.video-tabs.tab-menu', '.video-tabs-content');
     if (window.location.hash === '#bio') activateDefaultTab('.bio-tabs.tab-menu', '.bio-tabs-content');
   }
-  // window.addEventListener('hashchange', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
-  // window.addEventListener('popstate', () => { showSectionFromHash(window.location.hash); ensureSectionTabsForHash(); });
 
-  // Sistema de pestañas accesible y simple
+  // Sistema de Pestañas (Tabs) - Reutilizable
+  // Funciona como un archivador: muestra un contenido y oculta los demás
   function initTabs(tabMenuSelector, tabContentSelector) {
     const tabMenu = document.querySelector(tabMenuSelector);
     if (!tabMenu) return;
@@ -325,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!tabContent) return;
     const panes = tabContent.querySelectorAll('.tab-pane');
 
-    // Preparar ARIA/tabindex
+    // Configuración de accesibilidad (para lectores de pantalla)
     tabs.forEach(t => {
       if (!t.getAttribute('role')) t.setAttribute('role', 'tab');
       if (!t.hasAttribute('aria-selected')) t.setAttribute('aria-selected', t.classList.contains('active') ? 'true' : 'false');
@@ -334,20 +379,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => tab.addEventListener('click', function (e) {
       e.preventDefault();
-      // Al cambiar de pestaña interna, pausar cualquier medio en reproducción
+      
+      // Pausar audios/videos al cambiar de pestaña para que no suenen de fondo
       try { if (window.AudioCore && typeof window.AudioCore.pauseAllMedia === 'function') window.AudioCore.pauseAllMedia(); } catch (_) { }
+      
+      // Desactivar todas las pestañas
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
+      
+      // Activar la clicada
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
       tab.setAttribute('tabindex', '0');
+      
+      // Mostrar el contenido correspondiente
       const tabName = tab.getAttribute('data-tab');
       panes.forEach(pane => tabName === pane.id ? pane.classList.add('active') : pane.classList.remove('active'));
+      
       try { tab.blur(); } catch (e) { /* ignore */ }
     }));
 
     activateDefaultTab(tabMenuSelector, tabContentSelector);
   }
 
+  // Activa la primera pestaña por defecto si ninguna está activa
   function activateDefaultTab(tabMenuSelector, tabContentSelector) {
     const tabMenu = document.querySelector(tabMenuSelector);
     if (!tabMenu) return;
@@ -360,44 +414,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tabs.length && panes.length) { tabs[0].classList.add('active'); panes[0].classList.add('active'); }
   }
 
-  // Inicializar pestañas principales
+  // Inicializamos las pestañas de Videos y Biografía
   initTabs('.video-tabs.tab-menu', '.video-tabs-content');
   initTabs('.bio-tabs.tab-menu', '.bio-tabs-content');
 
-  /* ------------------------------------------------------------------
-     III. (migrado) Lógica de medios está en scriptsaudio.js
-     ------------------------------------------------------------------*/
 
   /* ------------------------------------------------------------------
-    IV. Lazy-load optimizado de iframes YouTube
-    
-    [MOVIDO A scriptsaudio.js]
-    Toda la lógica de carga diferida, miniaturas y reproducción de video
-    se encuentra ahora centralizada en scriptsaudio.js para mantener
-    el orden y proteger la funcionalidad de medios.
-    ------------------------------------------------------------------*/
-
-  /* ------------------------------------------------------------------
-     V. (migrado) Controles de audio ahora en scriptsaudio.js
+     IV. Galería de Fotos (Lightbox)
+     Crea una ventana superpuesta para ver las fotos en grande.
      ------------------------------------------------------------------*/
-
-  /* ------------------------------------------------------------------
-     VI. Galería de fotos (lightbox interactivo)
-     ------------------------------------------------------------------*/
-  // Seleccionamos tanto las fotos de la galería principal como las fotos expandibles en bio
+  
+  // Buscamos todas las fotos que deben abrirse en la galería
   const galleryTriggers = Array.from(document.querySelectorAll('.galeria-fotos .foto img, .expandable-photo'));
+  
+  // Preparamos la información de cada foto (origen, título, descripción)
   const galleryItems = galleryTriggers.map(trigger => {
-    // Intentar encontrar el contenedor y el caption de varias formas
     const container = trigger.closest('.foto') || trigger.closest('.logro-media-container');
     
+    // Función para encontrar el texto descriptivo de la foto
     const getCaption = () => {
       let text = '';
       if (container) {
-        // Prioridad 1: .logro-media-caption (usado en bio)
+        // Buscamos en diferentes lugares donde podría estar el texto
         const captionDiv = container.querySelector('.logro-media-caption');
         if (captionDiv) text = captionDiv.textContent.trim();
         
-        // Prioridad 2: p (usado en galería fotos)
         if (!text) {
           const p = container.querySelector('p');
           if (p && container.classList.contains('foto')) text = p.textContent.trim();
@@ -405,22 +446,22 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       return text || trigger.getAttribute('alt') || '';
     };
+    
     const getAlt = () => trigger.getAttribute('alt') || LanguageManager.t('gallery.defaultAlt') || 'Fotografía';
+    // Usamos la imagen de alta calidad (data-full) si existe, si no la normal
     const src = trigger.dataset && trigger.dataset.full ? trigger.dataset.full : trigger.currentSrc || trigger.src;
-    return {
-      trigger,
-      src,
-      getCaption,
-      getAlt
-    };
+    
+    return { trigger, src, getCaption, getAlt };
   });
 
+  // Si hay fotos, construimos el visor (Lightbox)
   if (galleryItems.length) {
+    // Creamos los elementos HTML del visor dinámicamente
     const lightbox = document.createElement('div');
     lightbox.className = 'photo-lightbox';
     lightbox.setAttribute('role', 'dialog');
     lightbox.setAttribute('aria-modal', 'true');
-  lightbox.setAttribute('aria-label', LanguageManager.t('gallery.dialogLabel') || 'Visor de fotografías');
+    lightbox.setAttribute('aria-label', LanguageManager.t('gallery.dialogLabel') || 'Visor de fotografías');
     lightbox.tabIndex = -1;
 
     const inner = document.createElement('div');
@@ -437,32 +478,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const captionNode = document.createElement('div');
     captionNode.className = 'photo-lightbox__caption';
 
+    // Botones de control (Cerrar, Anterior, Siguiente)
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'lightbox-close';
-  closeBtn.setAttribute('aria-label', LanguageManager.t('gallery.close') || 'Cerrar galería');
+    closeBtn.setAttribute('aria-label', LanguageManager.t('gallery.close') || 'Cerrar galería');
     closeBtn.innerHTML = '&times;';
 
     const prevBtn = document.createElement('button');
     prevBtn.type = 'button';
     prevBtn.className = 'lightbox-prev';
-  prevBtn.setAttribute('aria-label', LanguageManager.t('gallery.prev') || 'Ver foto anterior');
+    prevBtn.setAttribute('aria-label', LanguageManager.t('gallery.prev') || 'Ver foto anterior');
     prevBtn.textContent = '‹';
 
     const nextBtn = document.createElement('button');
     nextBtn.type = 'button';
     nextBtn.className = 'lightbox-next';
-  nextBtn.setAttribute('aria-label', LanguageManager.t('gallery.next') || 'Ver foto siguiente');
+    nextBtn.setAttribute('aria-label', LanguageManager.t('gallery.next') || 'Ver foto siguiente');
     nextBtn.textContent = '›';
 
     inner.append(media, captionNode, closeBtn, prevBtn, nextBtn);
     lightbox.appendChild(inner);
     document.body.appendChild(lightbox);
 
-  let currentIndex = 0;
-  let lightboxOpen = false;
-  let lastActiveTrigger = null;
+    let currentIndex = 0;
+    let lightboxOpen = false;
+    let lastActiveTrigger = null;
 
+    // Muestra una imagen específica
     function showImage(index) {
       const item = galleryItems[index];
       if (!item) return;
@@ -474,22 +517,25 @@ document.addEventListener('DOMContentLoaded', () => {
       captionNode.textContent = captionText || '';
     }
 
+    // Abre el visor
     function openLightbox(index) {
       if (!galleryItems[index]) return;
       lastActiveTrigger = galleryItems[index] ? galleryItems[index].trigger : null;
       showImage(index);
       lightbox.classList.add('active');
-      document.body.classList.add('lightbox-open');
+      document.body.classList.add('lightbox-open'); // Bloquea el scroll de la página
       lightboxOpen = true;
       requestAnimationFrame(() => {
         try { closeBtn.focus(); } catch (e) { /* ignore */ }
       });
     }
 
+    // Cierra el visor
     function closeLightbox() {
       lightbox.classList.remove('active');
       document.body.classList.remove('lightbox-open');
       lightboxOpen = false;
+      // Devuelve el foco al elemento que abrió la galería (accesibilidad)
       if (lastActiveTrigger) {
         requestAnimationFrame(() => {
           try { lastActiveTrigger.focus(); } catch (e) { /* ignore */ }
@@ -497,34 +543,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Navega entre fotos
     function navigate(delta) {
       if (!lightboxOpen) return;
       const total = galleryItems.length;
-      const nextIndex = (currentIndex + delta + total) % total;
+      const nextIndex = (currentIndex + delta + total) % total; // Cálculo circular (vuelve al principio)
       showImage(nextIndex);
     }
 
-    function buildTriggerLabel(item) {
-      const captionText = item.getCaption();
-      if (captionText) {
-        const prefix = LanguageManager.t('gallery.triggerPrefix') || 'Abrir fotografía:';
-        return `${prefix} ${captionText}`;
-      }
-      return LanguageManager.t('gallery.triggerFallback') || 'Abrir fotografía en tamaño completo';
-    }
-
+    // Configura los eventos para cada foto miniatura
     galleryItems.forEach((item, index) => {
       const { trigger } = item;
       trigger.style.cursor = 'zoom-in';
       trigger.setAttribute('role', 'button');
       trigger.setAttribute('tabindex', '0');
-      trigger.setAttribute('aria-label', buildTriggerLabel(item));
-
+      
+      // Click para abrir
       trigger.addEventListener('click', event => {
         event.preventDefault();
         openLightbox(index);
       });
 
+      // Teclado (Enter o Espacio) para abrir
       trigger.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
@@ -533,14 +573,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Eventos de los botones del visor
     prevBtn.addEventListener('click', () => navigate(-1));
     nextBtn.addEventListener('click', () => navigate(1));
     closeBtn.addEventListener('click', closeLightbox);
 
+    // Cerrar si se hace clic fuera de la imagen
     lightbox.addEventListener('click', event => {
       if (event.target === lightbox) closeLightbox();
     });
 
+    // Teclas rápidas (Escape, Flechas)
     document.addEventListener('keydown', event => {
       if (!lightboxOpen) return;
       if (event.key === 'Escape') {
@@ -555,6 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // Limpia la imagen al terminar la animación de cierre
     lightbox.addEventListener('transitionend', () => {
       if (!lightboxOpen) {
         mediaImg.src = '';
@@ -562,27 +606,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // Actualiza textos de accesibilidad si cambia el idioma
     updateGalleryAccessibility = () => {
       lightbox.setAttribute('aria-label', LanguageManager.t('gallery.dialogLabel') || 'Visor de fotografías');
       closeBtn.setAttribute('aria-label', LanguageManager.t('gallery.close') || 'Cerrar galería');
       prevBtn.setAttribute('aria-label', LanguageManager.t('gallery.prev') || 'Ver foto anterior');
       nextBtn.setAttribute('aria-label', LanguageManager.t('gallery.next') || 'Ver foto siguiente');
-      galleryItems.forEach(item => {
-        const { trigger } = item;
-        if (!trigger) return;
-        trigger.setAttribute('aria-label', buildTriggerLabel(item));
-      });
     };
 
     updateGalleryAccessibility();
   }
 
   /* ------------------------------------------------------------------
-     VII. Contador simple de visitas (localStorage)
+     V. Contador de Visitas
+     Un contador simple que se guarda en el navegador del usuario.
      ------------------------------------------------------------------*/
   visitCount = parseInt(localStorage.getItem('visitCount') || '0', 10);
   visitCount++;
   localStorage.setItem('visitCount', String(visitCount));
+  
   const counter = document.getElementById('visit-counter');
   updateVisitCounterDisplay = () => {
     if (!counter) return;
@@ -592,14 +634,17 @@ document.addEventListener('DOMContentLoaded', () => {
   updateVisitCounterDisplay();
 
   /* ------------------------------------------------------------------
-     VIII. Mute global (UI) — núcleo en scriptsaudio.js
+     VI. Botón de Silencio Global (Mute)
+     Conecta la interfaz con el sistema de audio (AudioCore).
      ------------------------------------------------------------------*/
   updateGlobalMuteButtonUI = () => {
     try {
       const btn = document.getElementById('global-mute-btn');
       if (!btn) return;
+      // Preguntamos al sistema de audio si está silenciado
       const muted = !!(window.AudioCore && window.AudioCore.isMuted && window.AudioCore.isMuted());
       const label = muted ? (LanguageManager.t('globalMute.unmute') || 'Activar todo el audio') : (LanguageManager.t('globalMute.mute') || 'Silenciar todo');
+      
       btn.setAttribute('aria-pressed', String(muted));
       btn.setAttribute('aria-label', label);
       btn.title = label;
@@ -609,18 +654,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   try {
     const muteBtn = document.getElementById('global-mute-btn');
+    // Si existe el botón y el sistema de audio, los conectamos
     if (muteBtn && window.AudioCore && typeof window.AudioCore.toggleGlobalMute === 'function') {
-      muteBtn.addEventListener('click', function(){ window.AudioCore.toggleGlobalMute(); try{ this.blur(); }catch(e){} });
+      muteBtn.addEventListener('click', function(){ 
+        window.AudioCore.toggleGlobalMute(); 
+        try{ this.blur(); }catch(e){} 
+      });
     }
+    // Escuchamos cambios en el estado de silencio
     if (window.AudioCore && typeof window.AudioCore.onMutedChange === 'function') {
       window.AudioCore.onMutedChange(() => updateGlobalMuteButtonUI());
     }
     updateGlobalMuteButtonUI();
   } catch (e) { /* ignore */ }
 
-  // Reproducción/autoplay del hero se maneja desde scriptsaudio.js
-
-  // Scroll Progress Bar
+  /* ------------------------------------------------------------------
+     VII. Barra de Progreso de Lectura
+     Muestra una barrita en la parte superior indicando cuánto falta leer.
+     ------------------------------------------------------------------*/
   window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -629,7 +680,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bar) bar.style.width = scrolled + '%';
   });
 
-  // Hamburger Menu Logic
+  /* ------------------------------------------------------------------
+     VIII. Menú Móvil (Hamburguesa)
+     Controla la apertura y cierre del menú en pantallas pequeñas.
+     ------------------------------------------------------------------*/
   const hamburgerBtn = document.querySelector('.hamburger-btn');
   const navbarTabsContainer = document.querySelector('.navbar-tabs');
 
@@ -639,11 +693,12 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburgerBtn.setAttribute('aria-expanded', !expanded);
       hamburgerBtn.classList.toggle('open');
       navbarTabsContainer.classList.toggle('active');
-      // Prevent scrolling when menu is open
+      
+      // Evita que se pueda hacer scroll en el fondo cuando el menú está abierto
       document.body.style.overflow = !expanded ? 'hidden' : ''; 
     });
 
-    // Close menu when a link is clicked
+    // Cierra el menú automáticamente al hacer clic en un enlace
     navbarTabsContainer.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         hamburgerBtn.setAttribute('aria-expanded', 'false');

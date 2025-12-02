@@ -1,20 +1,23 @@
 ﻿:root {
-  --bg-color: #1e293b; /* Slate 800 - Modern Dark Blue-Grey */
-  --surface-color: #334155; /* Slate 700 */
-  --text-color: #f8fafc; /* Slate 50 - Almost White */
-  --text-muted: #cbd5e1; /* Slate 300 */
-  --accent-color: #38bdf8; /* Sky Blue - Modern & Electric */
-  --accent-hover: #0ea5e9;
-  --nav-bg: rgba(30, 41, 59, 0.9);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --radius: 12px;
-  --font-main: 'Montserrat', sans-serif;
-  --font-heading: 'Cormorant Garamond', serif;
-  --max-width: 1200px;
-  --nav-height: 80px;
-  --transition: 0.3s ease;
+  /* Variables Globales de CSS
+     Aquí definimos los colores, fuentes y medidas que se usan en todo el sitio. */
+  --bg-color: #1e293b; /* Slate 800 - Azul Grisáceo Oscuro Moderno (Fondo principal) */
+  --surface-color: #334155; /* Slate 700 - Un poco más claro para tarjetas */
+  --text-color: #f8fafc; /* Slate 50 - Casi blanco (Texto principal) */
+  --text-muted: #cbd5e1; /* Slate 300 - Gris claro (Texto secundario) */
+  --accent-color: #38bdf8; /* Sky Blue - Azul Eléctrico (Color de acento) */
+  --accent-hover: #0ea5e9; /* Azul más oscuro para hover */
+  --nav-bg: rgba(30, 41, 59, 0.9); /* Fondo de navegación con transparencia */
+  --border-color: rgba(255, 255, 255, 0.1); /* Bordes sutiles */
+  --radius: 12px; /* Radio de esquinas */
+  --font-main: 'Montserrat', sans-serif; /* Fuente principal */
+  --font-heading: 'Cormorant Garamond', serif; /* Fuente de títulos */
+  --max-width: 1200px; /* Ancho máximo */
+  --nav-height: 80px; /* Altura de navegación */
+  --transition: 0.3s ease; /* Velocidad de animación */
 }
 
+/* Reset Básico */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -22,12 +25,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* Desplazamiento suave */
   font-size: 16px;
-  scroll-padding-top: var(--nav-height);
+  scroll-padding-top: var(--nav-height); /* Compensación de menú fijo */
 }
 
-/* Usability & Accessibility */
+/* Usabilidad y Accesibilidad */
 ::selection {
   background: var(--accent-color);
   color: #0f172a;
@@ -38,6 +41,7 @@ html {
   outline-offset: 2px;
 }
 
+/* Personalización de la barra de desplazamiento (Scrollbar) */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -57,42 +61,42 @@ html {
 
 body {
   background-color: var(--bg-color);
-  /* Subtle dark gradient mesh */
+  /* Malla de degradado sutil para dar textura al fondo */
   background-image: 
     radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.05) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.05) 0px, transparent 50%);
-  background-attachment: fixed;
+  background-attachment: fixed; /* El fondo se queda quieto al hacer scroll */
   color: var(--text-color);
   font-family: var(--font-main);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Evita scroll horizontal accidental */
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none; /* Quita el subrayado por defecto de los enlaces */
   color: inherit;
   transition: var(--transition);
 }
 
 ul {
-  list-style: none;
+  list-style: none; /* Quita los puntos de las listas */
 }
 
 img, video, iframe {
-  max-width: 100%;
+  max-width: 100%; /* Asegura que las imágenes no se salgan de su contenedor */
   display: block;
 }
 
-/* Navigation */
+/* Navegación (Barra Superior) */
 .navbar {
-  position: fixed;
+  position: fixed; /* Fija la barra en la parte superior */
   top: 0;
   left: 0;
   width: 100%;
   height: var(--nav-height);
   background: var(--nav-bg);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
+  backdrop-filter: blur(10px); /* Efecto de vidrio esmerilado */
+  z-index: 1000; /* Asegura que esté por encima de todo */
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
@@ -100,12 +104,12 @@ img, video, iframe {
 }
 
 .hamburger-btn {
-  display: none; /* Hidden on desktop */
+  display: none; /* Oculto en escritorio, visible en móviles */
 }
 
 .navbar-tabs {
   display: flex;
-  gap: 2rem;
+  gap: 2rem; /* Espacio entre enlaces */
   align-items: center;
 }
 
@@ -124,6 +128,7 @@ img, video, iframe {
   color: var(--accent-color);
 }
 
+/* Línea inferior animada para el enlace activo */
 .navbar-tabs a.active::after {
   content: '';
   position: absolute;
@@ -134,11 +139,12 @@ img, video, iframe {
   background: var(--accent-color);
 }
 
+/* Botón de cambio de idioma */
 .language-toggle button {
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.2);
   color: var(--text-color);
-  font-family: var(--font-main); /* Montserrat */
+  font-family: var(--font-main);
   font-weight: 500;
   padding: 0.5rem 1.2rem;
   border-radius: 30px;
@@ -153,29 +159,28 @@ img, video, iframe {
   background: var(--accent-color);
   border-color: var(--accent-color);
   color: #0f172a;
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Pequeño salto hacia arriba */
   box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
 }
 
-/* Main Layout */
+/* Diseño Principal */
 main.content {
-  padding-top: var(--nav-height);
+  padding-top: var(--nav-height); /* Espacio para no quedar oculto bajo la barra fija */
 }
 
 section.seccion {
-  min-height: 100vh;
+  min-height: 100vh; /* Cada sección ocupa al menos toda la altura de la pantalla */
   padding: 100px 20px;
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: 0 auto; /* Centrado horizontal */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Removed scroll-driven animation to keep it solid */
 }
 
 .seccion-titulo {
   font-family: var(--font-heading);
-  font-size: 3rem; /* Larger */
+  font-size: 3rem;
   font-weight: 600;
   font-style: italic;
   text-align: center;
@@ -186,6 +191,7 @@ section.seccion {
   align-self: center;
 }
 
+/* Línea decorativa debajo del título */
 .seccion-titulo::after {
   content: '';
   display: block;
@@ -203,7 +209,7 @@ section.seccion {
   }
 }
 
-/* Hero Section */
+/* Sección Hero (Inicio) */
 #inicio {
   text-align: center;
   position: relative;
@@ -221,12 +227,12 @@ section.seccion {
 
 .hero-title-name {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 10vw, 8rem); /* Larger for Cormorant */
-  font-weight: 600; /* Slightly lighter for elegance */
-  font-style: italic; /* Italic for extra style */
+  font-size: clamp(4rem, 10vw, 8rem); /* Tamaño adaptable: mínimo 4rem, ideal 10% ancho, máximo 8rem */
+  font-weight: 600;
+  font-style: italic;
   line-height: 1;
   color: var(--text-color);
-  letter-spacing: -2px; /* Tighter tracking */
+  letter-spacing: -2px;
 }
 
 .hero-title-sub {
@@ -256,10 +262,10 @@ section.seccion {
 }
 
 .hero-image:hover {
-  transform: scale(1.02);
+  transform: scale(1.02); /* Zoom suave al pasar el mouse */
 }
 
-/* Internal Tabs (Videos & Bio) */
+/* Pestañas Internas (Videos y Bio) */
 .tab-menu {
   display: flex;
   justify-content: center;
@@ -290,13 +296,13 @@ section.seccion {
 }
 
 .tab-content .tab-pane {
-  display: none;
+  display: none; /* Oculto por defecto */
   animation: fadeIn 0.5s ease;
 }
 
 .tab-content .tab-pane.active {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  display: grid; /* Se muestra como grilla cuando está activo */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas automáticas */
   gap: 2rem;
 }
 
@@ -305,18 +311,17 @@ section.seccion {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Video Cards - Improved */
+/* Tarjetas de Video - Mejoradas */
 .video {
   background: transparent;
   border-radius: var(--radius);
   overflow: hidden;
   transition: var(--transition);
-  padding: 0.5rem; /* Add padding for hover effect */
-  border: 1px solid transparent; /* Prevent layout shift */
+  padding: 0.5rem;
+  border: 1px solid transparent;
 }
 
 .video:hover {
-  /* transform: translateY(-5px);  Removed to prevent layout shifts while interacting with controls */
   background: rgba(255, 255, 255, 0.03);
   border-color: var(--border-color);
 }
@@ -325,7 +330,7 @@ section.seccion {
   text-decoration: none;
   color: inherit;
   transition: color 0.3s ease;
-  display: block; /* Make the whole title area clickable */
+  display: block; /* Hace que toda el área del título sea clickeable */
 }
 
 .video-title-link:hover {
@@ -335,12 +340,12 @@ section.seccion {
 
 .video iframe {
   width: 100%;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/9; /* Mantiene proporción panorámica */
   border-radius: var(--radius);
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* Video Poster (Thumbnail) */
+/* Miniatura de Video (Poster) */
 .video-poster {
   width: 100%;
   aspect-ratio: 16/9;
@@ -358,6 +363,7 @@ section.seccion {
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
+/* Botón de Play superpuesto */
 .video-poster::after {
   content: '▶';
   position: absolute;
@@ -375,7 +381,7 @@ section.seccion {
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.6);
   transition: all 0.3s ease;
-  padding-left: 4px; /* Optical adjustment for play icon */
+  padding-left: 4px;
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
@@ -396,7 +402,56 @@ section.seccion {
   line-height: 1.5;
 }
 
-/* Bio Section - Fixed Spacing */
+/* Sección de Premios */
+.premios-lista {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.premio-item {
+  display: flex;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.premio-item:last-child {
+  border-bottom: none;
+}
+
+.premio-ano {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  font-weight: 600;
+  min-width: 60px;
+}
+
+.premio-detalle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.premio-detalle a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.3); /* Subrayado sutil por defecto */
+  transition: var(--transition);
+  font-weight: 600;
+  padding-bottom: 1px;
+}
+
+.premio-detalle a:hover {
+  color: var(--accent-hover);
+  border-bottom-color: var(--accent-hover);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+/* Sección Bio - Espaciado Corregido */
 #bio .tab-pane.active {
   display: block; 
 }
@@ -422,7 +477,7 @@ section.seccion {
 
 .logro-media-container iframe,
 .logro-media-container img {
-  flex: 0 1 250px; /* Don't grow beyond 250px */
+  flex: 0 1 250px; /* No crecer más allá de 250px */
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
@@ -458,7 +513,7 @@ section.seccion {
   white-space: nowrap;
 }
 
-/* Photos Grid */
+/* Grilla de Fotos */
 .galeria-fotos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -485,10 +540,10 @@ section.seccion {
 }
 
 .foto p {
-  display: none; /* Hide captions in grid */
+  display: none; /* Ocultar leyendas en la grilla */
 }
 
-/* Contact Section */
+/* Sección de Contacto */
 #contacto {
   text-align: center;
 }
@@ -554,7 +609,7 @@ section.seccion {
   text-decoration: underline;
 }
 
-/* Footer / Back to Top */
+/* Pie de Página / Volver Arriba */
 #back-to-top {
   position: fixed;
   bottom: 2rem;
@@ -579,7 +634,7 @@ section.seccion {
   pointer-events: auto;
 }
 
-/* Lightbox - Restored & Fixed */
+/* Visor de Fotos (Lightbox) - Restaurado y Corregido */
 .photo-lightbox {
   position: fixed;
   top: 0;
@@ -587,7 +642,7 @@ section.seccion {
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.95);
-  z-index: 3000; /* Higher than mobile menu */
+  z-index: 3000; /* Más alto que el menú móvil */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -668,14 +723,14 @@ section.seccion {
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* Responsive */
+/* Diseño Responsivo (Móvil) */
 @media (max-width: 768px) {
   .navbar {
     justify-content: space-between;
     padding: 0 1.5rem;
   }
 
-  /* Hamburger Button */
+  /* Botón Hamburguesa */
   .hamburger-btn {
     display: flex;
     flex-direction: column;
@@ -707,20 +762,20 @@ section.seccion {
     transform: rotate(-45deg) translate(5px, -6px);
   }
   
-  /* Mobile Menu Overlay */
+  /* Menú Móvil (Overlay) */
   .navbar-tabs {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: var(--bg-color); /* Solid background */
+    background: var(--bg-color); /* Fondo sólido */
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 2rem;
     z-index: 2000;
-    transform: translateX(100%); /* Hidden by default */
+    transform: translateX(100%); /* Oculto por defecto */
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 2rem;
     border: none;
@@ -729,11 +784,11 @@ section.seccion {
   }
 
   .navbar-tabs.active {
-    transform: translateX(0); /* Slide in */
+    transform: translateX(0); /* Deslizar hacia adentro */
   }
   
   .navbar-tabs a {
-    font-size: 1.4rem; /* Smaller font size for mobile menu */
+    font-size: 1.4rem; /* Fuente más grande para menú móvil */
     font-family: var(--font-heading);
     color: var(--text-color);
     font-weight: 600;
@@ -743,7 +798,7 @@ section.seccion {
   }
 
   .navbar-tabs a.active::after {
-    display: none; /* Remove underline on mobile */
+    display: none; /* Quitar subrayado en móvil */
   }
 
   .navbar-tabs a:hover, .navbar-tabs a.active {
@@ -755,11 +810,11 @@ section.seccion {
   }
   
   .hero-title-name {
-    font-size: 3rem; /* Slightly smaller */
+    font-size: 3rem; /* Ligeramente más pequeño */
   }
 
   .video-background {
-    max-width: 85%; /* Reduce video width on mobile */
+    max-width: 85%; /* Reducir ancho de video en móvil */
     margin-left: auto;
     margin-right: auto;
   }
@@ -773,7 +828,7 @@ section.seccion {
     gap: 0.2rem;
   }
   
-  /* Fix Photos on Mobile */
+  /* Arreglar Fotos en Móvil */
   .galeria-fotos {
     grid-template-columns: repeat(2, 1fr); 
     gap: 0.5rem;
@@ -783,14 +838,14 @@ section.seccion {
     border-radius: 8px; 
   }
 
-  /* Fix Video Gallery on Mobile */
+  /* Arreglar Galería de Videos en Móvil */
   .tab-content .tab-pane.active {
-    grid-template-columns: 1fr; /* Single column */
-    padding: 0 1rem; /* Add padding */
+    grid-template-columns: 1fr; /* Una sola columna */
+    padding: 0 1rem; /* Añadir relleno */
   }
 
   .video-poster {
-    max-width: 100%; /* Ensure it fits */
+    max-width: 100%; /* Asegurar que encaje */
   }
   
   .lightbox-prev, .lightbox-next {
@@ -804,7 +859,7 @@ section.seccion {
   .lightbox-next { right: 1rem; }
 }
 
-/* Skip Link */
+/* Enlace para Saltar Contenido (Accesibilidad) */
 .skip-link {
   position: absolute;
   top: -999px;
@@ -822,7 +877,7 @@ section.seccion {
   top: 0;
 }
 
-/* Global Mute Button */
+/* Botón de Silencio Global */
 #global-mute-btn {
   position: fixed;
   bottom: 2rem;
@@ -835,7 +890,7 @@ section.seccion {
   color: var(--text-color);
   font-size: 1.5rem;
   cursor: pointer;
-  z-index: 1001; /* Above navbar */
+  z-index: 1001; /* Por encima de la barra de navegación */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -853,7 +908,7 @@ section.seccion {
 
 @media (max-width: 768px) {
   #global-mute-btn {
-    bottom: 80px; /* Above mobile nav */
+    bottom: 80px; /* Por encima de la navegación móvil */
     right: 1rem;
     width: 40px;
     height: 40px;
@@ -861,7 +916,7 @@ section.seccion {
   }
 }
 
-/* Rupulo Section */
+/* Sección Rúpulo */
 .rupulo-content {
   max-width: 800px;
   margin: 0 auto;
@@ -897,11 +952,11 @@ section.seccion {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   color: var(--text-muted);
-  text-align: justify; /* Justify text */
-  text-indent: 2rem; /* Standard indentation */
-  line-height: 1.8; /* Improve readability */
+  text-align: justify; /* Texto justificado */
+  text-indent: 2rem; /* Sangría estándar */
+  line-height: 1.8; /* Mejorar legibilidad */
   -webkit-hyphens: auto;
-  hyphens: auto; /* Enable hyphenation */
+  hyphens: auto; /* Habilitar guiones */
 }
 
 .rupulo-action {
@@ -928,7 +983,7 @@ section.seccion {
   font-weight: 600;
   transition: var(--transition);
   text-decoration: none;
-  word-break: break-all; /* Ensure long URL breaks if needed */
+  word-break: break-all; /* Asegurar que URLs largas se rompan si es necesario */
   text-align: center;
   max-width: 100%;
 }
@@ -939,7 +994,7 @@ section.seccion {
   box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
 }
 
-/* Scroll Progress Bar */
+/* Barra de Progreso de Scroll */
 #scroll-progress {
   position: fixed;
   top: 0;
@@ -952,7 +1007,7 @@ section.seccion {
   box-shadow: 0 0 10px var(--accent-color);
 }
 
-/* Footer */
+/* Pie de Página */
 .site-footer {
   text-align: center;
   padding: 3rem 1rem;
@@ -972,18 +1027,18 @@ section.seccion {
 
 @media (max-width: 768px) {
   .site-footer {
-    padding-bottom: 90px; /* Ensure copyright is visible above nav */
+    padding-bottom: 90px; /* Asegurar que el copyright sea visible sobre la navegación */
   }
 
-  /* Mobile adjustments for Rúpulo to improve text density */
+  /* Ajustes móviles para Rúpulo para mejorar densidad de texto */
   .rupulo-content {
     padding: 1.5rem;
   }
 
   .rupulo-detalle {
-    text-indent: 0; /* Remove indent on mobile */
+    text-indent: 0; /* Quitar sangría en móvil */
     font-size: 1rem;
-    text-align: left; /* Left align is often better for readability on narrow screens */
+    text-align: left; /* Alineación izquierda suele ser mejor para legibilidad en pantallas estrechas */
   }
 
   .rupulo-action {

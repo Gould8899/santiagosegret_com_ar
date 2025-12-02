@@ -1,53 +1,72 @@
 /* --------------------------------------------------------------------
-   scriptsaudio.js — núcleo de audio/video centralizado
+   scriptsaudio.js — Núcleo Centralizado de Audio y Video
 
-   - MediaManager: registra <audio>/<video> y garantiza "uno a la vez"
-   - YouTubeManager: pausa otros iframes YouTube y sincroniza mute global
-   - Controles compactos de audio: UI mínima para los dos audios locales
-   - Mute global: estado persistente y API pública para UI externas
+   Este archivo maneja toda la lógica multimedia del sitio:
+   - MediaManager: Controla los elementos <audio> y <video> nativos, asegurando que solo suene uno a la vez.
+   - YouTubeManager: Controla los videos de YouTube, pausándolos cuando otros se reproducen y sincronizando el silencio.
+   - Controles Compactos: Maneja la interfaz de los reproductores de audio pequeños (play, pausa, progreso).
+   - Silencio Global (Mute): Mantiene el estado de silencio en todo el sitio y lo guarda en la memoria del navegador.
 
-   Expone window.AudioCore con:
-     - MediaManager, YouTube, registerHtmlMedia(el)
-     - setGlobalMuted(m), toggleGlobalMute(), isMuted(), onMutedChange(fn)
+   Expone una herramienta global "window.AudioCore" para que otras partes del sitio puedan controlar el audio.
 -------------------------------------------------------------------- */
 (function(){
-  // Esperar DOM para operar con elementos
+  // Esperamos a que la página cargue completamente para poder manipular los elementos
   document.addEventListener('DOMContentLoaded', function(){
-    // Utilidad local: formatear tiempo en M:SS
-    function formatTime(s){ if(!s || isNaN(s)) return '0:00'; var m=Math.floor(s/60); var sec=String(Math.floor(s%60)).padStart(2,'0'); return m+':'+sec; }
+    
+    // Función auxiliar para convertir segundos (ej: 90) a formato Minutos:Segundos (ej: 1:30)
+    function formatTime(s){ 
+      if(!s || isNaN(s)) return '0:00'; 
+      var m=Math.floor(s/60); 
+      var sec=String(Math.floor(s%60)).padStart(2,'0'); 
+      return m+':'+sec; 
+    }
 
-    // ---------------- MediaManager (HTML audio/video) ----------------
+    // ---------------- Gestor de Medios (Audio/Video HTML5) ----------------
+    // Este objeto lleva el registro de todos los audios y videos nativos de la página
     var MediaManager = {
-      htmlMedias: new Set(),
-      _listeners: new WeakMap(),
+      htmlMedias: new Set(), // Lista de elementos registrados
+      _listeners: new WeakMap(), // Referencias a los "escuchadores" de eventos
+      
+      // Función para registrar un nuevo elemento de audio/video
       registerHtmlMedia: function(el){
         if(!el || typeof el.addEventListener !== 'function') return;
-        if(this.htmlMedias.has(el)) return;
+        if(this.htmlMedias.has(el)) return; // Si ya está registrado, no hacer nada
         this.htmlMedias.add(el);
+        
         var self=this;
+        // Cuando este elemento empieza a reproducirse...
         var onPlay = function(){
-          try { self.pauseAllExcept(el); } catch(e){}
+          try { self.pauseAllExcept(el); } catch(e){} // Pausar todos los demás audios HTML
           try {
+            // Intentar pausar el video principal (hero) si existe
             var hero = document.querySelector('.hero-video');
             if(hero && hero !== el && !hero.paused){ try{ hero.pause(); }catch(e){} }
           } catch(e){}
+          // Intentar pausar todos los videos de YouTube
           try { if(window.AudioCore && window.AudioCore.YouTube && typeof window.AudioCore.YouTube.pauseAll === 'function'){ window.AudioCore.YouTube.pauseAll(); } } catch(e){}
         };
+        
         el.addEventListener('play', onPlay);
         try{ this._listeners.set(el, onPlay); }catch(e){}
       },
+      
+      // Pausar todos los medios HTML excepto el que se pasa como argumento
       pauseAllExcept: function(except){ this.htmlMedias.forEach(function(m){ if(m!==except){ try{ if(!m.paused) m.pause(); }catch(e){} } }); },
+      
+      // Pausar absolutamente todos los medios HTML
       pauseAllHtmlMedia: function(){ this.htmlMedias.forEach(function(m){ try{ if(!m.paused) m.pause(); }catch(e){} }); }
     };
 
-    // ---------------- YouTube Manager (iframe API) -------------------
+    // ---------------- Gestor de YouTube (API de Iframe) -------------------
+    // Este módulo se encarga de cargar y controlar la API de YouTube
     var YouTubeManager = (function(){
-      var players = new Map();
-      var pending = new Set();
-      var apiRequested = false;
-      var apiReady = false;
-      var globalMuted = false;
+      var players = new Map(); // Mapa de reproductores activos
+      var pending = new Set(); // Lista de iframes esperando que la API cargue
+      var apiRequested = false; // ¿Ya pedimos la API a Google?
+      var apiReady = false; // ¿La API ya está lista para usarse?
+      var globalMuted = false; // Estado local del silencio
 
+      // Función para pedir la API de YouTube si no está cargada
       function ensureApi(){
         if(window.YT && typeof window.YT.Player === 'function'){ apiReady=true; return; }
         if(apiRequested) return;
@@ -60,28 +79,34 @@
         }
       }
 
+      // Cuando la API de YouTube avisa que está lista...
       var previousReady = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = function(){
         apiReady = true;
+        // Crear reproductores para todos los iframes que estaban esperando
         pending.forEach(function(iframe){ try{ createPlayer(iframe); }catch(e){} });
         pending.clear();
         if(typeof previousReady === 'function'){ try{ previousReady(); }catch(e){} }
       };
 
+      // Aplicar el estado de silencio (mute) a un reproductor específico
       function applyMuteState(player){
         if(!player || typeof player.mute !== 'function' || typeof player.unMute !== 'function') return;
         try { if(globalMuted) player.mute(); else player.unMute(); } catch(e){}
       }
 
+      // Manejar cambios de estado (ej: cuando el usuario da play)
       function handleStateChange(event){
         if(!event || typeof event.data === 'undefined' || !event.target || typeof YT === 'undefined') return;
         var player = event.target;
+        // Si el video empieza a reproducirse (PLAYING)...
         if(event.data === YT.PlayerState.PLAYING){
-          pauseAllExcept(player);
-          try{ MediaManager.pauseAllHtmlMedia(); }catch(e){}
+          pauseAllExcept(player); // Pausar otros YouTubes
+          try{ MediaManager.pauseAllHtmlMedia(); }catch(e){} // Pausar audios HTML
         }
       }
 
+      // Convertir un iframe normal en un reproductor controlado por API
       function createPlayer(iframe){
         if(!iframe || players.has(iframe)) return;
         if(!window.YT || typeof window.YT.Player !== 'function'){ pending.add(iframe); ensureApi(); return; }
@@ -91,12 +116,14 @@
         applyMuteState(player);
       }
 
+      // Pausar todos los videos de YouTube excepto el activo
       function pauseAllExcept(active){
         players.forEach(function(p){ if(active && p===active) return; try{ p.pauseVideo(); }catch(e){} });
       }
 
       function pauseAll(){ pauseAllExcept(null); }
 
+      // Interfaz pública del Gestor de YouTube
       return {
         registerIframe: function(iframe){
           if(!iframe) return;
@@ -111,10 +138,10 @@
       };
     })();
 
-    // Registrar existentes y nuevos medios HTML
+    // Buscar y registrar todos los elementos <audio> y <video> que ya existen en la página
     Array.prototype.forEach.call(document.querySelectorAll('audio, video'), function(el){ MediaManager.registerHtmlMedia(el); });
 
-    // Listener global para pausar hero cuando otro medio reproduce
+    // Escuchar eventos de reproducción globales para pausar el video principal (hero) si es necesario
     try {
       document.addEventListener('play', function(e){
         try {
@@ -125,7 +152,7 @@
       }, true);
     } catch(_){ }
 
-    // Observer de mutaciones para medios insertados luego
+    // Observador para detectar si se añaden nuevos videos/audios dinámicamente al DOM
     try{
       var mediaObserver = new MutationObserver(function(muts){
         muts.forEach(function(m){
@@ -143,11 +170,13 @@
       mediaObserver.observe(document.documentElement||document.body, { childList:true, subtree:true });
     }catch(_){ }
 
-    // -------------------- Mute global (núcleo) -----------------------
+    // -------------------- Sistema de Silencio Global -----------------------
     var GLOBAL_MUTE_KEY = 'siteGlobalMuted';
+    // Recuperar estado guardado o usar 'false' por defecto
     var globalMuted = !!JSON.parse(localStorage.getItem(GLOBAL_MUTE_KEY) || 'false');
     var muteSubscribers = new Set();
 
+    // Aplicar el estado de silencio a TODOS los medios (HTML y YouTube)
     function applyMuteToAll(options){
       try{
         MediaManager.htmlMedias.forEach(function(m){
@@ -167,6 +196,7 @@
       }catch(e){}
     }
 
+    // Función principal para cambiar el estado de silencio
     function setGlobalMuted(mute, options){
       globalMuted = !!mute;
       try{ localStorage.setItem(GLOBAL_MUTE_KEY, JSON.stringify(globalMuted)); }catch(e){}
@@ -176,10 +206,11 @@
 
     function toggleGlobalMute(){ setGlobalMuted(!globalMuted, { initial:false }); }
 
-    // Aplicar estado inicial (respetando autoplay)
+    // Aplicar estado inicial al cargar la página
     setGlobalMuted(globalMuted, { initial:true });
 
-    // ---------------- Controles compactos de audio -------------------
+    // ---------------- Controles de Audio Personalizados (Compactos) -------------------
+    // Configura los botones de play, barra de progreso y volumen para los audios
     function setupCompactAudioControls(audioId, rootId){
       var audio = document.getElementById(audioId);
       var root = document.getElementById(rootId);
@@ -191,34 +222,41 @@
       var timeLabel = root.querySelector('.compact-time');
       var volume = root.querySelector('.compact-volume');
 
+      // Configurar duración máxima de la barra cuando carguen los metadatos
       audio.addEventListener('loadedmetadata', function(){ if(progress) progress.max = audio.duration; });
 
+      // Botón Play/Pausa
       if(playBtn) playBtn.addEventListener('click', function(){
         if(audio.paused){ try{ MediaManager.pauseAllExcept(audio); }catch(e){} audio.play(); playBtn.textContent='⏸'; }
         else { audio.pause(); playBtn.textContent='▶'; }
       });
 
+      // Actualizar barra de progreso mientras reproduce
       audio.addEventListener('timeupdate', function(){ if(progress && !progress.dragging) progress.value = audio.currentTime; if(timeLabel) timeLabel.textContent = formatTime(audio.currentTime); });
+      // Resetear al terminar
       audio.addEventListener('ended', function(){ if(playBtn) playBtn.textContent='▶'; if(progress) progress.value=0; if(timeLabel) timeLabel.textContent = formatTime(0); });
       audio.addEventListener('play', function(){ if(playBtn) playBtn.textContent='⏸'; });
       audio.addEventListener('pause', function(){ if(playBtn && !audio.ended) playBtn.textContent='▶'; });
 
+      // Interacción con la barra de progreso (arrastrar)
       if(progress){
         progress.addEventListener('input', function(){ progress.dragging=true; if(timeLabel) timeLabel.textContent = formatTime(progress.value); });
         progress.addEventListener('change', function(){ audio.currentTime = parseFloat(progress.value); progress.dragging=false; });
       }
 
+      // Control de volumen
       if(volume){ volume.addEventListener('input', function(){ audio.volume = parseFloat(volume.value); }); audio.volume = parseFloat(volume.value||1); }
 
       if(timeLabel) timeLabel.textContent = formatTime(0);
       if(playBtn) playBtn.textContent = audio.paused ? '▶' : '⏸';
     }
 
-    // Vincular controles compactos si existen
+    // Vincular controles compactos a los audios específicos del sitio
     setupCompactAudioControls('audio-mi-refugio', 'compact-mi-refugio');
     setupCompactAudioControls('audio-la-familia', 'compact-la-familia');
 
-    // --------------------- API pública (AudioCore) -------------------
+    // --------------------- API Pública (AudioCore) -------------------
+    // Exponemos estas funciones para que puedan ser usadas desde otros scripts
     window.AudioCore = window.AudioCore || {};
     window.AudioCore.MediaManager = MediaManager;
     window.AudioCore.YouTube = YouTubeManager;
@@ -233,8 +271,7 @@
       try { if (YouTubeManager && typeof YouTubeManager.pauseAll === 'function') YouTubeManager.pauseAll(); } catch(_){ }
     };
 
-    // -------------------- Hero (Imagen estática) ------------------
-    // Ya no hay video de hero, pero mantenemos la función para compatibilidad
+    // -------------------- Sección Hero (Principal) ------------------
     function pauseOthers(except){
       try {
         if (except && typeof MediaManager.pauseAllExcept === 'function') MediaManager.pauseAllExcept(except);
@@ -252,11 +289,17 @@
     window.AudioCore.notifySectionChange = syncHeroForSection;
 
     /* ------------------------------------------------------------------
-       Lazy-load optimizado de iframes YouTube (Movido desde scripts.js)
+       Carga Diferida (Lazy Load) de Videos de YouTube
+       
+       Esta función busca iframes con la clase "lazy-video" y:
+       1. Muestra una imagen (miniatura) en lugar del video pesado.
+       2. Solo carga el video real de YouTube cuando el usuario hace clic.
+       3. Convierte el título del video en un enlace directo a YouTube.
        ------------------------------------------------------------------*/
     function initYouTubeLazyLoading() {
       var lazyVideos = document.querySelectorAll('iframe.lazy-video');
 
+      // Construir la URL correcta de YouTube con parámetros de optimización
       function buildEmbedUrl(rawSrc) {
         if (!rawSrc) return null;
         try {
@@ -268,12 +311,12 @@
               url.searchParams.set('origin', origin);
             }
           }
-          if (!url.searchParams.has('rel')) url.searchParams.set('rel', '0');
-          if (!url.searchParams.has('modestbranding')) url.searchParams.set('modestbranding', '1');
+          if (!url.searchParams.has('rel')) url.searchParams.set('rel', '0'); // No mostrar videos relacionados al final
+          if (!url.searchParams.has('modestbranding')) url.searchParams.set('modestbranding', '1'); // Menos logos de YT
           if (!url.searchParams.has('playsinline')) url.searchParams.set('playsinline', '1');
-          if (!url.searchParams.has('enablejsapi')) url.searchParams.set('enablejsapi', '1');
+          if (!url.searchParams.has('enablejsapi')) url.searchParams.set('enablejsapi', '1'); // Habilitar API JS
           if (!url.searchParams.has('fs')) url.searchParams.set('fs', '1'); // Permitir pantalla completa
-          // Asegurar autoplay al hacer click
+          // Asegurar autoplay al hacer click (ya que el usuario ya hizo clic en la miniatura)
           if (!url.searchParams.has('autoplay')) url.searchParams.set('autoplay', '1');
           return url.toString();
         } catch (error) {
@@ -282,14 +325,14 @@
         }
       }
 
-      // Extraer ID de video de YouTube desde URL
+      // Extraer ID de video de YouTube desde URL (ej: v=ABC12345)
       function getYouTubeId(url) {
         var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         var match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
       }
 
-      // Cargar iframe real
+      // Cargar iframe real (reemplazar miniatura con video)
       function loadIframe(iframe) {
         if (!iframe || !iframe.dataset || !iframe.dataset.src) return;
         // Si ya tiene src, es que ya se cargó o se está cargando
@@ -298,7 +341,7 @@
         var finalSrc = buildEmbedUrl(iframe.dataset.src);
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
         iframe.src = finalSrc || iframe.dataset.src;
-        // No removemos data-src para permitir re-verificaciones si fuera necesario, pero marcamos como cargado
+        // Marcamos como cargado
         iframe.dataset.loaded = 'true';
         
         // Limpiar imagen de fondo si existía (la miniatura)
@@ -307,7 +350,7 @@
         // Registrar en el sistema de audio inmediatamente
         try {
           if (YouTubeManager && typeof YouTubeManager.registerIframe === 'function') { YouTubeManager.registerIframe(iframe); }
-        } catch (e) { /* ignore YouTube registration errors */ }
+        } catch (e) { /* ignorar errores de registro */ }
       }
 
       // 1. Pre-cargar miniaturas inmediatamente y configurar "Click to Load"
@@ -373,3 +416,4 @@
 
   });
 })();
+
