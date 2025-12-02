@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 
+<!-- 
+  ==========================================================================
+  ENCABEZADO (HEAD)
+  ==========================================================================
+  Aquí va la información técnica que no se ve en la página, pero que es importante
+  para los buscadores (Google) y para que el navegador sepa cómo mostrar el sitio.
+-->
 <head>
   <meta charset="UTF-8">
-  <!-- Ajuste para dispositivos móviles -->
+  <!-- Ajuste para que se vea bien en celulares (Responsive) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- 
+    ATENCIÓN: Los atributos 'data-i18n-key' conectan este elemento con el archivo 'translations.js'.
+    El texto que ves aquí es el valor por defecto, pero será reemplazado por el traductor.
+  -->
   <meta name="description"
     content="Santiago Segret, músico y bandoneonista. Descubre su biografía, videos, partituras y más." data-i18n-key="meta.description" data-i18n-attr="content">
   <title data-i18n-key="meta.title">Santiago Segret - Músico</title>
+  
+  <!-- Fuentes de Google (Tipografías) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Hoja de Estilos (Diseño visual) -->
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <!-- Metadatos sociales -->
+  
+  <!-- Metadatos para redes sociales (Cómo se ve al compartir en Facebook/Twitter/WhatsApp) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Santiago Segret - Músico">
   <meta property="og:description" content="Santiago Segret, músico y bandoneonista. Biografía, videos y partituras.">
@@ -23,6 +40,8 @@
   <meta name="twitter:title" content="Santiago Segret - Músico">
   <meta name="twitter:description" content="Santiago Segret, músico y bandoneonista. Biografía, videos y partituras.">
   <meta name="twitter:image" content="/santiagosegretFOTOS/01_Fotos/Federico-Cabarcos-Santiago.jpg">
+  
+  <!-- Datos estructurados para Google (JSON-LD) -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -39,11 +58,23 @@
   </script>
 </head>
 
+<!-- 
+  ==========================================================================
+  CUERPO (BODY)
+  ==========================================================================
+  Aquí comienza todo lo que el usuario ve en la pantalla.
+-->
 <body>
-  <!-- Scroll Progress Bar -->
+  <!-- Barra de progreso de lectura (la línea que avanza arriba) -->
   <div id="scroll-progress"></div>
+  
+  <!-- Enlace oculto para accesibilidad (lectores de pantalla) -->
   <a class="skip-link" href="#inicio" data-i18n-key="skip.toContent">Saltar al contenido</a>
 
+  <!-- 
+    BARRA DE NAVEGACIÓN (Menú)
+    Contiene los enlaces a las secciones y el botón de idioma.
+  -->
   <nav class="navbar" role="navigation">
     <button class="hamburger-btn" aria-label="Abrir menú" aria-expanded="false">
       <span></span>
@@ -58,17 +89,19 @@
       <li><a href="#fotos" data-i18n-key="nav.photos">Fotos</a></li>
       <li><a href="#contacto" data-i18n-key="nav.contact">Contacto</a></li>
       <li><a href="#rupulo" data-i18n-key="nav.rupulo">Rúpulo</a></li>
-  <li class="language-toggle"><button type="button" id="language-toggle" data-i18n-key="nav.languageToggle" aria-label="Cambiar idioma a inglés">English</button></li>
+      <!-- Botón para cambiar de idioma -->
+      <li class="language-toggle"><button type="button" id="language-toggle" data-i18n-key="nav.languageToggle" aria-label="Cambiar idioma a inglés">English</button></li>
     </ul>
   </nav>
 
+  <!-- Contenido Principal -->
   <main class="content">
-    <!-- Sección Inicio -->
+    <!-- Sección Inicio (Portada) -->
     <section class="seccion" id="inicio">
       <div class="hero-title-cool">
         <h1 class="hero-title-name">Santiago Segret</h1>
         <br>
-  <span class="hero-title-sub" data-i18n-key="hero.subtitle">músico, bandoneonista</span>
+        <span class="hero-title-sub" data-i18n-key="hero.subtitle">músico, bandoneonista</span>
       </div>
 
       <div class="video-background">
@@ -438,7 +471,7 @@
               <p class="logro-detalle" data-i18n-key="bio.training.item1">En 2006 completó programa de la <strong>Orquesta Escuela de Tango Emilio Balcarce</strong>, junto a grandes maestros como Victor Lavallén, Raúl Garello, Lidia Borda, José Colángelo, Néstor Marconi y el mismo Emilio Balcarce.</p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle" data-i18n-key="bio.training.item6">A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: <strong>Julio Pane, Mariano "Paya" Cigna, Federico Pereiro y Carlos Lazzari</strong></p>
+              <p class="logro-detalle" data-i18n-key="bio.training.item6">A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: <strong>Julio Pane, Mariano "Paya" Cigna, Federico Pereiro y Carlos Lazzari.</strong></p>
             </div>
             <div class="logro-item">
               <p class="logro-detalle" data-i18n-key="bio.training.item4">De 2013 a 2015 integró la <strong>Orquesta del Tango de la Ciudad de Buenos Aires</strong> dirigida en aquel entonces por Raúl Garello, Néstor Marconi y Carlos Cuacci.</p>
