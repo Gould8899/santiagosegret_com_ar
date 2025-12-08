@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 64 64" role="img" aria-label="SS">
+  <title>SS — Santiago Segret (16)</title>
+  <style type="text/css"><![CDATA[ text { font-family: Arial, Helvetica, sans-serif; font-weight:800 } ]]></style>
+  <rect x="0" y="0" width="64" height="64" rx="12" fill="#ffffff"/>
+  <g transform="translate(32,36)">
+    <text x="0" y="0" text-anchor="middle" dominant-baseline="middle" fill="#000000" font-size="40">SS</text>
+  </g>
+</svg>
