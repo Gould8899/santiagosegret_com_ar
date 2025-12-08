@@ -1,0 +1,12 @@
+{
+  "name": "santiagosegret-favicons",
+  "version": "1.0.0",
+  "description": "Generador local de favicon a partir de favicon.svg",
+  "private": true,
+  "scripts": {
+    "generate-favicons": "node ./scripts/generate-favicons.js"
+  },
+  "dependencies": {
+    "sharp": "^0.33.0"
+  }
+}

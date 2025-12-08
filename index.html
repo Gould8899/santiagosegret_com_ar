@@ -2,7 +2,7 @@
 <html lang="es">
 
 <!-- 
-  ==========================================================================
+  =================================================================
   ENCABEZADO (HEAD)
   ==========================================================================
   Aquí va la información técnica que no se ve en la página, pero que es importante
@@ -28,9 +28,10 @@
   
   <!-- Hoja de Estilos (Diseño visual) -->
   <link rel="stylesheet" href="style.css">
-  <!-- Simple favicon (SVG monogram 'SS') -->
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="shortcut icon" href="./favicon.svg">
+  <!-- Favicons: SVG primary, PNG and ICO fallbacks -->
+  <link rel="icon" href="/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="shortcut icon" href="/favicon/favicon.ico">
   
   <!-- Metadatos para redes sociales (Cómo se ve al compartir en Facebook/Twitter/WhatsApp) -->
   <meta property="og:type" content="website">
@@ -440,7 +441,7 @@
               </p>
             </div>
             <div class="logro-item">
-              <p class="logro-detalle split-layout" data-i18n-key="bio.now.item3">
+              <p class="logro-detalle split-layout" data-i18n-key="bio.now.item1">
                 <span class="logro-text">Maestro particular de bandoneón.</span> <span class="logro-ano">Desde 2007</span>
               </p>
             </div>
@@ -496,30 +497,32 @@
             <div class="logro-item with-media">
               <div class="logro-content">
                 <p class="logro-detalle" data-i18n-key="bio.beginnings.item1">Santiago Segret nació el 5 de mayo del '88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo "el Marinero" Montes.</p>
+                <p class="logro-detalle" data-i18n-key="bio.beginnings.item2">Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier Malosetti en La Trastienda tocando solos de Piazzolla.</p>
               </div>
             </div>
 
             <div class="logro-item audio-block">
-              <p class="logro-detalle" data-i18n-key="bio.beginnings.item2">Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier Malosetti en La Trastienda tocando solos de Piazzolla.</p>
               <div style="margin-top: 0.8rem;">
                 <p class="logro-media-caption" style="text-align: left; margin-bottom: 0.5rem;" data-i18n-key="bio.beginnings.caption2">Grabaciones en La Trastienda (Registro sonoro de Raul Monti):</p>
                 
                 <div class="logro-audio-row">
                   <span class="logro-audio-title" data-i18n-key="bio.beginnings.audio1">Mi Refugio:</span>
-                  <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio" style="flex: 1; border: none; box-shadow: none; background: transparent; padding: 0;">
+                  <div class="compact-audio" id="compact-mi-refugio" aria-label="control de audio Mi Refugio">
                     <button class="compact-play" id="compact-play-mi-refugio" aria-label="Reproducir">▶</button>
                     <input type="range" class="compact-progress" id="compact-progress-mi-refugio" min="0" max="100" step="0.1" value="0">
                     <span class="compact-time" id="compact-time-mi-refugio">0:00</span>
+                    <input type="range" class="compact-volume" id="compact-volume-mi-refugio" min="0" max="1" step="0.1" value="1" aria-label="Control de volumen">
                   </div>
                   <audio id="audio-mi-refugio" preload="metadata" src="audio/Versión-editada-separada-Mi-Refugio.mp3"></audio>
                 </div>
 
                 <div class="logro-audio-row">
                   <span class="logro-audio-title" data-i18n-key="bio.beginnings.audio2">La Familia:</span>
-                  <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia" style="flex: 1; border: none; box-shadow: none; background: transparent; padding: 0;">
+                  <div class="compact-audio" id="compact-la-familia" aria-label="control de audio La Familia">
                     <button class="compact-play" id="compact-play-la-familia" aria-label="Reproducir">▶</button>
                     <input type="range" class="compact-progress" id="compact-progress-la-familia" min="0" max="100" step="0.1" value="0">
                     <span class="compact-time" id="compact-time-la-familia">0:00</span>
+                    <input type="range" class="compact-volume" id="compact-volume-la-familia" min="0" max="1" step="0.1" value="1" aria-label="Control de volumen">
                   </div>
                   <audio id="audio-la-familia" preload="metadata" src="audio/Versión-editada-separada-La-Familia.mp3"></audio>
                 </div>
@@ -551,8 +554,8 @@
           <p data-i18n-key="photos.7.caption">Con Andrés Pilar.</p>
         </div>
         <div class="foto">
-          <img src="santiagosegretFOTOS/01_Fotos/BalcarceDiploma_MG_2117.jpg" alt="Balcarce Diploma" loading="lazy" data-i18n-key="photos.15.alt" data-i18n-attr="alt">
-          <p data-i18n-key="photos.15.caption">Emilio Balcarce entregando diploma de la Orquesta Escuela de Tango Emilio Balcarce.</p>
+          <img src="santiagosegretFOTOS/01_Fotos/BalcarceDiploma_MG_2117.jpg" alt="Balcarce Diploma" loading="lazy" data-i18n-key="photos.24.alt" data-i18n-attr="alt">
+          <p data-i18n-key="photos.24.caption">Emilio Balcarce entregando diploma de la Orquesta Escuela de Tango Emilio Balcarce.</p>
         </div>        
         <div class="foto">
           <img src="santiagosegretFOTOS/01_Fotos/andres y vitillo.jpg" alt="Andrés y Vitillo" loading="lazy" data-i18n-key="photos.4.alt" data-i18n-attr="alt">
@@ -688,9 +691,10 @@
   <!-- Botón global para silenciar o activar todo el audio -->
   <button id="global-mute-btn" aria-pressed="false" aria-label="Silenciar todo" title="Silenciar todo">🔈</button>
 
-  <script src="translations.js"></script>
-  <script src="scriptsaudio.js"></script>
-  <script src="scripts.js"></script>
+  <script src="scripts/utils.js"></script>
+  <script src="scripts/translations.js"></script>
+  <script src="scripts/scriptsaudio.js"></script>
+  <script src="scripts/scripts.js"></script>
 </body>
 
 </html>

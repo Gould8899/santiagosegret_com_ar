@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Santiago Segret - SS">
-	<title>SS — Rúpulo Ediciones</title>
+	<title>SS — Santiago Segret</title>
 	<defs>
 		<linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
 			<stop offset="0" stop-color="#2a2a2a" />
@@ -16,9 +16,9 @@
 	<!-- White inset stroke for contrast -->
 	<rect x="6" y="6" width="52" height="52" rx="8" fill="none" stroke="#ffffff" stroke-opacity="0.06" />
 
-	<!-- Monograma SS centrado -->
-	<g fill="#ffffff" font-family="Cormorant Garamond, 'Times New Roman', serif" font-weight="700" font-size="30" text-anchor="middle">
-		<text x="50%" y="44%" style="font-size:28px">S</text>
-		<text x="50%" y="66%" style="font-size:28px" opacity="0.95">S</text>
+	<!-- Monograma SS horizontal, centrado usando transform -->
+	<g transform="translate(32,34)">
+		<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" fill="#ffffff" font-family="Montserrat, Cormorant Garamond, Arial, Helvetica, sans-serif" font-weight="700" font-size="26">SS</text>
 	</g>
+
 </svg>

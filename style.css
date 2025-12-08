@@ -492,12 +492,250 @@ section.seccion {
   margin-top: 0.5rem;
 }
 
+
 .logro-detalle.split-layout {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
   flex-wrap: wrap;
+}
+
+/* Estilos para el Reproductor de Audio */
+.audio-block {
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.audio-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.logro-audio-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.logro-audio-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  min-width: 100px; /* Asegura que el título tenga un ancho mínimo */
+}
+
+/* Contenedor del reproductor compacto */
+.compact-audio {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-grow: 1; /* Permite que el reproductor crezca para llenar el espacio */
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px; /* Bordes más redondeados para un look moderno */
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Botón de Play/Pause */
+.compact-play {
+  background: var(--accent-color);
+  color: #0f172a;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0; /* Evita que el botón se encoja */
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+}
+
+.compact-play:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+}
+
+/* Barra de Progreso */
+.compact-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s ease;
+  flex-grow: 1;
+}
+
+.compact-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+}
+
+.compact-progress::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+}
+
+.compact-progress:hover::-webkit-slider-thumb {
+  background: var(--accent-hover);
+}
+
+.compact-progress:hover::-moz-range-thumb {
+  background: var(--accent-hover);
+}
+
+/* Tiempo Actual del Audio */
+.compact-time {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums; /* Para que los números no "bailen" al cambiar */
+  flex-shrink: 0;
+  min-width: 40px; /* Asegura espacio para 0:00 y más */
+  text-align: right;
+}
+
+/* Control de Volumen */
+.compact-volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px; /* Ancho fijo para el control de volumen */
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.compact-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--text-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(255,255,255,0.5);
+}
+
+.compact-volume::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--text-color);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(255,255,255,0.5);
+}
+
+/* Media Queries para Responsiveness */
+@media (max-width: 768px) {
+  .logro-audio-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .logro-audio-title {
+    width: 100%;
+    text-align: left; /* Mejor alineado en móvil */
+    margin-bottom: 0.5rem;
+  }
+
+  .compact-audio {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem;
+  }
+
+  .compact-play {
+    width: 50px;
+    height: 50px;
+    font-size: 1.4rem;
+    touch-action: manipulation;
+    padding: 0; /* tamaño controlado por width/height */
+  }
+
+  .compact-progress {
+    width: 100%; /* Ocupa todo el ancho disponible en móvil */
+    margin: 0.3rem 0 0 0;
+  }
+  
+  .compact-time {
+    width: auto;
+    text-align: left;
+    margin-top: 0.25rem;
+  }
+
+  .compact-volume {
+    width: 100%;
+    margin: 0.2rem 0 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .compact-audio {
+    flex-direction: column;
+    padding: 1rem 0.8rem;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .compact-play {
+    order: 1; /* Cambia el orden en pantalla pequeña */
+    width: 56px;
+    height: 56px;
+    font-size: 1.6rem;
+    align-self: center;
+  }
+
+  .compact-progress {
+    order: 2;
+    width: 100%;
+    margin: 0;
+  }
+
+  .compact-time {
+    order: 3;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .compact-volume {
+    order: 4;
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .logro-text {
@@ -512,6 +750,7 @@ section.seccion {
   font-weight: 600;
   white-space: nowrap;
 }
+
 
 /* Grilla de Fotos */
 .galeria-fotos {
