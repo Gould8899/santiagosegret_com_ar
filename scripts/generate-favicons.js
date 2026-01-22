@@ -35,44 +35,44 @@ async function generate() {
 
   // '__dirname' es la carpeta actual ('scripts'). '..' sube un nivel a la raíz del proyecto.
   const root = path.resolve(__dirname, '..');
+  const favDir = path.join(root, 'favicon'); // Directorio de salida y origen
+
+  // Nos aseguramos que la carpeta exista
+  if (!fs.existsSync(favDir)) {
+    fs.mkdirSync(favDir);
+  }
+
   // Creamos la ruta completa al archivo SVG de origen.
-  const svgPath = path.join(root, 'favicon.svg');
+  const svgPath = path.join(favDir, 'favicon.svg');
 
   // Verificamos si el archivo 'favicon.svg' realmente existe antes de continuar.
   if (!fs.existsSync(svgPath)) {
-    console.error('Error: No se encuentra el archivo "favicon.svg" en la raíz del proyecto.');
+    console.error('Error: No se encuentra el archivo "favicon/favicon.svg".');
     process.exit(1); // Si no existe, terminamos el script con un código de error.
   }
 
   console.log('Iniciando la generación de favicons desde:', svgPath);
 
   try {
-    // --- Paso 2: Generar un PNG simple de 32x32 ---
-    // Este es un favicon moderno que muchos navegadores usan directamente.
-    const png32Path = path.join(root, 'favicon-32.png');
-    await sharp(svgPath) // Carga el SVG con sharp.
-      .resize(32, 32)   // Redimensiona la imagen a 32x32 píxeles.
-      .png({ quality: 90 }) // Convierte a formato PNG con 90% de calidad.
-      .toFile(png32Path);   // Guarda el resultado en el archivo 'favicon-32.png'.
-    console.log('✔ Generado:', png32Path);
-
-
-    // --- Paso 3: Crear las imágenes para el archivo .ico en memoria ---
-    // El formato .ico es un contenedor que puede tener varias imágenes dentro.
-    // Crearemos versiones de 16x16, 32x32 y 48x48 y las guardaremos en 'buffers'.
-    // Un 'buffer' es un espacio en la memoria para guardar datos binarios (como una imagen).
-    console.log('\nPreparando imágenes para el archivo .ico...');
+    // --- Paso 2 y 3: Generar PNGs y preparar ICO ---
+    console.log('\nGenerando imágenes PNG y preparando archivo .ico...');
     const sizes = [16, 32, 48]; // Los tamaños que incluiremos.
     const imageEntries = []; // Un array para guardar los datos de cada imagen.
 
     for (const s of sizes) {
+      // Ruta para guardar el PNG individual (ej: favicon-32.png)
+      const pngPath = path.join(favDir, `favicon-${s}.png`);
+
       const buffer = await sharp(svgPath)
         .resize(s, s)
-        .png() // Convertir a PNG
-        .toBuffer(); // Guardar en un buffer en lugar de un archivo.
-      
+        .png({ quality: 90 }) // Convertir a PNG
+        .toBuffer(); // Guardar en un buffer
+
+      // Guardar el archivo PNG en disco
+      fs.writeFileSync(pngPath, buffer);
+      console.log(`✔ Generado: ${pngPath}`);
+
       imageEntries.push({ size: s, buffer: buffer });
-      console.log(`  - Creada imagen de ${s}x${s}px en memoria.`);
     }
 
 
@@ -82,7 +82,7 @@ async function generate() {
     // 2. Un "directorio" que describe cada imagen (tamaño, formato, etc.).
     // 3. Los datos de cada imagen, uno tras otro.
 
-    const icoPath = path.join(root, 'favicon.ico');
+    const icoPath = path.join(favDir, 'favicon.ico');
 
     // 1. Crear el encabezado del .ico (6 bytes).
     const header = Buffer.alloc(6);
@@ -121,7 +121,7 @@ async function generate() {
     console.log('✔ Generado:', icoPath);
 
     console.log('\n¡Proceso completado! Si no ves los cambios, refresca la caché del navegador (Ctrl+F5 o Cmd+Shift+R).');
-  
+
   } catch (err) {
     // Si algo falla en cualquiera de los pasos, mostramos un error.
     console.error('Error generando los favicons:', err);

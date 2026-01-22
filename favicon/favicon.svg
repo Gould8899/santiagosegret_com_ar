@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Santiago Segret - SS">
 	<title>SS — Santiago Segret</title>
-	<!-- Simplified black & white favicon using Arial for universal availability -->
-	<defs>
-		<style type="text/css"><![CDATA[
-			text { font-family: Arial, Helvetica, sans-serif; font-weight: 800; }
-		]]></style>
-	</defs>
 
-	<!-- White background square with slight padding -->
-	<rect x="0" y="0" width="64" height="64" rx="12" fill="#ffffff"/>
+	<!-- Background: Solid Black, Rounded Corners -->
+	<rect x="0" y="0" width="64" height="64" rx="12" fill="#000000"/>
 
-	<!-- Large black SS centered -->
-	<g transform="translate(32,36)">
-		<text x="0" y="0" text-anchor="middle" dominant-baseline="middle" fill="#000000" font-size="42">SS</text>
-	</g>
-
+	<!-- Text: White, Centered, Standard Font -->
+	<!-- Ajuste manual de Y para corregir centrado vertical en renderizadores estrictos -->
+	<text
+		x="32"
+		y="45"
+		fill="#ffffff"
+		font-family="Arial, Helvetica, sans-serif"
+		font-weight="bold"
+		font-size="38"
+		text-anchor="middle"
+	>SS</text>
 </svg>
