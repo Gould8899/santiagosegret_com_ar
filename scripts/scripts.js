@@ -15,7 +15,7 @@
 
 // Esperamos a que toda la estructura de la página (DOM) esté lista antes de empezar.
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // Verificación de seguridad para YouTube: avisa si abres el archivo directamente sin un servidor.
   if (window.location && window.location.protocol === 'file:') {
     console.warn('Aviso: YouTube puede dar errores si abres el archivo directamente. Es mejor usar un servidor local.');
@@ -25,16 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
      I. Herramientas de Ayuda (Helpers)
      Pequeñas funciones que nos sirven para tareas repetitivas.
      ------------------------------------------------------------------*/
-  
+
   // Agrupamos estas herramientas para usarlas fácilmente en cualquier parte
   const utils = {
     isElement(el) { return el && el.nodeType === 1; }, // Verifica si algo es un elemento HTML válido
     safeCall(fn, ...args) { // Ejecuta una función de forma segura (si falla, no rompe la página)
-      try { 
-        if (typeof fn === 'function') return fn(...args); 
-      } catch (e) { 
-        console.warn('Error en utils.safeCall', e); 
-      } 
+      try {
+        if (typeof fn === 'function') return fn(...args);
+      } catch (e) {
+        console.warn('Error en utils.safeCall', e);
+      }
     }
   };
 
@@ -55,6 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const subscribers = new Set();   // Lista de funciones que quieren saber cuándo cambia el idioma
     let currentLang = DEFAULT_LANG;  // Idioma actual
 
+    // Evita que el mismo elemento quede registrado bajo múltiples keys.
+    // Esto es importante para botones dinámicos (ej: "Ver más" -> "Ver menos").
+    function removeExistingBindingsForElement(el, attr, keepKey) {
+      if (!el) return;
+      boundElements.forEach((entries, key) => {
+        if (key === keepKey) return;
+        const filtered = entries.filter(existing => !(existing.el === el && existing.attr === attr));
+        if (filtered.length !== entries.length) {
+          if (filtered.length) boundElements.set(key, filtered);
+          else boundElements.delete(key);
+        }
+      });
+    }
+
     // Busca una traducción en el diccionario
     function getTranslation(key, lang) {
       const table = translations[lang] || {};
@@ -72,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function storeBinding(key, entry) {
       if (!key || !entry || !entry.el) return;
       const list = boundElements.get(key) || [];
+      removeExistingBindingsForElement(entry.el, entry.attr, key);
       if (!list.some(existing => existing.el === entry.el && existing.attr === entry.attr)) {
         list.push(entry);
         boundElements.set(key, list);
@@ -97,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const translation = lang === DEFAULT_LANG ? undefined : getTranslation(key, lang);
       // Si es el idioma original, usamos el texto original. Si no, buscamos la traducción.
       const value = lang === DEFAULT_LANG ? original : (translation !== undefined ? translation : original);
-      
+
       if (attr) el.setAttribute(attr, value);
       else el.innerHTML = value;
     }
@@ -106,20 +121,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyLanguage(lang, options = {}) {
       const targetLang = translations[lang] ? lang : DEFAULT_LANG;
       currentLang = targetLang;
-      
+
       // Actualiza todos los textos registrados
       boundElements.forEach((entries, key) => {
         entries.forEach(entry => applyToEntry(entry, key, targetLang));
       });
-      
+
       // Avisa al navegador del cambio (útil para accesibilidad/lectores de pantalla)
       document.documentElement.setAttribute('lang', targetLang);
-      
+
       // Guarda la preferencia del usuario si se solicita
       if (options.persist !== false) {
         try { localStorage.setItem(STORAGE_KEY, targetLang); } catch (e) { /* ignorar error si cookies bloqueadas */ }
       }
-      
+
       // Avisa a otras partes del código que el idioma cambió
       subscribers.forEach(fn => utils.safeCall(fn, targetLang));
     }
@@ -177,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
      III. Navegación y Pestañas (Tabs)
      Controla cómo nos movemos por la página y cambiamos entre vistas.
      ------------------------------------------------------------------*/
-  
+
   const navTabs = document.querySelectorAll('.navbar-tabs a');
   const secciones = document.querySelectorAll('section.seccion');
   const navbar = document.querySelector('.navbar');
@@ -219,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Actualiza el texto del botón de idioma (ES/EN)
   function updateLanguageToggleButton(lang) {
     if (!languageToggleBtn) return;
-    
+
     const order = ['es', 'en'];
     const nextIndex = (order.indexOf(lang) + 1) % order.length;
     const nextLang = order[nextIndex];
@@ -279,11 +294,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Detectar scroll para mostrar/ocultar la barra de navegación y el botón volver arriba
   function updateScrollState() {
     const scrollY = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    
+
     // Si bajamos un poco, la barra de navegación cambia de estilo
     if (scrollY > 36) document.body.classList.add('navbar-scrolled');
     else document.body.classList.remove('navbar-scrolled');
-    
+
     // Si bajamos mucho, aparece el botón de volver arriba
     if (backToTopBtn) {
       if (scrollY > 420) backToTopBtn.classList.add('visible');
@@ -323,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', updateActiveSection);
-  
+
   // Desplazamiento suave al hacer clic en el menú
   navTabs.forEach(link => link.addEventListener('click', function (e) {
     e.preventDefault();
@@ -333,12 +348,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const headerOffset = 80; // Compensamos la altura del menú fijo
       const elementPosition = target.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
       });
-      
+
       // Actualizamos la URL sin saltos bruscos
       if (history.pushState) history.pushState(null, null, hash);
     }
@@ -370,22 +385,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => tab.addEventListener('click', function (e) {
       e.preventDefault();
-      
+
       // Pausar audios/videos al cambiar de pestaña para que no suenen de fondo
       try { if (window.AudioCore && typeof window.AudioCore.pauseAllMedia === 'function') window.AudioCore.pauseAllMedia(); } catch (_) { }
-      
+
       // Desactivar todas las pestañas
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
-      
+
       // Activar la clicada
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
       tab.setAttribute('tabindex', '0');
-      
+
       // Mostrar el contenido correspondiente
       const tabName = tab.getAttribute('data-tab');
-      panes.forEach(pane => tabName === pane.id ? pane.classList.add('active') : pane.classList.remove('active'));
-      
+      panes.forEach(pane => {
+        if (tabName === pane.id) {
+          pane.classList.add('active');
+          // Reiniciar el estado de "Ver más" al cambiar de pestaña
+          resetShowMoreButtonInPane(pane);
+        } else {
+          pane.classList.remove('active');
+        }
+      });
+
       try { tab.blur(); } catch (e) { /* ignore */ }
     }));
 
@@ -402,8 +425,119 @@ document.addEventListener('DOMContentLoaded', () => {
     const panes = tabContent.querySelectorAll('.tab-pane');
     tabs.forEach(t => t.classList.remove('active'));
     panes.forEach(p => p.classList.remove('active'));
-    if (tabs.length && panes.length) { tabs[0].classList.add('active'); panes[0].classList.add('active'); }
+    if (tabs.length && panes.length) {
+      tabs[0].classList.add('active');
+      panes[0].classList.add('active');
+
+      // Inicializar "Ver más" en la pestaña por defecto
+      resetShowMoreButtonInPane(panes[0]);
+    }
   }
+
+  function resetShowMoreButtonInPane(pane) {
+    if (!pane) return;
+    const showMoreBtn = pane.querySelector('.show-more-btn');
+    if (!showMoreBtn) return;
+
+    const videos = pane.querySelectorAll('.video');
+    if (videos.length <= 5) return;
+
+    videos.forEach((v, i) => {
+      v.style.display = i >= 5 ? 'none' : '';
+    });
+
+    const btnContainer = showMoreBtn.closest('.show-more-container');
+    if (btnContainer) {
+      btnContainer.classList.remove('is-expanded');
+      pane.appendChild(btnContainer);
+    }
+
+    pane.classList.remove('show-more-expanded');
+
+    showMoreBtn.textContent = LanguageManager.t('videos.showMore') || 'Ver más';
+    showMoreBtn.dataset.i18nKey = 'videos.showMore';
+    showMoreBtn.dataset.expanded = 'false';
+    showMoreBtn.setAttribute('aria-expanded', 'false');
+    LanguageManager.register(showMoreBtn, 'videos.showMore', null, { original: 'Ver más' });
+  }
+
+  // Lógica para los botones "Ver más" en los videos
+  function initShowMoreVideos() {
+    const tabPanes = document.querySelectorAll('.video-tabs-content .tab-pane');
+
+    tabPanes.forEach(pane => {
+      const videos = pane.querySelectorAll('.video');
+      if (videos.length > 5) {
+        // Ocultar videos a partir del 6to
+        videos.forEach((v, i) => {
+          if (i >= 5) v.style.display = 'none';
+        });
+
+        // Crear contenedor y botón
+        const btnContainer = document.createElement('div');
+        btnContainer.className = 'show-more-container';
+
+        const btn = document.createElement('button');
+        btn.className = 'show-more-btn';
+        btn.dataset.i18nKey = 'videos.showMore';
+        btn.textContent = LanguageManager.t('videos.showMore') || 'Ver más';
+        btn.dataset.expanded = 'false';
+        btn.setAttribute('aria-expanded', 'false');
+        btn.type = 'button';
+
+        btn.addEventListener('click', () => {
+          const isExpanded = btn.dataset.expanded === 'true';
+
+          if (isExpanded) {
+            // Ocultar
+            videos.forEach((v, i) => {
+              if (i >= 5) v.style.display = 'none';
+              else v.style.display = '';
+            });
+
+            btnContainer.classList.remove('is-expanded');
+            pane.appendChild(btnContainer);
+            pane.classList.remove('show-more-expanded');
+
+            btn.textContent = LanguageManager.t('videos.showMore') || 'Ver más';
+            btn.dataset.i18nKey = 'videos.showMore';
+            btn.dataset.expanded = 'false';
+            btn.setAttribute('aria-expanded', 'false');
+            LanguageManager.register(btn, 'videos.showMore', null, { original: 'Ver más' });
+
+            // Scroll suave hacia arriba de la pestaña
+            const offsetPosition = pane.getBoundingClientRect().top + window.pageYOffset - 100;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+          } else {
+            // Mostrar
+            videos.forEach(v => v.style.display = '');
+
+            // Al expandir, movemos el botón arriba (debajo de la descripción) y lo dejamos sticky.
+            btnContainer.classList.add('is-expanded');
+            pane.classList.add('show-more-expanded');
+            const description = pane.querySelector('.video-tab-description');
+            if (description && description.parentNode === pane) {
+              description.insertAdjacentElement('afterend', btnContainer);
+            } else {
+              pane.insertBefore(btnContainer, pane.firstChild);
+            }
+
+            btn.textContent = LanguageManager.t('videos.showLess') || 'Ver menos';
+            btn.dataset.i18nKey = 'videos.showLess';
+            btn.dataset.expanded = 'true';
+            btn.setAttribute('aria-expanded', 'true');
+            LanguageManager.register(btn, 'videos.showLess', null, { original: 'Ver menos' });
+          }
+        });
+
+        btnContainer.appendChild(btn);
+        pane.appendChild(btnContainer);
+        LanguageManager.register(btn, 'videos.showMore', null, { original: 'Ver más' });
+      }
+    });
+  }
+
+  initShowMoreVideos();
 
   // Inicializamos las pestañas de Videos y Biografía
   initTabs('.video-tabs.tab-menu', '.video-tabs-content');
@@ -414,14 +548,14 @@ document.addEventListener('DOMContentLoaded', () => {
      IV. Galería de Fotos (Lightbox)
      Crea una ventana superpuesta para ver las fotos en grande.
      ------------------------------------------------------------------*/
-  
+
   // Buscamos todas las fotos que deben abrirse en la galería
   const galleryTriggers = Array.from(document.querySelectorAll('.galeria-fotos .foto img, .expandable-photo'));
-  
+
   // Preparamos la información de cada foto (origen, título, descripción)
   const galleryItems = galleryTriggers.map(trigger => {
     const container = trigger.closest('.foto') || trigger.closest('.logro-media-container');
-    
+
     // Función para encontrar el texto descriptivo de la foto
     const getCaption = () => {
       let text = '';
@@ -429,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Buscamos en diferentes lugares donde podría estar el texto
         const captionDiv = container.querySelector('.logro-media-caption');
         if (captionDiv) text = captionDiv.textContent.trim();
-        
+
         if (!text) {
           const p = container.querySelector('p');
           if (p && container.classList.contains('foto')) text = p.textContent.trim();
@@ -437,11 +571,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       return text || trigger.getAttribute('alt') || '';
     };
-    
+
     const getAlt = () => trigger.getAttribute('alt') || LanguageManager.t('gallery.defaultAlt') || 'Fotografía';
     // Usamos la imagen de alta calidad (data-full) si existe, si no la normal
     const src = trigger.dataset && trigger.dataset.full ? trigger.dataset.full : trigger.currentSrc || trigger.src;
-    
+
     return { trigger, src, getCaption, getAlt };
   });
 
@@ -548,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger.style.cursor = 'zoom-in';
       trigger.setAttribute('role', 'button');
       trigger.setAttribute('tabindex', '0');
-      
+
       // Click para abrir
       trigger.addEventListener('click', event => {
         event.preventDefault();
@@ -615,7 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
   visitCount = parseInt(localStorage.getItem('visitCount') || '0', 10);
   visitCount++;
   localStorage.setItem('visitCount', String(visitCount));
-  
+
   const counter = document.getElementById('visit-counter');
   updateVisitCounterDisplay = () => {
     if (!counter) return;
@@ -635,7 +769,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Preguntamos al sistema de audio si está silenciado
       const muted = !!(window.AudioCore && window.AudioCore.isMuted && window.AudioCore.isMuted());
       const label = muted ? (LanguageManager.t('globalMute.unmute') || 'Activar todo el audio') : (LanguageManager.t('globalMute.mute') || 'Silenciar todo');
-      
+
       btn.setAttribute('aria-pressed', String(muted));
       btn.setAttribute('aria-label', label);
       btn.title = label;
@@ -647,9 +781,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const muteBtn = document.getElementById('global-mute-btn');
     // Si existe el botón y el sistema de audio, los conectamos
     if (muteBtn && window.AudioCore && typeof window.AudioCore.toggleGlobalMute === 'function') {
-      muteBtn.addEventListener('click', function(){ 
-        window.AudioCore.toggleGlobalMute(); 
-        try{ this.blur(); }catch(e){} 
+      muteBtn.addEventListener('click', function () {
+        window.AudioCore.toggleGlobalMute();
+        try { this.blur(); } catch (e) { }
       });
     }
     // Escuchamos cambios en el estado de silencio
@@ -684,9 +818,9 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburgerBtn.setAttribute('aria-expanded', !expanded);
       hamburgerBtn.classList.toggle('open');
       navbarTabsContainer.classList.toggle('active');
-      
+
       // Evita que se pueda hacer scroll en el fondo cuando el menú está abierto
-      document.body.style.overflow = !expanded ? 'hidden' : ''; 
+      document.body.style.overflow = !expanded ? 'hidden' : '';
     });
 
     // Cierra el menú automáticamente al hacer clic en un enlace
