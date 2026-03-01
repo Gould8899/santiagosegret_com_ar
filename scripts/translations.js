@@ -146,7 +146,7 @@ window.SiteTranslations = {
       'bio.training.item7': 'En esos años conoció más de 20 países con la Orquesta Escuela de Tango, la Orquesta de Érica Di Salvo, Diego Schissi Quinteto, trío Patio y otros.',
 
       'bio.beginnings.title': 'Inicios',
-      'bio.beginnings.item1': 'Santiago Segret nació el 5 de mayo del \'88 en Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo “El Marinero” Montes.',
+      'bio.beginnings.item1': 'Santiago Segret nació el 5 de mayo del \'88 en Champaign-Urbana, Illinois y desde los 4 años vive en Buenos Aires. De chico jugaba con el piano vertical de su abuelo Horacio en Almagro, tarareaba con su mamá y acompañaba con el bombo a su papá. Comenzó a tocar el bandoneón a los 7 de la mano de Osvaldo “El Marinero” Montes.',
       'bio.beginnings.caption1': 'Tocando “Caminito” y foto con el Marinero Montes.',
       'bio.beginnings.item2': 'Alrededor de los 10 años tomó clases de piano con Liliana Campos. A los 15 debuta como telonero de Javier Malosetti en La Trastienda tocando solos de Piazzolla.',
       'bio.beginnings.caption2': 'Grabaciones en La Trastienda: “Mi Refugio” y “La Familia”, audio de Raúl Monti.',
@@ -369,7 +369,7 @@ window.SiteTranslations = {
 
       // --- Biografía: Comienzos ---
       'bio.beginnings.title': 'Beginnings',
-      'bio.beginnings.item1': 'Santiago Segret was born on May 5, 1988 in Illinois and has lived in Buenos Aires since he was four. As a child he played on his grandfather Horacio\'s upright piano in Almagro, sang with his mother, and kept rhythm on the bombo with his father. He began playing bandoneon at seven with Osvaldo “El Marinero” Montes.',
+      'bio.beginnings.item1': 'Santiago Segret was born on May 5, 1988 in Champaign-Urbana, Illinois and has lived in Buenos Aires since he was four. As a child he played on his grandfather Horacio\'s upright piano in Almagro, sang with his mother, and kept rhythm on the bombo with his father. He began playing bandoneon at seven with Osvaldo “El Marinero” Montes.',
       'bio.beginnings.caption1': 'Playing “Caminito” and photo with Marinero Montes.',
       'bio.beginnings.item2': 'Around age ten he took piano lessons with Liliana Campos. At fifteen he opened for Javier Malosetti at La Trastienda performing Piazzolla solos.',
       'bio.beginnings.caption2': 'Recordings from La Trastienda: “Mi Refugio” and “La Familia”, audio by Raúl Monti.',
