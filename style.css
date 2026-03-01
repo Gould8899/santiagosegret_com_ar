@@ -356,6 +356,12 @@ section.seccion {
   gap: 2rem;
 }
 
+/* En grilla, la descripción debe ocupar todo el ancho
+   para evitar huecos/reflujo raro al mover el botón "Ver más" */
+.video-tab-description {
+  grid-column: 1 / -1;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
