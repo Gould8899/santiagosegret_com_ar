@@ -55,7 +55,7 @@ window.SiteTranslations = {
 
       // --- Pestañas de Secciones ---
       'tabs.bandoneon': 'Bandoneón',
-      'tabs.busquedas': 'Búsquedas',
+      'tabs.busquedas': 'Original',
       'tabs.patio': 'Patio',
       'tabs.dsq': 'DSQ',
 
@@ -64,7 +64,7 @@ window.SiteTranslations = {
       'videos.showMore': 'Ver más',
       'videos.showLess': 'Ver menos',
       'videos.bandoneon.description': 'Obras y arreglos para bandoneón solo, explorando la tradición y nuevas sonoridades.',
-      'videos.busquedas.description': 'Búsquedas personales, composiciones y pruebas en distintos formatos e instrumentos.',
+      'videos.busquedas.description': 'Obras originales, composiciones y experimentos en distintos formatos e instrumentaciones.',
       'videos.patio.description': 'Música del trío Patio, junto a Andrés Pilar y Juan Quintero. Folklore y composiciones propias.',
       'videos.dsq.description': 'Registros junto al Diego Schissi Quinteto, interpretando música original y arreglos de tango.',
 
@@ -275,7 +275,7 @@ window.SiteTranslations = {
 
       // --- Pestañas de Videos ---
       'tabs.bandoneon': 'Bandoneón',
-      'tabs.busquedas': 'Explorations',
+      'tabs.busquedas': 'Original',
       'tabs.patio': 'Patio',
       'tabs.dsq': 'DSQ',
 
@@ -284,7 +284,7 @@ window.SiteTranslations = {
       'videos.showMore': 'Show more',
       'videos.showLess': 'Show less',
       'videos.bandoneon.description': 'Works and arrangements for solo bandoneon, exploring tradition and new sonorities.',
-      'videos.busquedas.description': 'Personal searches, compositions, and experiments in different formats and instruments.',
+      'videos.busquedas.description': 'Original works, compositions, and experiments in different formats and instrumentations.',
       'videos.patio.description': 'Music by the trio Patio, with Andrés Pilar and Juan Quintero. Folklore and original compositions.',
       'videos.dsq.description': 'Recordings with the Diego Schissi Quinteto, performing original music and tango arrangements.',
 

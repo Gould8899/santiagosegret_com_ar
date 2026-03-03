@@ -327,19 +327,21 @@ section.seccion {
   background: var(--surface-color);
   color: var(--text-muted);
   font-size: 0.9rem;
+  font-weight: 600;
   border: 1px solid var(--border-color);
   transition: var(--transition);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.tab-menu a:hover,
+.tab-menu a:hover {
+  transform: translateY(-2px);
+}
+
 .tab-menu a.active {
   background: var(--accent-color);
   color: #0f172a;
   border-color: var(--accent-color);
-  font-weight: 600;
   box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
-  transform: translateY(-2px);
 }
 
 .tab-content .tab-pane {

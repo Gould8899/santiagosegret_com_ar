@@ -385,6 +385,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => tab.addEventListener('click', function (e) {
       e.preventDefault();
+      e.stopPropagation();
+
+      if (tab.classList.contains('active')) {
+        return;
+      }
 
       // Pausar audios/videos al cambiar de pestaña para que no suenen de fondo
       try { if (window.AudioCore && typeof window.AudioCore.pauseAllMedia === 'function') window.AudioCore.pauseAllMedia(); } catch (_) { }
@@ -440,7 +445,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!showMoreBtn) return;
 
     const videos = pane.querySelectorAll('.video');
-    if (videos.length <= 5) return;
+    if (videos.length <= 5) {
+      pane.classList.remove('show-more-expanded');
+      return;
+    }
 
     videos.forEach((v, i) => {
       v.style.display = i >= 5 ? 'none' : '';
