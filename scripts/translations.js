@@ -92,7 +92,7 @@ window.SiteTranslations = {
 
       // Descripciones de videos (Patio)
       'videos.patio.1': 'Con los Patio.',
-      'videos.patio.2': 'Con Patio y Nadia Larsher.',
+      'videos.patio.2': 'Con Patio y Nadia Larcher.',
       'videos.patio.3': 'Una zamba con el trío Patio.',
 
       // Descripciones de videos (DSQ)
@@ -126,8 +126,8 @@ window.SiteTranslations = {
 
       'bio.now.title': 'Presente',
       'bio.now.item2': '<span class="logro-text">Profesor de bandoneón en el <strong>Conservatorio “Astor Piazzolla”</strong> (CABA).</span> <span class="logro-ano">Desde 2018</span>',
-      'bio.now.item1': '<span class="logro-text">Profesor de bandoneón privado.</span> <span class="logro-ano">Desde 2007</span>',
-      'bio.now.item7': '<span class="logro-text">Desarrollador y creador del catálogo de partituras <a href="rupulo_en_desarrollo.html" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a> &lt;!-- Enlace original: <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a> --&gt;.</span> <span class="logro-ano">Desde 2008</span>',
+      'bio.now.item1': '<span class="logro-text">Profesor particular de bandoneón.</span> <span class="logro-ano">Desde 2007</span>',
+      'bio.now.item7': '<span class="logro-text">Desarrollador y creador del catálogo de partituras <a href="rupulo_en_desarrollo.html" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a>.</span> <span class="logro-ano">Desde 2008</span>',
       'bio.now.item5': '<span class="logro-text">Profesor y asistente de dirección de la <strong>Orquesta de Tango de la UNA</strong>.</span> <span class="logro-ano">Desde 2010</span>',
       'bio.now.item4': '<span class="logro-text">Integra el trío <strong>Patio</strong>, junto a Andrés Pilar y Juan Quintero.</span> <span class="logro-ano">Desde 2013</span>',
       'bio.now.item6': '<span class="logro-text">Integra el <strong>Quinteto de Diego Schissi</strong>.</span> <span class="logro-ano">Desde 2009</span>',
@@ -142,7 +142,7 @@ window.SiteTranslations = {
       'bio.training.item4': 'De 2013 a 2015 integró la Orquesta del Tango de la Ciudad de Buenos Aires dirigida en aquel entonces por Raúl Garello, Néstor Marconi y Carlos Cuacci.',
       'bio.training.caption3': 'En la Usina del Arte con la Orquesta del Tango de la Ciudad.',
       'bio.training.item5': 'Cursó el programa educativo llevado adelante por Hilda Herrera llamado CIMAP: Creadores e Intérpretes de Música Argentina en Piano.',
-      'bio.training.item6': 'A lo largo de su adolescencia y hacia la juventud estudió bandoneón con: Pablo Mainetti, Julio Pane, Mariano “Paya” Cigna, Federico Pereiro y con Carlos Lazzari a los 18 años.',
+      'bio.training.item6': 'A lo largo de su adolescencia y juventud estudió bandoneón con Pablo Mainetti, Julio Pane, Mariano “Paya” Cigna, Federico Pereiro, Carlos Lazzari y Joaquín Amenábar.',
       'bio.training.item7': 'En esos años conoció más de 20 países con la Orquesta Escuela de Tango, la Orquesta de Érica Di Salvo, Diego Schissi Quinteto, trío Patio y otros.',
 
       'bio.beginnings.title': 'Inicios',
@@ -241,6 +241,7 @@ window.SiteTranslations = {
       'gallery.triggerFallback': 'Abrir fotografía en tamaño completo',
       'gallery.defaultAlt': 'Fotografía',
       'counter.label': 'Visitas: {count}',
+      'footer.rights': 'Todos los derechos reservados.',
       'globalMute.mute': 'Silenciar todo',
       'globalMute.unmute': 'Activar todo el audio'
    },
@@ -312,7 +313,7 @@ window.SiteTranslations = {
 
       // --- Títulos de Videos (Patio) ---
       'videos.patio.1': 'With Patio.',
-      'videos.patio.2': 'With Patio and Nadia Larsher.',
+      'videos.patio.2': 'With Patio and Nadia Larcher.',
       'videos.patio.3': 'A zamba with the trio Patio.',
 
       // --- Títulos de Videos (DSQ) ---
@@ -348,7 +349,7 @@ window.SiteTranslations = {
       'bio.now.title': 'Now',
       'bio.now.item2': '<span class="logro-text">Bandoneon professor at the <strong>“Astor Piazzolla” Conservatory</strong> (CABA).</span> <span class="logro-ano">Since 2018</span>',
       'bio.now.item1': '<span class="logro-text">Private bandoneon lessons, online and in person.</span> <span class="logro-ano">Since 2007</span>',
-      'bio.now.item7': '<span class="logro-text">Developer and creator of the sheet music catalog <a href="rupulo_en_desarrollo.html" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a> &lt;!-- Original link: <a href="https://rupulo-ediciones.web.app" target="_blank" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a> --&gt;.</span> <span class="logro-ano">Since 2008</span>',
+      'bio.now.item7': '<span class="logro-text">Developer and creator of the sheet music catalog <a href="rupulo_en_desarrollo.html" rel="noopener noreferrer"><strong>Rúpulo Ediciones</strong></a>.</span> <span class="logro-ano">Since 2008</span>',
       'bio.now.item5': '<span class="logro-text">Professor and assistant conductor of the <strong>UNA Tango Orchestra</strong>.</span> <span class="logro-ano">Since 2010</span>',
       'bio.now.item4': '<span class="logro-text">Member of the trio <strong>Patio</strong>, with Andrés Pilar and Juan Quintero.</span> <span class="logro-ano">Since 2013</span>',
       'bio.now.item6': '<span class="logro-text">Member of the <strong>Diego Schissi Quinteto</strong>.</span> <span class="logro-ano">Since 2009</span>',
@@ -364,7 +365,7 @@ window.SiteTranslations = {
       'bio.training.item4': 'From 2013 to 2015 he was part of the Buenos Aires City Tango Orchestra, then conducted by Raúl Garello, Néstor Marconi, and Carlos Cuacci.',
       'bio.training.caption3': 'At the Usina del Arte with the Buenos Aires City Tango Orchestra.',
       'bio.training.item5': 'He completed the educational program led by Hilda Herrera called CIMAP: Creators and Performers of Argentine Music on Piano.',
-      'bio.training.item6': 'Throughout his adolescence and youth he studied bandoneon with Pablo Mainetti, Julio Pane, Mariano “Paya” Cigna, Federico Pereiro, and with Carlos Lazzari at age 18.',
+      'bio.training.item6': 'Throughout his adolescence and youth he studied bandoneon with Pablo Mainetti, Julio Pane, Mariano “Paya” Cigna, Federico Pereiro, Carlos Lazzari and Joaquín Amenabar.',
       'bio.training.item7': 'In those years he visited more than 20 countries with the Tango Orchestra School, Érica Di Salvo\'s Orchestra, the Diego Schissi Quinteto, the trio Patio, and others.',
 
       // --- Biografía: Comienzos ---
@@ -464,6 +465,7 @@ window.SiteTranslations = {
       'gallery.triggerFallback': 'Open photo in full size',
       'gallery.defaultAlt': 'Photograph',
       'counter.label': 'Visits: {count}',
+      'footer.rights': 'All rights reserved.',
       'globalMute.mute': 'Mute all',
       'globalMute.unmute': 'Unmute all audio'
    },
